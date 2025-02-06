@@ -1,0 +1,105 @@
+.swiper-quests {
+
+    // .swiper-quests__card
+    &__card {}
+}
+
+.quests__swiper-top {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    @include adaptiveValue("margin-bottom", 50, 25);
+
+    @media (max-width: em(400)) {
+        flex-direction: column;
+        align-items: start;
+        gap: 20px;
+
+        &>.swiper-buttons {
+            margin-left: auto;
+        }
+    }
+
+    &>.block-title {
+        margin-bottom: 0;
+    }
+
+}
+
+.quests__swiper {
+    .swiper-btn {
+        @media (min-width:em(1400)) {
+            display: none;
+            visibility: hidden;
+            opacity: 0;
+        }
+    }
+}
+
+.card-quests {
+
+    // .card-quests__body
+    &__body {
+        display: flex;
+        flex-direction: column;
+        @include adaptiveValue("gap", 10, 5);
+    }
+
+    // .card-quests__img
+    &__img {
+        img {
+            border-radius: 20px;
+            max-width: 100%;
+        }
+    }
+
+    // .card-quests__top
+    &__top {
+        display: flex;
+        flex-direction: column;
+
+    }
+
+    // .card-quests__name
+    &__name {
+        @include adaptiveValue("font-size", 40, 30);
+        color: #ffffff00;
+        -webkit-background-clip: text;
+        background-clip: text;
+        background-image: linear-gradient(45deg, $mainPink 0%, $mainGreen 70%);
+        padding: 5px 0;
+        width: fit-content;
+        @include adaptiveValue("margin-bottom", 10, 5);
+    }
+
+    // .card-quests__difficulty
+    &__difficulty {
+        @include adaptiveValue("font-size", 22, 18);
+        color: #ffffff4d;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 5px;
+
+        &.lite {
+            color: green;
+        }
+
+        span.medium {
+            color: orange;
+        }
+
+        span.hard {
+            color: red;
+        }
+    }
+
+    // .card-quests__description
+    &__description {
+        color: #9e9e9e;
+        line-height: 1.4;
+        font-weight: 300;
+        @include adaptiveValue("font-size", 18, 16);
+    }
+}

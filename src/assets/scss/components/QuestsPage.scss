@@ -1,0 +1,52 @@
+.quest {
+
+    // .quest__body
+    &__body {
+        display: flex;
+        flex-direction: row;
+        max-width: 1200px;
+        margin: 0px auto;
+        @include adaptiveValue("gap", 30, 15);
+    }
+
+    // .quest__attributes
+    &__attributes {}
+}
+
+
+.body-quest {
+
+    // .body-quest__img
+    &__img {}
+
+    // .body-quest__content
+    &__content {
+        display: flex;
+        flex-direction: column;
+        @include adaptiveValue("gap", 30, 15);
+    }
+
+    // .body-quest__name
+    &__name {
+        @include adaptiveValue("font-size", 60, 40);
+    }
+
+    // .body-quest__description
+    &__description {
+        line-height: 1.4;
+        font-weight: 300;
+        color: #e7e7e7;
+    }
+}
+
+.attributes-quest {
+
+    // .attributes-quest__item
+    &__item {}
+
+    // .attributes-quest__img
+    &__img {}
+
+    // .attributes-quest__text
+    &__text {}
+}

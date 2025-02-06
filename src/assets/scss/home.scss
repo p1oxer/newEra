@@ -1,0 +1,201 @@
+a.link {
+    padding: 5px 0;
+
+    @media (any-hover: hover) {
+        &:hover {
+            color: #ffffff00;
+            -webkit-background-clip: text;
+            background-clip: text;
+            background-image: $gradient
+        }
+    }
+}
+
+main {
+    margin-top: 84px;
+}
+
+.nav-list {
+    display: flex;
+    @include adaptiveValue("gap", 50, 25);
+
+    &.horizontal {
+        flex-direction: row;
+    }
+
+    &.vertical {
+        flex-direction: column;
+    }
+}
+
+.nav-item {
+    padding: 3px 0
+}
+
+.nav-link {
+    @include adaptiveValue("font-size", 20, 16);
+    transition: all 0.1s ease 0s;
+
+}
+
+.block-title {
+    @include adaptiveValue("font-size", 50, 35);
+    font-weight: 500;
+    @include adaptiveValue("margin-bottom", 50, 25);
+}
+
+.block {
+    @include adaptiveValue("padding-top", 120, 60);
+    @include adaptiveValue("padding-bottom", 120, 60);
+}
+
+.button {
+    @include adaptiveValue("font-size", 20, 16);
+    color: #fff;
+    background: linear-gradient(45deg, $mainPink 0%, $mainGreen 70%);
+    max-width: fit-content;
+    padding: 15px 50px;
+    border-radius: 20px;
+    transition: all 0.3s ease 0s;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+
+    @media (any-hover: hover) {
+        &:hover {
+            filter: brightness(90%);
+        }
+    }
+}
+
+.swiper-buttons {
+    position: relative;
+    display: flex;
+    gap: 15px;
+}
+
+.swiper-btn {
+    width: rem(50);
+    height: rem(50);
+    background-color: $bg-light;
+    border-radius: 50%;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid transparent;
+    background: linear-gradient($bg-light, $bg-light 0) padding-box,
+        linear-gradient(to right, $mainPink, $mainGreen) border-box;
+
+    transition: all 0.3s ease 0s;
+
+    &.swiper-btn-absolute {
+        position: absolute;
+        inset: 0;
+        top: 50%;
+        transform: translate(0px, -50%);
+        left: auto;
+    }
+
+    @media (any-hover: hover) {
+        &:hover {
+            background: linear-gradient($bg-dark, $bg-dark 0) padding-box,
+                linear-gradient(to right, $mainPink, $mainGreen) border-box;
+        }
+    }
+
+    @media (max-width:$mobileSmall) {
+        width: 40px;
+        height: 40px;
+    }
+
+    svg {
+        fill: #fff;
+        stroke: #fff;
+    }
+}
+
+.swiper-btn-disabled {
+    filter: brightness(0.5);
+}
+
+.swiper-btn-prev {
+    &.swiper-btn-absolute {
+        left: 30px;
+
+        @media (max-width:$mobileSmall) {
+            left: 15px;
+        }
+    }
+}
+
+.swiper-btn-next {
+    background: linear-gradient($bg-light, $bg-light 0) padding-box,
+        linear-gradient(to left, $mainPink, $mainGreen) border-box;
+
+    &.swiper-btn-absolute {
+        right: 30px;
+    }
+
+    @media (max-width:$mobileSmall) {
+        right: 15px;
+    }
+
+    @media (any-hover: hover) {
+        &:hover {
+            background: linear-gradient($bg-dark, $bg-dark 0) padding-box,
+                linear-gradient(to left, $mainPink, $mainGreen) border-box;
+        }
+    }
+}
+
+
+.swiper-pagination {
+    bottom: 15px !important;
+}
+
+.swiper-pagination-bullet {
+    width: 25px !important;
+    height: 3px !important;
+    border-radius: 0 !important;
+    background: #cccccc !important;
+    transition: all 0.3s ease 0s !important;
+
+    @media (max-width:$tablet) {
+        width: 20px !important;
+        height: 2px !important;
+    }
+}
+
+.swiper-pagination-bullet-active {
+    background: linear-gradient(45deg, $mainPink 0%, $mainGreen 70%) !important;
+    height: 4px !important;
+    width: 35px !important;
+
+    @media (max-width:$tablet) {
+        width: 25px !important;
+        height: 3px !important;
+    }
+}
+
+.socials {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 30px;
+
+    a {
+        svg {
+            transition: all 0.2s ease 0s;
+        }
+
+        @media (any-hover: hover) {
+            &:hover {
+                svg {
+                    fill: $mainPink;
+                }
+            }
+        }
+    }
+}

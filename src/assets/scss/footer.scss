@@ -1,0 +1,55 @@
+//====================================================================================================
+.footer {
+    @include adaptiveValue("padding-bottom", 70, 35);
+    @include adaptiveValue("padding-top", 50, 25);
+    border-top: 1px solid #505050;
+
+    // .footer__body
+    &__body {}
+    &__copyright {
+        margin-top: 30px;
+        color: #c4c4c4;
+        font-weight: 300;
+    }
+}
+
+
+.body-footer {
+    display: flex;
+    flex-direction: row;
+    @include adaptiveValue("gap", 100, 30);
+
+    &__nav {
+        ul li a {
+
+            @include adaptiveValue("font-size", 30, 20);
+        }
+    }
+
+    // .body-footer__list
+    &__list {
+        display: flex;
+        flex-direction: column;
+        @include adaptiveValue("gap", 30, 20);
+
+        li {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            @include adaptiveValue("font-size", 30, 20);
+            gap: 10px;
+
+            &.socials {
+                @include adaptiveValue("gap", 30, 20);
+            }
+        }
+
+    }
+
+    // .body-footer__socials
+    &__socials {}
+}
+
+
+
+//====================================================================================================

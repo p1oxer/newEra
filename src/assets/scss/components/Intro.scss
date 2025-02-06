@@ -1,0 +1,142 @@
+.intro {
+    margin-top: 50px;
+
+    &__body {
+        display: flex;
+        flex-direction: column;
+        @include adaptiveValue("gap", 30, 15);
+        max-width: 1600px;
+        margin: 0px auto;
+    }
+}
+
+.body-intro__top {
+    display: flex;
+    flex-direction: row;
+    @include adaptiveValue("gap", 30, 15);
+}
+
+.intro-swiper__img {
+    width: 100%;
+    height: 100%;
+    border: 2px solid transparent;
+    border-radius: 20px;
+    background: linear-gradient($bg-light, $bg-light 0) padding-box,
+        linear-gradient(to left, $mainPink, $mainGreen) border-box;
+
+    @media (max-width:$tablet) {
+        border-radius: 10px;
+    }
+
+    img {
+        width: 100%;
+        height: 100%;
+        border-radius: 20px;
+
+        @media (max-width:$tablet) {
+            border-radius: 10px;
+        }
+
+    }
+}
+
+.menu-intro {
+    padding: 30px;
+    border: 2px solid transparent;
+    border-radius: 20px;
+    background: linear-gradient($bg-light, $bg-light 0) padding-box,
+        linear-gradient(to right, $mainPink, $mainGreen) border-box;
+    max-width: fit-content;
+    min-width: 250px;
+
+    @media (max-width: em(1200)) {
+        min-width: 180px;
+    }
+
+    @media (max-width:$tablet) {
+        padding: 20px;
+        border-radius: 10px;
+        width: fit-content;
+        min-width: 150px;
+    }
+
+    @media (max-width:$mobile) {
+        display: none;
+        visibility: hidden;
+        opacity: 0;
+    }
+
+    .intro__nav {}
+
+    p {
+        @include adaptiveValue("font-size", 22, 18);
+        @include adaptiveValue("margin-bottom", 20, 10);
+    }
+
+    .nav-list {
+        @include adaptiveValue("gap", 20, 10);
+    }
+
+    .nav-link {
+        @include adaptiveValue("font-size", 18, 14);
+        font-weight: 300;
+        color: #b9b9b9;
+
+        @media (any-hover: hover) {
+            &:hover {
+                color: transparent;
+            }
+        }
+    }
+}
+
+.intro-buttons {
+    width: 100%;
+}
+
+.intro-buttons__slide {
+    @media (max-width:em(900)) {
+        width: 200px !important;
+    }
+}
+
+.button-intro {
+    padding: 30px;
+    width: 100%;
+    border: 2px solid transparent;
+    border-radius: 20px;
+    background: linear-gradient($bg-light, $bg-light 0) padding-box,
+        linear-gradient(to right, $mainPink, $mainGreen) border-box;
+    position: relative;
+    min-height: 200px;
+    overflow: visible;
+    display: block;
+
+    @media (max-width:$tablet) {
+        border-radius: 10px;
+        padding: 15px;
+        min-height: 170px;
+    }
+
+    // .button-intro__text
+    &__text {
+        line-height: 1.2;
+        @include adaptiveValue("font-size", 24, 18);
+    }
+
+    // .button-intro__image
+    &__image {
+        max-width: 150px;
+        position: absolute;
+        right: 0;
+        bottom: 10px;
+
+        @media (max-width: em(1200)) {
+            max-width: 120px;
+        }
+
+        img {
+            max-width: 100%;
+        }
+    }
+}
