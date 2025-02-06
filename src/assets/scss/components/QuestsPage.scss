@@ -35,18 +35,50 @@
     &__description {
         line-height: 1.4;
         font-weight: 300;
-        color: #e7e7e7;
+        color: $text;
+        @include adaptiveValue("font-size", 20, 16);
     }
 }
 
 .attributes-quest {
-
+    // display: grid;
+    // grid-template-columns: repeat(auto-fit, minmax(30%, 1fr));
+    @include adaptiveValue("gap", 30, 15);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     // .attributes-quest__item
-    &__item {}
+    &__item {
+        @include adaptiveValue("font-size", 30, 20);
+        text-align: center;
+        width: 30%;
+        &:nth-child(2),
+        &:nth-child(4) {
+            .attributes-quest__img svg {
+                fill: none;
+                stroke: $mainPink;
+            }
+        }
+    }
 
     // .attributes-quest__img
-    &__img {}
+    &__img {
+        &:not(:last-child) {
+            margin-bottom: rem(10);
+        }
+
+        svg {
+            fill: $mainPink;
+        }
+    }
 
     // .attributes-quest__text
-    &__text {}
+    &__text {
+        line-height: 1.2;
+    }
+}
+
+.attributes-quest__img svg {
+    height: 50px;
+    width: 50px;
 }
