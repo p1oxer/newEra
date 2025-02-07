@@ -1,5 +1,6 @@
 import React from "react";
 import HeaderNav from "../Nav";
+import Burger from "./Burger";
 
 export default function Header() {
     const navigation = [
@@ -17,6 +18,7 @@ export default function Header() {
                         <a href="tel:+79095984080" className="body-header__phone link">
                             +7 (909) 598-40-80
                         </a>
+                        <Burger />
                     </div>
                 </div>
             </header>

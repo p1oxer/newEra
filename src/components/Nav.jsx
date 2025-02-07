@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { translit } from "../functions/translit";
 export default function Nav({ direction, list, modificator }) {
+    modificator = modificator || "";
     return (
         <nav className={`nav ${modificator}`}>
             <ul

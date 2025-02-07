@@ -6,6 +6,7 @@
 
     // .footer__body
     &__body {}
+
     &__copyright {
         margin-top: 30px;
         color: #c4c4c4;
@@ -18,6 +19,11 @@
     display: flex;
     flex-direction: row;
     @include adaptiveValue("gap", 100, 30);
+
+    @media (max-width:$mobileSmall) {
+        flex-direction: column;
+        gap: 15px;
+    }
 
     &__nav {
         ul li a {
