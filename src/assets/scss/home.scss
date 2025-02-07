@@ -199,3 +199,47 @@ main {
         }
     }
 }
+
+.breadcrumbs {
+    @include adaptiveValue("margin-bottom", 50, 25);
+    @include adaptiveValue("font-size", 24, 20);
+}
+
+.breadcrumbs>* {
+    display: inline-block;
+    margin-right: 10px;
+    @include adaptiveValue("font-size", 20, 16);
+}
+
+.breadcrumbs .crumb::after {
+    content: ">";
+    margin-left: 10px;
+    color: #969696;
+}
+
+.breadcrumbs .crumb:last-child:after {
+    content: "";
+}
+
+.breadcrumbs .crumb:last-child {
+    color: #ffffff00;
+    -webkit-background-clip: text;
+    background-clip: text;
+    background-image: $gradient;
+    padding: 5px 0;
+}
+
+.breadcrumbs .crumb:not(:last-child) {
+    font-weight: 300;
+    color: $text;
+    transition: all 0.2s ease 0s;
+}
+
+.breadcrumbs .crumb:not(:last-child):hover {
+    color: #fff;
+}
+
+.page {
+    @include adaptiveValue("padding-top", 60, 30);
+    @include adaptiveValue("padding-bottom", 100, 50);
+}

@@ -1,12 +1,14 @@
 import React from "react";
-import Header from "./components/Header/Header";
-import { Outlet } from "react-router-dom";
-import Footer from "./components/Footer/Footer";
+import Header from "../Header/Header";
+import { Outlet, ScrollRestoration } from "react-router-dom";
+import Footer from "../Footer/Footer";
+import Breadcrumbs from "../Breadcrumbs";
 
 export default function Layout() {
     return (
         <>
             <div className="wrapper">
+                <ScrollRestoration />
                 <Header />
                 <main>
                     <Outlet />

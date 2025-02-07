@@ -1,55 +1,113 @@
-import React from "react";
-import Button from "../UI/Button";
+import React, { useState, useEffect } from "react";
+import { Navigate, useParams } from "react-router-dom";
+
+import { FreeMode, Thumbs } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css/thumbs";
+import "swiper/css/free-mode";
+
 import { FaVk } from "react-icons/fa";
 import { FaPeopleGroup } from "react-icons/fa6";
 import { TbMoodKid } from "react-icons/tb";
 import { FaSkull } from "react-icons/fa6";
 import { IoTimeOutline } from "react-icons/io5";
 import { FaLocationDot } from "react-icons/fa6";
+
 import AttributeQuest from "../Quests/AttributeQuest";
+import Breadcrumbs from "../Breadcrumbs";
+import Button from "../UI/Button";
+import questsData from "../../files/questsData.json";
 
 export default function QuestsPage() {
-    // todo: breadcrumbs, thumbs
+    const { questId } = useParams();
+    const [thumbsSwiper, setThumbsSwiper] = useState(null);
+    const currentQuest = questsData[questId];
+
+    if (!currentQuest) {
+        return <Navigate replace to="/404" />; // Или редирект на страницу 404
+    }
+
+    // Разбиение текста на абзацы и рендеринг в JSX
+    const descriptionParagraphs = currentQuest.description
+        .split(";") // Или другой разделитель, если не ';'
+        .map((paragraph, index) => (
+            <p key={index} className="body-quest__paragraph">
+                {paragraph.trim()}
+            </p>
+        ));
+
     return (
-        <section className="quest block">
+        <section className="quest page">
             <div className="container">
+                <Breadcrumbs />
                 <div className="quest__body body-quest">
-                    <div className="body-quest__img">
-                        <img src="../../../public/img/QuestsSwiper/koma.jpg" alt=""></img>
+                    <div className="body-quest__gallery">
+                        {/* Swiper components (без изменений) */}
+                        <Swiper
+                            spaceBetween={10}
+                            thumbs={{ swiper: thumbsSwiper }}
+                            modules={[FreeMode, Thumbs]}
+                            className={"body-quest__swiper"}
+                        >
+                            {[...Array(5)].map(
+                                (
+                                    _,
+                                    index // Создаем 5 слайдов
+                                ) => (
+                                    <SwiperSlide key={index}>
+                                        <div className="body-quest__img">
+                                            <img
+                                                src={`/img/QuestsSwiper/${currentQuest.img}.jpg`}
+                                                alt=""
+                                            />
+                                        </div>
+                                    </SwiperSlide>
+                                )
+                            )}
+                        </Swiper>
+                        <Swiper
+                            onSwiper={setThumbsSwiper}
+                            spaceBetween={10}
+                            slidesPerView={4}
+                            freeMode={true}
+                            watchSlidesProgress={true}
+                            modules={[FreeMode, Thumbs]}
+                            className={"body-quest__thumbs"}
+                        >
+                            {[...Array(5)].map((_, index) => (
+                                <SwiperSlide key={index}>
+                                    <div className="body-quest__img">
+                                        <img
+                                            src={`/img/QuestsSwiper/${currentQuest.img}.jpg`}
+                                            alt=""
+                                        />
+                                    </div>
+                                </SwiperSlide>
+                            ))}
+                        </Swiper>
                     </div>
                     <div className="body-quest__content">
-                        <span className="body-quest__name">Кома</span>
-                        <p className="body-quest__description">
-                            Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                            Perferendis, voluptatum nobis, ex doloribus adipisci dicta
-                            rerum illo aspernatur earum, eligendi similique. Fugiat fugit
-                            sit labore ea quam soluta nihil illum architecto. A modi amet
-                            unde, sapiente impedit excepturi aliquam cupiditate sunt
-                            provident esse nisi saepe sequi architecto odio eaque ratione
-                            placeat hic quisquam?
-                        </p>
-                        <Button
-                            target={"_blank"}
-                            link={
-                                "https://vk.com/market/product/khorror-kvest-quotkomaquot-213324777-9536720"
-                            }
-                        >
+                        <span className="body-quest__name">{currentQuest.title}</span>
+                        <div className="body-quest__description">
+                            {descriptionParagraphs}
+                        </div>
+                        <Button target={"_blank"} link={currentQuest.link}>
                             Забронировать <FaVk size={25} />
                         </Button>
                         <div className="quest__attributes attributes-quest">
-                            <AttributeQuest text={"2-15"}>
-                                <FaPeopleGroup/>
+                            <AttributeQuest text={currentQuest.people}>
+                                <FaPeopleGroup />
                             </AttributeQuest>
-                            <AttributeQuest text={"14+ 18+"}>
+                            <AttributeQuest text={currentQuest.age}>
                                 <TbMoodKid />
                             </AttributeQuest>
-                            <AttributeQuest text={"MEDIUM | HARD"}>
+                            <AttributeQuest text={currentQuest.difficulty}>
                                 <FaSkull />
                             </AttributeQuest>
-                            <AttributeQuest text={"60-90 минут"}>
+                            <AttributeQuest text={currentQuest.time}>
                                 <IoTimeOutline />
                             </AttributeQuest>
-                            <AttributeQuest text={"Герцена, 105Б"}>
+                            <AttributeQuest text={currentQuest.address}>
                                 <FaLocationDot />
                             </AttributeQuest>
                         </div>
