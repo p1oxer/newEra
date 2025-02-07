@@ -5,6 +5,7 @@ import Layout from "./components/Layouts/Layout.jsx";
 import "./assets/scss/style.scss";
 import Home from "./components/pages/Home.jsx";
 import MainLayout from "./components/Layouts/MainLayout.jsx";
+import Quests from "./components/pages/Quests.jsx";
 const router = createBrowserRouter([
     {
         path: "/",
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
         element: <Layout />,
         errorElement: <NotFoundPage />,
         children: [
+            {
+                path: "quests",
+                element: <Quests />,
+            },
             {
                 path: "quests/:questId",
                 element: <QuestsPage />,

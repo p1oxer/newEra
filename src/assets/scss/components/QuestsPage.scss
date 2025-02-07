@@ -1,3 +1,7 @@
+.quests {
+    @include adaptiveValue("margin-top", 50, 25);
+}
+
 .quest {
 
     // .quest__body
@@ -25,19 +29,21 @@
 
 
 .body-quest {
+    &__slide {}
 
     &__gallery {
         max-width: 540px;
 
-
-
         img {
             max-width: 100%;
+            aspect-ratio: 1/1;
         }
     }
 
     &__swiper {
         margin-bottom: 10px;
+
+
     }
 
     &__thumbs {
@@ -58,10 +64,13 @@
     // .body-quest__img
     &__img {
         margin: 0px auto;
+        height: 100%;
 
         img {
+            height: 100%;
             border-radius: 20px;
             max-width: 100%;
+            object-fit: cover;
         }
     }
 

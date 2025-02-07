@@ -6,7 +6,7 @@ import QuestsSwiperCard from "./QuestsSwiperCard";
 import BlockTitle from "../../UI/BlockTitle";
 import SwiperButton from "../../UI/SwiperButton";
 
-export default function QuestsSwiper() {
+export default function QuestsSwiper({block}) {
     const swiperRef = useRef();
     const swiperButtonPrev = useRef(null);
     const swiperButtonNext = useRef(null);
@@ -54,7 +54,7 @@ export default function QuestsSwiper() {
         }
     }
     return (
-        <section className="quests__swiper block">
+        <section className={block ? "quests__swiper block" : "quests__swiper"}>
             <div className="container">
                 <div className="quests__swiper-top">
                     <BlockTitle title={"Наши квесты"} />

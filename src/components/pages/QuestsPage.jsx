@@ -49,21 +49,16 @@ export default function QuestsPage() {
                             modules={[FreeMode, Thumbs]}
                             className={"body-quest__swiper"}
                         >
-                            {[...Array(5)].map(
-                                (
-                                    _,
-                                    index // Создаем 5 слайдов
-                                ) => (
-                                    <SwiperSlide key={index}>
-                                        <div className="body-quest__img">
-                                            <img
-                                                src={`/img/QuestsSwiper/${currentQuest.img}.jpg`}
-                                                alt=""
-                                            />
-                                        </div>
-                                    </SwiperSlide>
-                                )
-                            )}
+                            {currentQuest.img.map((img) => (
+                                <SwiperSlide className="body-quest__slide" key={img}>
+                                    <div className="body-quest__img">
+                                        <img
+                                            src={`/img/QuestsSwiper/${questId}/${img}.jpg`}
+                                            alt=""
+                                        />
+                                    </div>
+                                </SwiperSlide>
+                            ))}
                         </Swiper>
                         <Swiper
                             onSwiper={setThumbsSwiper}
@@ -74,11 +69,11 @@ export default function QuestsPage() {
                             modules={[FreeMode, Thumbs]}
                             className={"body-quest__thumbs"}
                         >
-                            {[...Array(5)].map((_, index) => (
-                                <SwiperSlide key={index}>
+                            {currentQuest.img.map((img) => (
+                                <SwiperSlide className="body-quest__slide" key={img}>
                                     <div className="body-quest__img">
                                         <img
-                                            src={`/img/QuestsSwiper/${currentQuest.img}.jpg`}
+                                            src={`/img/QuestsSwiper/${questId}/${img}.jpg`}
                                             alt=""
                                         />
                                     </div>

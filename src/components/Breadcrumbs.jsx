@@ -13,16 +13,21 @@ export default function Breadcrumbs() {
             currentLink += `/${crumb}`;
             const breadcrumbName =
                 nameMap[crumb] || capitalizeFirstLetterAndReplaceDash(crumb);
-
             return (
-                <div className="crumb" key={crumb}>
-                    <Link to={currentLink}>{breadcrumbName}</Link>
-                </div>
+                <>
+                    
+                    <div className="crumb" key={crumb}>
+                        <Link to={currentLink}>{breadcrumbName}</Link>
+                    </div>
+                </>
             );
         });
 
     return (
         <div className="breadcrumbs">
+            <div className="crumb">
+                <Link to={"/"}>Главная</Link>
+            </div>
             {crumbs}
         </div>
     );

@@ -6,7 +6,7 @@ export default function Home() {
     return (
         <>
             <Intro />
-            <QuestsSwiper />
+            <QuestsSwiper block={true} />
         </>
     );
 }
