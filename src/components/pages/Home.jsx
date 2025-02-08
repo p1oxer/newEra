@@ -2,6 +2,7 @@ import React from "react";
 import Intro from "../Intro/Intro";
 import QuestsSwiper from "../Quests/QuestsSwiper/QuestsSwiper";
 import BlockTitle from "../UI/BlockTitle";
+import Reviews from "../Reviews";
 
 export default function Home() {
     return (
@@ -18,6 +19,7 @@ export default function Home() {
                     ></iframe>
                 </div>
             </div>
+            <Reviews />
         </>
     );
 }

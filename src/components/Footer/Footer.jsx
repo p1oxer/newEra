@@ -8,13 +8,21 @@ import { FaInstagram } from "react-icons/fa6";
 export default function Footer() {
     const navigation = [
         { text: "Главная", link: "/" },
-        { text: "Страница", link: "#" },
-        { text: "Страница", link: "#" },
+        { text: "Хоррор", link: "horror" },
+        { text: "Приключения", link: "adventures" },
+        { text: "День рождения", link: "birthday" },
+        { text: "Школьный класс/Выпускной", link: "graduation" },
+        { text: "Корпоратив", link: "graduation" },
+        { text: "Подарочный сертификат", link: "sertificate" },
+        { text: "Контакты", link: "contacts" },
+        { text: "Информация", link: "information" },
     ];
     return (
         <footer className="footer">
             <div className="container">
+                <div className="footer__logo"><img src="/img/logo.png" alt="" /></div>
                 <div className="footer__body body-footer">
+                    
                     <Nav
                         modificator={"body-footer__nav"}
                         direction={"vertical"}

@@ -1,6 +1,6 @@
 import React from "react";
 import IntroSwiper from "./IntroSwiper/IntroSwiper";
-import IntroButtons from "./IntroButtons/IntroButtons";
+import { IntroButtons } from "./IntroButtons/IntroButtons";
 
 export default function Intro() {
     return (

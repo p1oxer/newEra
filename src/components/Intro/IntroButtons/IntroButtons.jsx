@@ -4,19 +4,17 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/free-mode";
+import { FaMagnifyingGlass } from "react-icons/fa6";
+import { FaQuestion } from "react-icons/fa";
+import { FaVk } from "react-icons/fa";
+import { FaSkull } from "react-icons/fa6";
 
-export default function IntroButtons() {
-    const buttons = [
-        { text: "С актёрами", image: "actors" },
-        { text: "Без актёров", image: "no_actors" },
-        { text: "Подарочные сертификаты", image: "sertificate" },
-        { text: "Сложности квестов", image: "difficulties" },
-    ];
+export function IntroButtons() {
     return (
         <>
             <Swiper
                 className="intro-buttons"
-                freeMode={true}
+                freeMode={{ enabled: true }}
                 breakpoints={{
                     320: {
                         slidesPerView: "auto",
@@ -25,13 +23,26 @@ export default function IntroButtons() {
                     900: { slidesPerView: 4, spaceBetween: 30 },
                 }}
             >
-                {buttons.map((button, index) => {
-                    return (
-                        <SwiperSlide className="intro-buttons__slide" key={index}>
-                            <IntroButton text={button.text} image={button.image} />
-                        </SwiperSlide>
-                    );
-                })}
+                <SwiperSlide className="intro-buttons__slide">
+                    <IntroButton text={"Все квесты"}>
+                        <FaQuestion size={60}/>
+                    </IntroButton>
+                </SwiperSlide>
+                <SwiperSlide className="intro-buttons__slide">
+                    <IntroButton text={"Хоррор"}>
+                        <FaSkull size={60}/>
+                    </IntroButton>
+                </SwiperSlide>
+                <SwiperSlide className="intro-buttons__slide">
+                    <IntroButton text={"Приключения"}>
+                        <FaMagnifyingGlass size={60}/>
+                    </IntroButton>
+                </SwiperSlide>
+                <SwiperSlide className="intro-buttons__slide">
+                    <IntroButton text={"Забронировать квест"}>
+                        <FaVk size={60}/>
+                    </IntroButton>
+                </SwiperSlide>
             </Swiper>
         </>
     );

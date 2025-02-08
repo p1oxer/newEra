@@ -8,7 +8,7 @@ export default function QuestsSwiperCard({ img, name, description, difficulty })
         <div className="swiper-quests__card card-quests">
             <div className="card-quests__body">
                 <Link to={`../quests/${translit(name)}`} className="card-quests__img">
-                    <img src={`img/QuestsSwiper/${img}.jpg`} alt="" />
+                    <img src={`/img/QuestsSwiper/${img}.jpg`} alt="" />
                 </Link>
                 <div className="card-quests__top">
                     <p className="card-quests__name">{name}</p>
