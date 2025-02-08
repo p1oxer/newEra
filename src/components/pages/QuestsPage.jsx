@@ -17,6 +17,7 @@ import AttributeQuest from "../Quests/AttributeQuest";
 import Breadcrumbs from "../Breadcrumbs";
 import Button from "../UI/Button";
 import questsData from "../../files/questsData.json";
+import QuestsSwiper from "../Quests/QuestsSwiper/QuestsSwiper";
 
 export default function QuestsPage() {
     const { questId } = useParams();
@@ -27,9 +28,8 @@ export default function QuestsPage() {
         return <Navigate replace to="/404" />; // Или редирект на страницу 404
     }
 
-    // Разбиение текста на абзацы и рендеринг в JSX
     const descriptionParagraphs = currentQuest.description
-        .split(";") // Или другой разделитель, если не ';'
+        .split(";") 
         .map((paragraph, index) => (
             <p key={index} className="body-quest__paragraph">
                 {paragraph.trim()}
@@ -108,6 +108,7 @@ export default function QuestsPage() {
                         </div>
                     </div>
                 </div>
+                <QuestsSwiper block={true} />
             </div>
         </section>
     );

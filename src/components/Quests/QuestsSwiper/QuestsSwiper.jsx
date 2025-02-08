@@ -5,38 +5,39 @@ import "swiper/css";
 import QuestsSwiperCard from "./QuestsSwiperCard";
 import BlockTitle from "../../UI/BlockTitle";
 import SwiperButton from "../../UI/SwiperButton";
-
-export default function QuestsSwiper({block}) {
+import questsData from "../../../files/questsData.json";
+export default function QuestsSwiper({ block }) {
     const swiperRef = useRef();
     const swiperButtonPrev = useRef(null);
     const swiperButtonNext = useRef(null);
+
     const quests = [
         {
             img: "koma",
             name: "Кома",
             description:
-                'Кол-во игроков 2-15 | Возраст 14+, 18+ | Режим "Медиум" - 5 персонажей | Режим " Хард" - 5 персонажей | Продолжительность - 60-90 минут | Квест находится по адресу Герцена, 105Б',
+                'Кол-во игроков 2-15 | Возраст 14+, 18+ | Режим "Медиум" - 5 персонажей | Режим " Хард" - 5 персонажей',
             difficulty: "MEDIUM | HARD",
         },
         {
             img: "son",
             name: "Сон",
             description:
-                'Кол-во игроков 2-15 | Возраст 9+ | Режим "Лайт" - с участием 3-ёх персонажей | Продолжительность - 60-90 минут | Квест находится по адресу Герцена, 105Б',
+                'Кол-во игроков 2-15 | Возраст 9+ | Режим "Лайт" - с участием 3-ёх персонажей',
             difficulty: "LITE",
         },
         {
             img: "ditya",
             name: "Дитя апокалипсиса",
             description:
-                'Кол-во игроков 2-12 | Возраст 14+, 18+ | Режим "Медиум" - 1 персонаж | Режим " Хард" - 1 персонаж | Продолжительность - 60-90 минут | Квест находится по адресу Зосимовская, 7',
+                'Кол-во игроков 2-12 | Возраст 14+, 18+ | Режим "Медиум" - 1 персонаж | Режим " Хард" - 1 персонаж',
             difficulty: "MEDIUM | HARD",
         },
         {
             img: "bloggers",
             name: "Блогеры: загадки старого дома",
             description:
-                'Кол-во игроков 2-12 | Возраст 8+ | Режим "Лайт" - с участием 1-ого персонажа | Продолжительность - 60-90 минут | Квест находится по адресу Зосимовская, 7',
+                'Кол-во игроков 2-12 | Возраст 8+ | Режим "Лайт" - с участием 1-ого персонажа',
             difficulty: "LITE",
         },
     ];

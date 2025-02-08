@@ -19,19 +19,28 @@ export default function Burger() {
                     </li>
 
                     <li className="menu__item">
-                        <Link to={"/"}>Страшные</Link>
+                        <Link to={"/"}>Хоррор</Link>
                     </li>
                     <li className="menu__item">
-                        <Link to={"/"}>Не страшные</Link>
+                        <Link to={"/"}>Приключения</Link>
                     </li>
                     <li className="menu__item">
-                        <Link to={"/"}>Детям</Link>
+                        <Link to={"/"}>День Рождения</Link>
                     </li>
                     <li className="menu__item">
-                        <Link to={"/"}>Детский праздник</Link>
+                        <Link to={"/"}>Школьный Класс/Выпускной</Link>
                     </li>
                     <li className="menu__item">
-                        <Link to={"/"}>Подарочные сертификаты</Link>
+                        <Link to={"/"}>Корпоратив</Link>
+                    </li>
+                    <li className="menu__item">
+                        <Link to={"/"}>Подарочный сертификат</Link>
+                    </li>
+                    <li className="menu__item">
+                        <Link to={"/"}>Контакты</Link>
+                    </li>
+                    <li className="menu__item">
+                        <Link to={"/"}>Информация</Link>
                     </li>
                 </ul>
             </nav>

@@ -11,25 +11,79 @@
 	&__body {}
 }
 
+.header__nav {
+	width: 100%;
+	overflow: hidden;
+	position: relative;
+}
+
+.header__swiper {
+	position: relative;
+	width: 100%;
+	overflow: hidden;
+	padding-right: 50px;
+}
+
+.header__swiper--slide {
+	max-width: fit-content;
+	padding: 5px 0;
+}
+
+.header__swiper-button {
+	position: absolute;
+	right: 0;
+	top: 50%;
+	transform: translateY(-50%);
+	background-color: $bg-dark;
+	z-index: 4;
+	padding: 10px;
+	padding-right: 0;
+}
 
 .body-header {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	padding: 25px 0;
+	padding: 10px 0;
+	@include adaptiveValue("gap", 50, 25, 1920, 767);
+
+	@media (max-width:$mobile) {
+		gap: 25px;
+	}
+
+	@media (max-width:$mobileSmall) {
+		justify-content: space-between;
+	}
 
 	// .body-header__logo
-	&__logo {}
+	&__logo {
+		max-width: 200px;
+		min-width: 150px;
+
+		@media (max-width:$tablet) {
+			max-width: 150px;
+		}
+
+		img {
+			max-width: 100%;
+		}
+	}
 
 	// .body-header__phone
 	&__phone {
 		margin-left: auto;
 		@include adaptiveValue("font-size", 24, 20);
+		white-space: nowrap;
+
+		@media (max-width:$mobileSmall) {
+			display: none;
+		}
+
 	}
 
 	// .body-header__nav
 	.nav {
-		@media (max-width:em(600)) {
+		@media (max-width:$mobile) {
 			display: none;
 			visibility: hidden;
 			opacity: 0;
@@ -41,12 +95,16 @@
 //====================================================================================================
 
 //Burger
+@media (min-width:$mobile) {
+	.header__menu {
+		display: none;
+	}
+}
 
 .icon-menu {
 	display: none;
 
 	@media (max-width: $mobile) {
-		margin-left: 15px;
 		display: block;
 		position: relative;
 		width: rem(30);
@@ -105,9 +163,19 @@
 		position: relative;
 		display: none;
 
+		&::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			height: rem(70);
+			width: 100%;
+			background-color: $bg-dark;
+		}
+
 		@media (max-width: $tablet) {
 			position: fixed;
-			width: 100%;
+			width: 80%;
 			height: 100%;
 			top: 0;
 			left: 100%;
@@ -119,17 +187,18 @@
 			transition: left 0.3s ease 0s;
 
 			.menu-open & {
-				left: 0;
+				left: 20%;
 			}
 		}
 	}
 
 	&__list {
-		padding: 0 15px;
 		color: #fff;
 		display: flex;
 		flex-direction: column;
-		@include adaptiveValue("gap", 40, 25,767, 320);
+		@include adaptiveValue("gap", 40, 25, 767, 320);
 		@include adaptiveValue("font-size", 28, 24, 767, 320);
+		overflow-y: auto;
+		padding: 15px;
 	}
 }

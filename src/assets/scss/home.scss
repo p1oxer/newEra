@@ -10,7 +10,9 @@ a.link {
         }
     }
 }
-
+body.menu-open {
+    overflow: hidden;
+}
 main {
     margin-top: 84px;
 }
@@ -46,7 +48,6 @@ main {
 
 .block {
     @include adaptiveValue("padding-top", 120, 60);
-    @include adaptiveValue("padding-bottom", 120, 60);
 }
 
 .button {
@@ -242,4 +243,13 @@ main {
 .page {
     @include adaptiveValue("padding-top", 60, 30);
     @include adaptiveValue("padding-bottom", 100, 50);
+}
+
+.map {
+    @media (max-width:$mobile) {
+        iframe {
+
+            height: 300px;
+        }
+    }
 }

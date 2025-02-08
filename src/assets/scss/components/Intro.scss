@@ -1,6 +1,5 @@
 .intro {
-    margin-top: 50px;
-
+    @include adaptiveValue("margin-top", 50, 25);
     &__body {
         display: flex;
         flex-direction: column;
