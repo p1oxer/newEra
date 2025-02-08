@@ -1,0 +1,87 @@
+.about {
+
+    // .about__body
+    &__body {}
+}
+
+.block {}
+
+.container {}
+
+html,
+body {
+    height: 100%;
+    overflow-x: hidden;
+    /* Prevent horizontal scroll */
+}
+
+.body-about {
+    display: flex;
+    flex-direction: row;
+    max-width: 1000px;
+    margin: 0px auto;
+    @include adaptiveValue("gap", 50, 25);
+    position: relative;
+    height: 100%;
+
+    @media (max-width:$mobile) {
+        flex-direction: column-reverse;
+    }
+
+    .sticky {
+        min-height: 100%;
+        position: relative;
+    }
+
+    // .body-about__img
+    &__img {
+        position: sticky;
+        top: 120px;
+
+        @media (max-width:$tablet) {
+            width: 300px;
+        }
+
+        @media (max-width:$mobile) {
+            max-width: 500px;
+            margin: 0px auto;
+        }
+
+        img {
+            max-width: 100%;
+            @media (min-width:$tablet){
+                 min-width: 400px; 
+            }
+        }
+    }
+
+    // .body-about__content
+    &__content {
+        .block-title {
+            color: #ffffff00;
+            -webkit-background-clip: text;
+            background-clip: text;
+            background-image: $gradient;
+            width: fit-content;
+            padding: 8px 0;
+        }
+
+        p:not(.block-title) {
+            line-height: 1.2;
+            font-weight: 300;
+
+            span {
+                font-weight: 500;
+                @include adaptiveValue("font-size", 22, 18);
+                color: #fff;
+            }
+
+            &:not(:last-child) {
+                margin-bottom: rem(10);
+            }
+
+            @include adaptiveValue("font-size", 20, 16);
+            color: #dbdbdb;
+        }
+    }
+}

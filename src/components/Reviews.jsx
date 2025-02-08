@@ -2,6 +2,7 @@ import React from "react";
 import { reviews } from "../files/reviews";
 import { SwiperSlide } from "swiper/react";
 import CustomSwiper from "./UI/CustomSwiper";
+import Button from "./UI/Button";
 export default function Reviews() {
     const swiperReviewsSettings = {
         slidesPerView: 4,
@@ -28,19 +29,29 @@ export default function Reviews() {
         },
     };
     return (
-        <CustomSwiper
-            block={true}
-            modificator={"reviews"}
-            blockTitle={"Отзывы"}
-            settings={swiperReviewsSettings}
-        >
-            {reviews.map((review, index) => {
-                return (
-                    <SwiperSlide key={index} className="swiper-reviews__slide">
-                        <p className="swiper-reviews__item">{review}</p>
-                    </SwiperSlide>
-                );
-            })}
-        </CustomSwiper>
+        <div className="reviews">
+            <CustomSwiper
+                block={true}
+                modificator={"reviews"}
+                blockTitle={"Отзывы"}
+                settings={swiperReviewsSettings}
+            >
+                {reviews.map((review, index) => {
+                    return (
+                        <SwiperSlide key={index} className="swiper-reviews__slide">
+                            <p className="swiper-reviews__item">{review}</p>
+                        </SwiperSlide>
+                    );
+                })}
+            </CustomSwiper>
+            <Button
+                link={
+                    "https://yandex.ru/maps/org/novaya_era/99357520468/?ll=39.906866%2C59.205287&z=17"
+                }
+                target={"_blank"}
+            >
+                Больше отзывов на яндекс картах
+            </Button>
+        </div>
     );
 }

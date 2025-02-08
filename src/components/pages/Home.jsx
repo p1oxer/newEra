@@ -3,12 +3,15 @@ import Intro from "../Intro/Intro";
 import QuestsSwiper from "../Quests/QuestsSwiper/QuestsSwiper";
 import BlockTitle from "../UI/BlockTitle";
 import Reviews from "../Reviews";
+import About from "../About";
 
 export default function Home() {
     return (
         <>
             <Intro />
             <QuestsSwiper block={true} />
+            <Reviews />
+            <About />
             <div className="map block">
                 <div className="container">
                     <BlockTitle title={"Где нас найти?"} />
@@ -19,7 +22,6 @@ export default function Home() {
                     ></iframe>
                 </div>
             </div>
-            <Reviews />
         </>
     );
 }
