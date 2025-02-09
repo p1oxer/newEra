@@ -103,3 +103,7 @@
         @include adaptiveValue("font-size", 18, 16);
     }
 }
+
+.quest__category{
+    @include adaptiveValue("padding-top", 50, 25);
+}

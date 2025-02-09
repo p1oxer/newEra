@@ -9,7 +9,7 @@ export default function Home() {
     return (
         <>
             <Intro />
-            <QuestsSwiper block={true} />
+            <QuestsSwiper block={true} category={"all"}/>
             <Reviews />
             <About />
             <div className="map block">

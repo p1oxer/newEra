@@ -7,8 +7,8 @@ export default function Header() {
     const navigation = [
         { text: "Главная", link: "/" },
 
-        { text: "Хоррор", link: "horror" },
-        { text: "Приключения", link: "adventures" },
+        { text: "Хоррор", link: "quests/horror" },
+        { text: "Приключения", link: "quests/adventures" },
         { text: "День рождения", link: "birthday" },
         { text: "Школьный класс/Выпускной", link: "graduation" },
         { text: "Корпоратив", link: "graduation" },
@@ -16,17 +16,17 @@ export default function Header() {
         { text: "Контакты", link: "contacts" },
         { text: "Информация", link: "information" },
     ];
-    // useEffect(() => {
-    //     if (document.getElementById("quests")) {
-    //         navigation.unshift({
-    //             text: "Квесты",
-    //             scrollTo: "quests",
-    //             link: "",
-    //         });
-    //     } else {
-    //         return;
-    //     }
-    // }, []);
+    useEffect(() => {
+        if (document.getElementById("quests")) {
+            navigation.unshift({
+                text: "Квесты",
+                scrollTo: "quests",
+                link: "",
+            });
+        } else {
+            return;
+        }
+    }, []);
 
     return (
         <>

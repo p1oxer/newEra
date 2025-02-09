@@ -8,13 +8,6 @@
 
 .container {}
 
-html,
-body {
-    height: 100%;
-    overflow-x: hidden;
-    /* Prevent horizontal scroll */
-}
-
 .body-about {
     display: flex;
     flex-direction: row;

@@ -8,6 +8,7 @@ import MainLayout from "./components/Layouts/MainLayout.jsx";
 import Quests from "./components/pages/Quests.jsx";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import QuestCategory from "./components/pages/questCategory.jsx";
 const router = createBrowserRouter(
     [
         {
@@ -31,7 +32,11 @@ const router = createBrowserRouter(
                     element: <Quests />,
                 },
                 {
-                    path: "quests/:questId",
+                    path: "quests/:questCategory",
+                    element: <QuestCategory />,
+                },
+                {
+                    path: "quests/:questCategory/:questId",
                     element: <QuestsPage />,
                 },
             ],

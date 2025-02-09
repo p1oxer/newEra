@@ -42,7 +42,6 @@ export default function QuestsPage() {
                 <Breadcrumbs />
                 <div className="quest__body body-quest">
                     <div className="body-quest__gallery">
-                        {/* Swiper components (без изменений) */}
                         <Swiper
                             spaceBetween={10}
                             thumbs={{ swiper: thumbsSwiper }}
@@ -108,7 +107,7 @@ export default function QuestsPage() {
                         </div>
                     </div>
                 </div>
-                <QuestsSwiper block={true} />
+                <QuestsSwiper category={"all"} block={true} />
             </div>
         </section>
     );

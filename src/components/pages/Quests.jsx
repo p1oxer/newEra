@@ -7,7 +7,7 @@ export default function Quests() {
             <div className="container">
                 <Breadcrumbs />
             </div>
-            <QuestsSwiper />
+            <QuestsSwiper/>
         </section>
     );
 }

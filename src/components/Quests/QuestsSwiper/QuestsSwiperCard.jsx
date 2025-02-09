@@ -1,13 +1,23 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Button from "../../UI/Button";
 import { Link } from "react-router-dom";
 import { translit } from "../../../functions/translit";
 
-export default function QuestsSwiperCard({ img, name, description, difficulty }) {
+export default function QuestsSwiperCard({
+    img,
+    name,
+    description,
+    difficulty,
+    category,
+}) {
+    
     return (
         <div className="swiper-quests__card card-quests">
             <div className="card-quests__body">
-                <Link to={`../quests/${translit(name)}`} className="card-quests__img">
+                <Link
+                    to={`../quests/${category}/${translit(name)}`}
+                    className="card-quests__img"
+                >
                     <img src={`/img/QuestsSwiper/${img}.jpg`} alt="" />
                 </Link>
                 <div className="card-quests__top">
@@ -29,7 +39,10 @@ export default function QuestsSwiperCard({ img, name, description, difficulty })
                     </p>
                 </div>
                 <span className="card-quests__description">{description}</span>
-                <Button link={`../quests/${translit(name)}`} text={"Подробнее"} />
+                <Button
+                    link={`../quests/${category}/${translit(name)}`}
+                    text={"Подробнее"}
+                />
             </div>
         </div>
     );
