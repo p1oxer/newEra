@@ -5,14 +5,22 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css/free-mode";
 import { FreeMode, Navigation } from "swiper/modules";
 import { IoIosArrowForward } from "react-icons/io";
-export default function Nav({ direction, list, modificator }) {
-    modificator = modificator || "";
-    const swiperRef = useRef();
-    const [isButtonVisible, setIsButtonVisible] = useState(false);
 
+export default function HeaderNav({ direction, list, modificator }) {
+    const swiperRef = useRef();
+    modificator = modificator || "";
+    const [isButtonVisible, setIsButtonVisible] = useState(false);
+    // const handleNavClick = (event) => {
+    //     event.preventDefault();
+    //     const target = event.target;
+    //     const id = target.getAttribute("href").replace("#", "");
+    //     const element = document.getElementById(id);
+    //     element.scrollIntoView({
+    //         behavior: "smooth",
+    //     });
+    // };
     useEffect(() => {
         const swiper = swiperRef.current;
-
         if (swiper) {
             const checkButtonVisibility = () => {
                 const canScroll = swiper.slides.length > 0 && swiper.isLocked === false;
@@ -44,9 +52,16 @@ export default function Nav({ direction, list, modificator }) {
                 {list.map((item, index) => {
                     return (
                         <SwiperSlide key={index} className="header__swiper--slide">
-                            <Link to={translit(item.link)} className="nav-link link">
-                                {item.text}
-                            </Link>
+                            {item.link != "" && (
+                                <Link to={translit(item.link)} className="nav-link link">
+                                    {item.text}
+                                </Link>
+                            )}
+                            {/* {item.scrollTo && (
+                                <a href="#quests" className="nav-link link">
+                                    {item.text}
+                                </a>
+                            )} */}
                         </SwiperSlide>
                     );
                 })}

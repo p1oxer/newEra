@@ -15,7 +15,6 @@ export default function Breadcrumbs() {
                 nameMap[crumb] || capitalizeFirstLetterAndReplaceDash(crumb);
             return (
                 <>
-                    
                     <div className="crumb" key={crumb}>
                         <Link to={currentLink}>{breadcrumbName}</Link>
                     </div>

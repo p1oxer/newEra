@@ -11,6 +11,18 @@ a.link {
     }
 }
 
+p.link {
+    cursor: pointer;
+    @media (any-hover: hover) {
+        &:hover {
+            color: #ffffff00;
+            -webkit-background-clip: text;
+            background-clip: text;
+            background-image: $gradient
+        }
+    }
+}
+
 body.menu-open {
     overflow: hidden;
 }
@@ -306,6 +318,7 @@ main {
         margin-top: 20px;
         background: $mainPink;
     }
+
     .swiper-slide {
         height: auto !important;
     }

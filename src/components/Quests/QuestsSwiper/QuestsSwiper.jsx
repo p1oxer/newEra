@@ -55,7 +55,10 @@ export default function QuestsSwiper({ block }) {
         }
     }
     return (
-        <section className={block ? "quests__swiper block" : "quests__swiper"}>
+        <section
+            id="quests"
+            className={block ? "quests__swiper block" : "quests__swiper"}
+        >
             <div className="container">
                 <div className="quests__swiper-top">
                     <BlockTitle title={"Наши квесты"} />

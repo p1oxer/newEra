@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import HeaderNav from "./HeaderNav";
 import Burger from "./Burger";
 import { Link } from "react-router-dom";
@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 export default function Header() {
     const navigation = [
         { text: "Главная", link: "/" },
+
         { text: "Хоррор", link: "horror" },
         { text: "Приключения", link: "adventures" },
         { text: "День рождения", link: "birthday" },
@@ -15,6 +16,18 @@ export default function Header() {
         { text: "Контакты", link: "contacts" },
         { text: "Информация", link: "information" },
     ];
+    // useEffect(() => {
+    //     if (document.getElementById("quests")) {
+    //         navigation.unshift({
+    //             text: "Квесты",
+    //             scrollTo: "quests",
+    //             link: "",
+    //         });
+    //     } else {
+    //         return;
+    //     }
+    // }, []);
+
     return (
         <>
             <header className="header">
@@ -23,7 +36,11 @@ export default function Header() {
                         <Link to={"/"} className="body-header__logo">
                             <img src="/img/logo.png" alt="" />
                         </Link>
-                        <HeaderNav list={navigation} direction={"horizontal"} modificator={"header__nav"}/>
+                        <HeaderNav
+                            list={navigation}
+                            direction={"horizontal"}
+                            modificator={"header__nav"}
+                        />
                         <a href="tel:+79095984080" className="body-header__phone link">
                             +7 (909) 598-40-80
                         </a>
