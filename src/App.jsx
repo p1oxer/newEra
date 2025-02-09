@@ -6,46 +6,54 @@ import "./assets/scss/style.scss";
 import Home from "./components/pages/Home.jsx";
 import MainLayout from "./components/Layouts/MainLayout.jsx";
 import Quests from "./components/pages/Quests.jsx";
-import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
+
 import QuestCategory from "./components/pages/questCategory.jsx";
-const router = createBrowserRouter(
-    [
-        {
-            path: "/",
-            element: <MainLayout />,
-            errorElement: <NotFoundPage />,
-            children: [
-                {
-                    path: "/",
-                    element: <Home />,
-                },
-            ],
-        },
-        {
-            path: "/",
-            element: <Layout />,
-            errorElement: <NotFoundPage />,
-            children: [
-                {
-                    path: "quests",
-                    element: <Quests />,
-                },
-                {
-                    path: "quests/:questCategory",
-                    element: <QuestCategory />,
-                },
-                {
-                    path: "quests/:questCategory/:questId",
-                    element: <QuestsPage />,
-                },
-            ],
-        },
-    ],
+import Information from "./components/pages/Information.jsx";
+import Contacts from "./components/pages/Contacts.jsx";
+const router = createBrowserRouter([
     {
-        scrollRestoration: "manual", // Включаем ручное управление прокруткой
-    }
-);
+        path: "/",
+        element: <MainLayout />,
+        errorElement: <NotFoundPage />,
+        children: [
+            {
+                path: "/",
+                element: <Home />,
+            },
+        ],
+    },
+    {
+        path: "/",
+        element: <Layout />,
+        errorElement: <NotFoundPage />,
+        children: [
+            {
+                path: "quests",
+                element: <Quests />,
+            },
+            {
+                path: "quests/:questCategory",
+                element: <QuestCategory />,
+            },
+            {
+                path: "quests/:questCategory/:questId",
+                element: <QuestsPage />,
+            },
+            {
+                path: "404",
+                element: <NotFoundPage />,
+            },
+            {
+                path: "information",
+                element: <Information />,
+            },
+            {
+                path: "contacts",
+                element: <Contacts />,
+            },
+        ],
+    },
+]);
 export default function App() {
     return (
         <>
