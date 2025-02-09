@@ -1,17 +1,20 @@
 export const handleNavClick = (event) => {
-    if (event.target.classList.contains("button-intro__link")) {
-        window.location.href = event.target.getAttribute("href");
+    if (event.target.closest(".button-intro__link")) {
+        return;
     } else {
         event.preventDefault();
         const target = event.target;
-        if (target.getAttribute("href")) {
-            const id = target.getAttribute("href").replace("#", "");
-            const element = document.getElementById(id);
-            element.scrollIntoView({
-                behavior: "smooth",
-            });
-        }
+        const href =
+            target.getAttribute("href") || target.closest("a")?.getAttribute("href");
 
-        
+        if (href) {
+            const id = href.replace("#", "");
+            const element = document.getElementById(id);
+            if (element) {
+                element.scrollIntoView({
+                    behavior: "smooth",
+                });
+            }
+        }
     }
 };

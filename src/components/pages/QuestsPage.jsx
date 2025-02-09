@@ -15,21 +15,24 @@ import { FaLocationDot } from "react-icons/fa6";
 
 import AttributeQuest from "../Quests/AttributeQuest";
 import Breadcrumbs from "../Breadcrumbs";
-import Button from "../UI/Button";
+import ButtonLink from "../UI/ButtonLink";
 import questsData from "../../files/questsData.json";
 import QuestsSwiper from "../Quests/QuestsSwiper/QuestsSwiper";
+import Button from "../UI/Button";
+import Modal from "../UI/Modal";
+import Video from "../UI/Video";
 
 export default function QuestsPage() {
     const { questId } = useParams();
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
     const currentQuest = questsData[questId];
-
+    const [open, setOpen] = useState(false);
     if (!currentQuest) {
         return <Navigate replace to="/404" />; // Или редирект на страницу 404
     }
 
     const descriptionParagraphs = currentQuest.description
-        .split(";") 
+        .split(";")
         .map((paragraph, index) => (
             <p key={index} className="body-quest__paragraph">
                 {paragraph.trim()}
@@ -38,6 +41,11 @@ export default function QuestsPage() {
 
     return (
         <section className="quest page">
+            {currentQuest.video && (
+                <Modal open={open} onClose={() => setOpen(false)}>
+                    <Video video={currentQuest.video} />
+                </Modal>
+            )}
             <div className="container">
                 <Breadcrumbs />
                 <div className="quest__body body-quest">
@@ -85,9 +93,16 @@ export default function QuestsPage() {
                         <div className="body-quest__description">
                             {descriptionParagraphs}
                         </div>
-                        <Button target={"_blank"} link={currentQuest.link}>
-                            Забронировать <FaVk size={25} />
-                        </Button>
+                        <div className="body-quest__buttons">
+                            <ButtonLink target={"_blank"} link={currentQuest.link}>
+                                Забронировать <FaVk size={25} />
+                            </ButtonLink>
+                            {currentQuest.video && (
+                                <Button onClick={() => setOpen(true)}>
+                                    Трейлер квеста
+                                </Button>
+                            )}
+                        </div>
                         <div className="quest__attributes attributes-quest">
                             <AttributeQuest text={currentQuest.people}>
                                 <FaPeopleGroup />

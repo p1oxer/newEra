@@ -1,5 +1,6 @@
 .intro {
     @include adaptiveValue("margin-top", 50, 25);
+
     &__body {
         display: flex;
         flex-direction: column;
@@ -108,7 +109,7 @@
         linear-gradient(to right, $mainPink, $mainGreen) border-box;
     position: relative;
     min-height: 200px;
-    overflow: visible;
+    // overflow: visible;
     display: block;
 
     @media (max-width:$tablet) {

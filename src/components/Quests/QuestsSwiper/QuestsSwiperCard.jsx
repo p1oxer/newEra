@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import Button from "../../UI/Button";
+import Button from "../../UI/ButtonLink";
 import { Link } from "react-router-dom";
 import { translit } from "../../../functions/translit";
 
@@ -10,7 +10,6 @@ export default function QuestsSwiperCard({
     difficulty,
     category,
 }) {
-    
     return (
         <div className="swiper-quests__card card-quests">
             <div className="card-quests__body">

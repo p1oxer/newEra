@@ -1,0 +1,46 @@
+.modal {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease 0s;
+    z-index: 7;
+    &.visible {
+        background: rgba(0, 0, 0, 0.4);
+    }
+    &.invisible {
+        opacity: 0;
+        visibility: hidden;
+        background: none;
+    }
+    &__body{
+        background: $bg-dark;
+        border-radius: 20px;
+        padding: 25px;
+        transition: all 0.3s ease 0s;
+        position: relative;
+        width: fit-content;
+        max-width: 90vw;
+        min-width: 50vw;
+        max-height: 90vh;
+        padding-top: 80px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .visible & {
+            transform: scale(1);
+            opacity: 1;
+        }
+        .invisible & {
+            transform: scale(1.25);
+            opacity: 0;
+        }
+    }
+    &__close {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        padding: 5px;
+    }
+}

@@ -2,7 +2,7 @@ import React from "react";
 import { reviews } from "../files/reviews";
 import { SwiperSlide } from "swiper/react";
 import CustomSwiper from "./UI/CustomSwiper";
-import Button from "./UI/Button";
+import Button from "./UI/ButtonLink";
 export default function Reviews() {
     const swiperReviewsSettings = {
         slidesPerView: 4,

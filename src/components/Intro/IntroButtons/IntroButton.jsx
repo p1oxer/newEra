@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Button from "../../UI/Button";
+import Button from "../../UI/ButtonLink";
 
 export default function IntroButton({
     text,
@@ -24,10 +24,7 @@ export default function IntroButton({
             {scrollTo && (
                 <a href={`#${scrollTo}`} className="intro__button button-intro">
                     <div className="button-intro__text">{text}</div>
-                    <div className="button-intro__image">
-                        {/* <img src={`/img/IntroButtons/${image}.png`} alt=""></img> */}
-                        {children}
-                    </div>
+                    <div className="button-intro__image">{children}</div>
                 </a>
             )}
             {linkOuter && (
