@@ -1,0 +1,98 @@
+.contacts {
+
+    // .contacts__body
+    &__body {}
+
+    // .contacts__content
+    &__content {}
+}
+
+.body-contacts {}
+
+.content-contacts {
+    margin-bottom: 50px;
+
+    // .content-contacts__list
+    &__list {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 30px;
+        flex-wrap: wrap;
+    }
+
+    // .content-contacts__item
+    &__item {}
+
+    // .content-contacts__name
+    &__name {
+        &:not(:last-child) {
+            margin-bottom: rem(10);
+        }
+
+        @include adaptiveValue("font-size", 26, 20);
+        font-weight: 400;
+        color: #ffffff00;
+        -webkit-background-clip: text;
+        background-clip: text;
+        background-image: $gradient;
+        padding: 5px 0;
+        width: fit-content;
+
+    }
+
+    // .content-contacts__link
+    &__link {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+        transition: all 0.3s ease 0s;
+
+        &.hover {
+            @media (any-hover: hover) {
+                &:hover {
+                    svg {
+                        fill: #eee;
+                    }
+
+                }
+            }
+        }
+
+        &:not(:last-child) {
+            margin-bottom: rem(10);
+        }
+
+        svg {
+            transition: all 0.3s ease 0s;
+        }
+
+
+
+        @include adaptiveValue("font-size", 40, 30);
+    }
+}.contacts__review{
+    width: 100%;
+    max-width: 560px;
+}
+.contacts__reviews{
+    margin-bottom: 50px;
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+    justify-content: center;
+    flex-wrap: wrap;
+    @include adaptiveValue("gap", 50, 25);
+}
+.yandex-reviews{
+    @media (max-width:$mobile){
+        width: 100% !important;
+    }
+    
+}
+.yandex-reviews__text{
+    text-align: center;
+    @include adaptiveValue("margin-bottom", 20, 10);
+    @include adaptiveValue("font-size", 30, 24);
+}
