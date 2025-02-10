@@ -28,6 +28,14 @@
 }
 
 .quests__swiper {
+    .swiper-slide {
+        &:nth-child(even) {
+            .card-quests__name {
+                color: $mainGreen;
+            }
+        }
+    }
+
     .swiper-btn {
         @media (min-width:em(1400)) {
             display: none;
@@ -64,14 +72,13 @@
     // .card-quests__name
     &__name {
         @include adaptiveValue("font-size", 40, 30);
-        color: #ffffff00;
-        -webkit-background-clip: text;
-        background-clip: text;
-        background-image: linear-gradient(45deg, $mainPink 0%, $mainGreen 70%);
+        color: $mainPink;
         padding: 5px 0;
         width: fit-content;
         @include adaptiveValue("margin-bottom", 10, 5);
     }
+
+
 
     // .card-quests__difficulty
     &__difficulty {
@@ -104,6 +111,6 @@
     }
 }
 
-.quest__category{
+.quest__category {
     @include adaptiveValue("padding-top", 50, 25);
 }

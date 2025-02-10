@@ -3,10 +3,7 @@ a.link {
 
     @media (any-hover: hover) {
         &:hover {
-            color: #ffffff00;
-            -webkit-background-clip: text;
-            background-clip: text;
-            background-image: $gradient
+            color: $mainPink;
         }
     }
 }
@@ -16,10 +13,7 @@ p.link {
 
     @media (any-hover: hover) {
         &:hover {
-            color: #ffffff00;
-            -webkit-background-clip: text;
-            background-clip: text;
-            background-image: $gradient
+            color: $mainPink;
         }
     }
 }
@@ -28,9 +22,7 @@ body.menu-open {
     overflow: hidden;
 }
 
-main {
-    margin-top: 92px;
-}
+main {}
 
 .nav-list {
     display: flex;
@@ -91,7 +83,7 @@ main {
 .button {
     @include adaptiveValue("font-size", 20, 16);
     color: #fff;
-    background: linear-gradient(45deg, $mainPink 0%, $mainGreen 70%);
+    background: $mainPink;
     max-width: fit-content;
     padding: 15px 50px;
     border-radius: 20px;
@@ -128,9 +120,7 @@ button.button {
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 2px solid transparent;
-    background: linear-gradient($bg-light, $bg-light 0) padding-box,
-        linear-gradient(to right, $mainPink, $mainGreen) border-box;
+    border: 2px solid $mainPink;
 
     transition: all 0.3s ease 0s;
 
@@ -144,8 +134,7 @@ button.button {
 
     @media (any-hover: hover) {
         &:hover {
-            background: linear-gradient($bg-dark, $bg-dark 0) padding-box,
-                linear-gradient(to right, $mainPink, $mainGreen) border-box;
+            background: $bg-dark;
         }
     }
 
@@ -162,6 +151,12 @@ button.button {
 
 .swiper-btn-disabled {
     filter: brightness(0.5);
+
+    @media (any-hover: hover) {
+        &:hover {
+            background: $bg-light;
+        }
+    }
 }
 
 .swiper-btn-prev {
@@ -175,8 +170,7 @@ button.button {
 }
 
 .swiper-btn-next {
-    background: linear-gradient($bg-light, $bg-light 0) padding-box,
-        linear-gradient(to left, $mainPink, $mainGreen) border-box;
+    background: $bg-light;
 
     &.swiper-btn-absolute {
         right: 30px;
@@ -188,8 +182,7 @@ button.button {
 
     @media (any-hover: hover) {
         &:hover {
-            background: linear-gradient($bg-dark, $bg-dark 0) padding-box,
-                linear-gradient(to left, $mainPink, $mainGreen) border-box;
+            background: $bg-dark;
         }
     }
 }
@@ -200,6 +193,7 @@ button.button {
 }
 
 .swiper-pagination-bullet {
+
     width: 25px !important;
     height: 3px !important;
     border-radius: 0 !important;
@@ -213,9 +207,13 @@ button.button {
 }
 
 .swiper-pagination-bullet-active {
-    background: linear-gradient(45deg, $mainPink 0%, $mainGreen 70%) !important;
+    background: $mainPink !important;
     height: 4px !important;
     width: 35px !important;
+
+    &:nth-child(even) {
+        background: $mainGreen !important
+    }
 
     @media (max-width:$tablet) {
         width: 25px !important;
@@ -269,7 +267,7 @@ button.button {
     color: #ffffff00;
     -webkit-background-clip: text;
     background-clip: text;
-    background-image: $gradient;
+    background-image: $mainPink;
     padding: 5px 0;
 }
 
@@ -344,9 +342,8 @@ button.button {
 }
 
 .accordion {
-    border: 2px solid transparent;
-    background: linear-gradient($bg-light, $bg-light 0) padding-box,
-        linear-gradient(to right, $mainPink, $mainGreen) border-box;
+    border: 2px solid $mainPink;
+    background: $bg-light;
     border-radius: 15px;
     margin: 10px 0;
     overflow: hidden;
@@ -404,9 +401,8 @@ button.button {
 
 .accordion__content-inner {
     padding: 30px;
-    border-top: 2px solid transparent;
-    background: linear-gradient($bg-dark, $bg-dark 0) padding-box,
-        linear-gradient(to right, $mainPink, $mainGreen) border-box;
+    border-top: 2px solid $mainPink;
+    background: $bg-dark;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -420,8 +416,12 @@ button.button {
     }
 }
 
-.faq{
+.faq {
     display: flex;
     flex-direction: column;
     gap: 20px;
+}
+
+.map {
+    @include adaptiveValue("margin-bottom", 100, 50);
 }

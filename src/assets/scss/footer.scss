@@ -2,7 +2,6 @@
 .footer {
     @include adaptiveValue("padding-bottom", 70, 35);
     @include adaptiveValue("padding-top", 50, 25);
-    @include adaptiveValue("margin-top", 100, 50);
     border-top: 1px solid #505050;
 
     // .footer__body

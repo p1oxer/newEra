@@ -1,14 +1,12 @@
 //====================================================================================================
 .header {
-	position: fixed;
+	position: sticky;
 	top: 0;
 	width: 100%;
 	background-color: $bg-dark;
 	z-index: 6;
 	border-bottom: 1px solid #505050;
 
-	// .header__body
-	&__body {}
 }
 
 .header__nav {
@@ -17,12 +15,23 @@
 	position: relative;
 }
 
+.header__top {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+	@media (min-width:$mobile){
+		margin-bottom: 10px;
+		  
+	}
+}
+
 .header__swiper {
 	position: relative;
 	width: 100%;
 	overflow: hidden;
-	padding-right: 50px;
-	cursor: grab;
+	padding-right: 35px;
 }
 
 .header__swiper--slide {
@@ -43,13 +52,14 @@
 
 .body-header {
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	align-items: center;
 	padding: 10px 0;
-	@include adaptiveValue("gap", 50, 25, 1920, 767);
 
 	@media (max-width:$mobile) {
 		gap: 25px;
+		flex-direction: row;
+		align-items: center;
 	}
 
 	@media (max-width:$mobileSmall) {
@@ -85,6 +95,7 @@
 	// .body-header__nav
 	.nav {
 		@media (max-width:$mobile) {
+
 			display: none;
 			visibility: hidden;
 			opacity: 0;
@@ -92,7 +103,9 @@
 		}
 	}
 }
-
+.header__nav {
+	max-width: fit-content;
+}
 //====================================================================================================
 
 //Burger

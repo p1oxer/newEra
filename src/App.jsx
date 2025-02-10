@@ -10,6 +10,8 @@ import Quests from "./components/pages/Quests.jsx";
 import QuestCategory from "./components/pages/questCategory.jsx";
 import Information from "./components/pages/Information.jsx";
 import Contacts from "./components/pages/Contacts.jsx";
+import Group from "./components/pages/Group.jsx";
+import Birthday from "./components/pages/Birthday.jsx";
 const router = createBrowserRouter([
     {
         path: "/",
@@ -50,6 +52,14 @@ const router = createBrowserRouter([
             {
                 path: "contacts",
                 element: <Contacts />,
+            },
+            {
+                path: "group",
+                element: <Group />,
+            },
+            {
+                path: "birthday",
+                element: <Birthday />,
             },
         ],
     },

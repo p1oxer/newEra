@@ -6,13 +6,11 @@ export default function Intro() {
     return (
         <>
             <section className="intro">
-                <div className="container">
-                    <div className="intro__body body-intro">
-                        <div className="body-intro__top">
-                            <IntroSwiper />
-                        </div>
-                        <IntroButtons />
+                <div className="intro__body body-intro">
+                    <div className="body-intro__top">
+                        <IntroSwiper />
                     </div>
+                    <IntroButtons />
                 </div>
             </section>
         </>

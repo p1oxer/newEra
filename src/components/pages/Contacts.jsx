@@ -27,7 +27,7 @@ export default function Contacts() {
                                     href="tel:89095944080"
                                     className="content-contacts__link hover"
                                 >
-                                    +7 (909) 594-40-80
+                                    +7 (909) 598-40-80
                                 </a>
                             </li>
                             <li className="content-contacts__item">

@@ -8,8 +8,8 @@ import { FaInstagram } from "react-icons/fa6";
 export default function Footer() {
     const navigation = [
         { text: "Главная", link: "/" },
-        { text: "Хоррор", link: "horror" },
-        { text: "Приключения", link: "adventures" },
+        { text: "Хоррор", link: "quests/horror" },
+        { text: "Приключения", link: "quests/adventures" },
         { text: "День рождения", link: "birthday" },
         { text: "Школьный класс/Выпускной", link: "graduation" },
         { text: "Корпоратив", link: "graduation" },

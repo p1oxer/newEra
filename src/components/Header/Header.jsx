@@ -10,8 +10,8 @@ export default function Header() {
         { text: "Хоррор", link: "quests/horror" },
         { text: "Приключения", link: "quests/adventures" },
         { text: "День рождения", link: "birthday" },
-        { text: "Школьный класс/Выпускной", link: "graduation" },
-        { text: "Корпоратив", link: "graduation" },
+        { text: "Школьный класс/Выпускной", link: "group" },
+        { text: "Корпоратив", link: "group" },
         { text: "Подарочный сертификат", link: "sertificate" },
         { text: "Контакты", link: "contacts" },
         { text: "Информация", link: "information" },
@@ -33,17 +33,24 @@ export default function Header() {
             <header className="header">
                 <div className="container">
                     <div className="header__body body-header">
-                        <Link to={"/"} className="body-header__logo">
-                            <img src="/img/logo.png" alt="" />
-                        </Link>
+                        <div className="header__top">
+                            <Link to={"/"} className="body-header__logo">
+                                <img src="/img/logo.png" alt="" />
+                            </Link>
+                            <a
+                                href="tel:+79095984080"
+                                className="body-header__phone link"
+                            >
+                                +7 (909) 598-40-80
+                            </a>
+                        </div>
+
                         <HeaderNav
                             list={navigation}
                             direction={"horizontal"}
                             modificator={"header__nav"}
                         />
-                        <a href="tel:+79095984080" className="body-header__phone link">
-                            +7 (909) 598-40-80
-                        </a>
+
                         <Burger />
                     </div>
                 </div>

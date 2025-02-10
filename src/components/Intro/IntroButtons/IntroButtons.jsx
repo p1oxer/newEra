@@ -3,7 +3,6 @@ import IntroButton from "./IntroButton";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode } from "swiper/modules";
 import "swiper/css";
-import "swiper/css/free-mode";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { FaQuestion } from "react-icons/fa";
 import { FaVk } from "react-icons/fa";
@@ -15,7 +14,6 @@ export function IntroButtons() {
             <div onClick={handleNavClick} className="">
                 <Swiper
                     className="intro-buttons"
-                    freeMode={{ enabled: true }}
                     breakpoints={{
                         320: {
                             slidesPerView: "auto",

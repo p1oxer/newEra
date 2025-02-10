@@ -1,0 +1,152 @@
+.group {
+    h1 {
+        text-align: center;
+        @include adaptiveValue("font-size", 60, 40);
+        margin-bottom: 30px;
+
+        span {
+            color: $mainPink;
+        }
+    }
+
+    h2 {
+        text-align: center;
+        @include adaptiveValue("font-size", 40, 30);
+
+        span {
+            color: $mainPink;
+        }
+
+        margin-bottom: 30px;
+    }
+
+    &__text {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        @include adaptiveValue("font-size", 22, 18);
+        font-weight: 300;
+        color: #dbdbdb;
+        max-width: 1000px;
+        margin: 0px auto;
+        line-height: 1.2;
+
+        span {
+            font-weight: 500;
+            color: $mainGreen;
+        }
+    }
+}
+
+
+.offers {
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+    justify-content: center;
+    @include adaptiveValue("margin-bottom", 50, 25);
+    @include adaptiveValue("gap", 50, 20);
+    flex-wrap: wrap;
+
+    @media (max-width:$mobileSmall) {
+        flex-direction: column;
+    }
+}
+
+.offer {
+
+    // .offer__item
+    &__item {}
+}
+
+.item-offer {
+    background: $bg-light;
+    border-radius: 15px;
+    transition: all 0.3s ease 0s;
+    max-width: 350px;
+
+    @media (any-hover: hover) {
+        &:hover {
+            transform: scale(1.05);
+        }
+    }
+
+    // .item-offer__body
+    &__body {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    // .item-offer__top
+    &__top {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        padding-bottom: 25px;
+        padding: 15px 15px 25px 15px;
+    }
+
+    // .item-offer__name
+    &__name {
+        @include adaptiveValue("font-size", 40, 30);
+        color: $mainGreen;
+    }
+
+    // .item-offer__pricing
+    &__pricing {
+        p {
+            font-weight: 300;
+            margin-bottom: 10px;
+            @include adaptiveValue("font-size", 20, 16);
+            color: $text;
+        }
+
+        @include adaptiveValue("font-size", 30, 24);
+    }
+
+    // .item-offer__price
+    &__price {}
+
+    // .item-offer__bottom
+    &__bottom {
+        flex: 1 1 auto;
+    }
+
+    // .item-offer__list
+    &__list {
+        padding: 0 15px;
+        margin-bottom: 30px;
+    }
+
+    // .item-offer__list-item
+    &__list-item {
+        &:not(:last-child) {
+            margin-bottom: rem(10);
+        }
+        line-height: 1.2;
+        font-weight: 300;
+        @include adaptiveValue("font-size", 20, 16);
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 5px;
+    }
+
+    // .item-offer__button
+    &__button {
+        background-color: $mainPink;
+        text-align: center;
+        border-radius: 0px 0px 15px 15px;
+        padding: 20px 0;
+        transition: all 0.3s ease 0s;
+        @include adaptiveValue("font-size", 30, 24);
+
+        @media (any-hover: hover) {
+            &:hover {
+                background-color: #a71261;
+            }
+        }
+    }
+}

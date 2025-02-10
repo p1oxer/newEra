@@ -13,7 +13,7 @@ export default function Nav({ direction, list, modificator }) {
                 {list.map((item, index) => {
                     return (
                         <li key={index} className="nav-item">
-                            <Link to={translit(item.link)} className="nav-link link">
+                            <Link to={item.link} className="nav-link link">
                                 {item.text}
                             </Link>
                         </li>

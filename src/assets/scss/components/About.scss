@@ -29,7 +29,7 @@
     // .body-about__img
     &__img {
         position: sticky;
-        top: 120px;
+        top: 150px;
 
         @media (max-width:$tablet) {
             width: 300px;
@@ -51,10 +51,7 @@
     // .body-about__content
     &__content {
         .block-title {
-            color: #ffffff00;
-            -webkit-background-clip: text;
-            background-clip: text;
-            background-image: $gradient;
+            color: $mainPink;
             width: fit-content;
             padding: 8px 0;
         }
@@ -66,7 +63,7 @@
             span {
                 font-weight: 500;
                 @include adaptiveValue("font-size", 22, 18);
-                color: #fff;
+                color: $mainGreen;
             }
 
             &:not(:last-child) {

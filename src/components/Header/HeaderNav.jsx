@@ -34,7 +34,7 @@ export default function HeaderNav({ direction, list, modificator }) {
                 onSwiper={(swiper) => (swiperRef.current = swiper)}
                 breakpoints={{
                     1200: {
-                        spaceBetween: 50,
+                        spaceBetween: 30,
                     },
                     767: {
                         spaceBetween: 20,
