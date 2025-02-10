@@ -12,6 +12,7 @@ import Information from "./components/pages/Information.jsx";
 import Contacts from "./components/pages/Contacts.jsx";
 import Group from "./components/pages/Group.jsx";
 import Birthday from "./components/pages/Birthday.jsx";
+import Sertificate from "./components/pages/Sertificate.jsx";
 const router = createBrowserRouter([
     {
         path: "/",
@@ -60,6 +61,10 @@ const router = createBrowserRouter([
             {
                 path: "birthday",
                 element: <Birthday />,
+            },
+            {
+                path: "sertificate",
+                element: <Sertificate />,
             },
         ],
     },

@@ -38,7 +38,7 @@ export default function CustomSwiper({
         >
             <div className="container">
                 <div className={`block-top ${modificator}__swiper-top`}>
-                    <BlockTitle title={blockTitle} />
+                    {blockTitle && <BlockTitle title={blockTitle} />}
                     <div className="swiper-buttons">
                         <SwiperButton
                             direction={"prev"}
@@ -69,8 +69,10 @@ export default function CustomSwiper({
                         handleButtonDisabling(swiper);
                     }}
                     className={`${modificator}__sliper`}
-                    pagination={{ clickable: true,clickableClass:`${modificator}__swiper-pagination` }}
-                    
+                    pagination={{
+                        clickable: true,
+                        clickableClass: `${modificator}__swiper-pagination`,
+                    }}
                 >
                     {children}
                 </Swiper>
