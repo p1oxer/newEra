@@ -1,11 +1,13 @@
 import React from "react";
 import { birthdayOffers } from "../../files/OffersData";
 import Offers from "../Offers/Offers";
+import Breadcrumbs from "../Breadcrumbs";
 
 export default function Birthday() {
     return (
         <section className="group page">
             <div className="container">
+                <Breadcrumbs />
                 <h1>
                     День Рождения в <span>Новой Эре</span>
                 </h1>

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { IoMdCheckmark } from "react-icons/io";
 export default function OfferItem({ offer }) {
     return (
-        <div className="offer__item item-offer">
+        <div className={offer.best ? "offer__item item-offer item-offer--best" : "offer__item item-offer"}>
             <div className="item-offer__body">
                 <div className="item-offer__top">
                     <div className="item-offer__name">{offer.name}</div>

@@ -264,10 +264,7 @@ button.button {
 }
 
 .breadcrumbs .crumb:last-child {
-    color: #ffffff00;
-    -webkit-background-clip: text;
-    background-clip: text;
-    background-image: $mainPink;
+    color: $mainGreen;
     padding: 5px 0;
 }
 
@@ -351,6 +348,14 @@ button.button {
     max-width: 1000px;
     margin: 0px auto;
     width: 100%;
+
+    &:nth-child(even) {
+        border: 2px solid $mainGreen;
+
+        .accordion__content-inner {
+            border-top: 2px solid $mainGreen;
+        }
+    }
 }
 
 .accordion__header {
@@ -424,4 +429,25 @@ button.button {
 
 .map {
     @include adaptiveValue("margin-bottom", 100, 50);
+}
+
+.quest__category {
+    @include adaptiveValue("padding-bottom", 100, 50);
+}
+
+.notfound__body {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    @include adaptiveValue("gap", 50, 25);
+    flex-wrap: wrap;
+
+    p {
+        @include adaptiveValue("font-size", 60, 40);
+        margin-bottom: 30px;
+    }
+    img {
+        max-width: 100%;
+    }
 }

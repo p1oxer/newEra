@@ -11,8 +11,8 @@ export default function Footer() {
         { text: "Хоррор", link: "quests/horror" },
         { text: "Приключения", link: "quests/adventures" },
         { text: "День рождения", link: "birthday" },
-        { text: "Школьный класс/Выпускной", link: "graduation" },
-        { text: "Корпоратив", link: "graduation" },
+        { text: "Школьный класс/Выпускной", link: "group" },
+        { text: "Корпоратив", link: "group" },
         { text: "Подарочный сертификат", link: "sertificate" },
         { text: "Контакты", link: "contacts" },
         { text: "Информация", link: "information" },
@@ -20,9 +20,10 @@ export default function Footer() {
     return (
         <footer className="footer">
             <div className="container">
-                <div className="footer__logo"><img src="/img/logo.png" alt="" /></div>
+                <div className="footer__logo">
+                    <img src="/img/logo.png" alt="" />
+                </div>
                 <div className="footer__body body-footer">
-                    
                     <Nav
                         modificator={"body-footer__nav"}
                         direction={"vertical"}

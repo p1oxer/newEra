@@ -1,11 +1,13 @@
 import React from "react";
 import Offers from "../Offers/Offers";
 import { groupOffers } from "../../files/OffersData";
+import Breadcrumbs from "../Breadcrumbs";
 
 export default function Group() {
     return (
         <section className="group page">
             <div className="container">
+                <Breadcrumbs />
                 <h1>Большая компания? Выпускной? Корпоратив? </h1>
                 <h2>
                     Отметьте Ваш праздник в <span>Новой Эре</span>
@@ -37,7 +39,9 @@ export default function Group() {
                     <p>- Салфетки</p>
                     <p>- Столовые приборы, одноразовая посуда</p>
                     <p>- Микроволновка</p>
-                    <p><span>Действует ежедневно.</span></p>
+                    <p>
+                        <span>Действует ежедневно.</span>
+                    </p>
                     <p>
                         Есть возможность принести свои угощения, фрукты или заказать пиццу
                         для празднования в комнате отдыха.

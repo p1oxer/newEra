@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import QuestsSwiper from "../Quests/QuestsSwiper/QuestsSwiper";
 import { Navigate, useParams } from "react-router-dom";
 import urlMappings from "../../files/url-mapping.json";
+import Breadcrumbs from "../Breadcrumbs";
 export default function QuestCategory() {
     const [nameMap, setNameMap] = useState(urlMappings);
     const { questCategory } = useParams();
@@ -12,6 +13,9 @@ export default function QuestCategory() {
     return (
         <>
             <div className="quest__category">
+                <div className="container">
+                    <Breadcrumbs />
+                </div>
                 <QuestsSwiper
                     category={questCategory}
                     blockTitle={`Квесты ${category}`}

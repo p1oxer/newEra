@@ -13,7 +13,9 @@ import Contacts from "./components/pages/Contacts.jsx";
 import Group from "./components/pages/Group.jsx";
 import Birthday from "./components/pages/Birthday.jsx";
 import Sertificate from "./components/pages/Sertificate.jsx";
+import AdminPanel from "./components/Admin/AdminPanel.jsx";
 const router = createBrowserRouter([
+    { path: "admin/*", element: <AdminPanel /> },
     {
         path: "/",
         element: <MainLayout />,
@@ -43,10 +45,6 @@ const router = createBrowserRouter([
                 element: <QuestsPage />,
             },
             {
-                path: "404",
-                element: <NotFoundPage />,
-            },
-            {
                 path: "information",
                 element: <Information />,
             },
@@ -65,6 +63,11 @@ const router = createBrowserRouter([
             {
                 path: "sertificate",
                 element: <Sertificate />,
+            },
+            // Ловушка для несуществующих маршрутов
+            {
+                path: "*",
+                element: <NotFoundPage />,
             },
         ],
     },

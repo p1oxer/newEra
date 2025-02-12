@@ -1,13 +1,21 @@
 import React from "react";
 import { SwiperSlide, Swiper } from "swiper/react";
+import { Autoplay } from "swiper/modules";
 import BlockTitle from "../UI/BlockTitle";
+import Breadcrumbs from "../Breadcrumbs";
 export default function Sertificate() {
     return (
         <section className="sertificate page">
             <div className="container">
+                <Breadcrumbs />
                 <BlockTitle title={"Подарочные сертификаты"} />
                 <div className="sertificate__body body-sertificate">
-                    <Swiper className="body-sertificate__swiper">
+                    <Swiper
+                        modules={[Autoplay]}
+                        loop={{ enabled: true }}
+                        autoplay={{ enabled: true, delay: 3000 }}
+                        className="body-sertificate__swiper"
+                    >
                         <SwiperSlide className="body-sertificate__slide">
                             <div className="body-sertificate__slide-body">
                                 <img src="/img/Sertificates/01.jpg" alt="" />
@@ -36,7 +44,10 @@ export default function Sertificate() {
                         </p>
                         <p>
                             <span>4.</span> Необходимо предварительно забронировать время
-                            игры в группе <a target="_blank" href="https://vk.com/newera35">vk.com/newera35</a>{" "}
+                            игры в группе{" "}
+                            <a target="_blank" href="https://vk.com/newera35">
+                                vk.com/newera35
+                            </a>{" "}
                             или по телефону
                         </p>
                         <p>
