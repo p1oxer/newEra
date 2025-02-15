@@ -9,7 +9,6 @@ export default function MainLayout() {
         <>
             <div className="wrapper">
                 <ScrollRestoration />
-                <ScrollToTop />
                 <Header />
                 <main>
                     <Outlet />

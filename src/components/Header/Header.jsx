@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 export default function Header() {
     const navigation = [
         { text: "Главная", link: "/" },
-
         { text: "Хоррор", link: "quests/horror" },
         { text: "Приключения", link: "quests/adventures" },
         { text: "День рождения", link: "birthday" },

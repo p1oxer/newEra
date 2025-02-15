@@ -3,7 +3,7 @@ import "swiper/css/pagination";
 import "swiper/css";
 import image from "./img/01.png";
 import image1280 from "./img/01-1280.jpg";
-import image640 from "./img/01-640.jpg";
+import image640 from "./img/mob.png";
 import SwiperButton from "../../UI/SwiperButton";
 export default () => {
     return (

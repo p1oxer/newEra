@@ -7,6 +7,17 @@ export default function Burger() {
         setIsOpened(!isOpened);
         document.body.classList.toggle("menu-open");
     }
+    const navigation = [
+        { text: "Главная", link: "/" },
+        { text: "Хоррор", link: "quests/horror" },
+        { text: "Приключения", link: "quests/adventures" },
+        { text: "День рождения", link: "birthday" },
+        { text: "Школьный класс/Выпускной", link: "group" },
+        { text: "Корпоратив", link: "group" },
+        { text: "Подарочный сертификат", link: "sertificate" },
+        { text: "Контакты", link: "contacts" },
+        { text: "Информация", link: "information" },
+    ];
     return (
         <div className={isOpened ? "header__menu menu" : "header__menu menu"}>
             <button onClick={handleClick} type="button" className="menu__icon icon-menu">
@@ -14,34 +25,13 @@ export default function Burger() {
             </button>
             <nav className="menu__body">
                 <ul className="menu__list">
-                    <li className="menu__item">
-                        <Link to={"/"}>Главная</Link>
-                    </li>
-
-                    <li className="menu__item">
-                        <Link to={"quests/horror"}>Хоррор</Link>
-                    </li>
-                    <li className="menu__item">
-                        <Link to={"quests/adventures"}>Приключения</Link>
-                    </li>
-                    <li className="menu__item">
-                        <Link to={"birthday"}>День Рождения</Link>
-                    </li>
-                    <li className="menu__item">
-                        <Link to={"group"}>Школьный Класс/Выпускной</Link>
-                    </li>
-                    <li className="menu__item">
-                        <Link to={"group"}>Корпоратив</Link>
-                    </li>
-                    <li className="menu__item">
-                        <Link to={"sertificate"}>Подарочный сертификат</Link>
-                    </li>
-                    <li className="menu__item">
-                        <Link to={"contacts"}>Контакты</Link>
-                    </li>
-                    <li className="menu__item">
-                        <Link to={"information"}>Информация</Link>
-                    </li>
+                    {navigation.map((item) => {
+                        return (
+                            <li className="menu__item">
+                                <Link to={item.link}>{item.text}</Link>
+                            </li>
+                        );
+                    })}
                 </ul>
             </nav>
         </div>

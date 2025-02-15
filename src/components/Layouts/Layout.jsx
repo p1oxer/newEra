@@ -10,7 +10,6 @@ export default function Layout() {
         <>
             <div className="wrapper">
                 <ScrollRestoration />
-                <ScrollToTop />
                 <Header />
                 <main>
                     <Outlet />
