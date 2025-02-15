@@ -6,21 +6,15 @@ const generateData = (resource, count) => {
     return Array.from({ length: count }, (_, id) => ({
         id: id + 1,
         ...(resource === "posts" && {
-            title: faker.lorem.sentence(),
-            body: faker.lorem.paragraph(),
-        }),
-        ...(resource === "users" && {
-            name: faker.person.fullName(),
-            email: faker.internet.email(),
-            phone: faker.phone.number(),
+            title: "Название квеста",
+            body: "Описание квеста",
         }),
     }));
 };
 
 // База данных с заглушками
 const fakeDB = {
-    posts: generateData("posts", 20),
-    users: generateData("users", 10),
+    posts: generateData("posts", 5),
 };
 
 const fakeDataProvider = {

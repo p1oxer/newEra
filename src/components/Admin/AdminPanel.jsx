@@ -6,8 +6,13 @@ import PostCreate from "./posts/PostCreate";
 import fakeDataProvider from "./FakeDataProvider";
 import authProvider from "./AuthProvider";
 import LoginPage from "./LoginPage"; // Импортируем кастомную страницу логина
+import russianMessages from "ra-language-russian";
+import polyglotI18nProvider from "ra-i18n-polyglot";
+
+const i18nProvider = polyglotI18nProvider(() => russianMessages, "ru");
 const AdminPanel = () => (
     <Admin
+        i18nProvider={i18nProvider}
         basename="/admin"
         dataProvider={fakeDataProvider}
         authProvider={authProvider}

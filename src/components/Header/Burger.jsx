@@ -28,13 +28,13 @@ export default function Burger() {
                         <Link to={"birthday"}>День Рождения</Link>
                     </li>
                     <li className="menu__item">
-                        <Link to={"/"}>Школьный Класс/Выпускной</Link>
+                        <Link to={"group"}>Школьный Класс/Выпускной</Link>
                     </li>
                     <li className="menu__item">
-                        <Link to={"/"}>Корпоратив</Link>
+                        <Link to={"group"}>Корпоратив</Link>
                     </li>
                     <li className="menu__item">
-                        <Link to={"/"}>Подарочный сертификат</Link>
+                        <Link to={"sertificate"}>Подарочный сертификат</Link>
                     </li>
                     <li className="menu__item">
                         <Link to={"contacts"}>Контакты</Link>

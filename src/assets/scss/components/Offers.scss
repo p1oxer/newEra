@@ -3,6 +3,7 @@
         text-align: center;
         @include adaptiveValue("font-size", 60, 40);
         margin-bottom: 30px;
+        line-height: 1.2;
 
         span {
             color: $mainPink;
@@ -12,6 +13,7 @@
     h2 {
         text-align: center;
         @include adaptiveValue("font-size", 40, 30);
+        line-height: 1.2;
 
         span {
             color: $mainPink;
@@ -47,10 +49,6 @@
     @include adaptiveValue("margin-bottom", 50, 25);
     @include adaptiveValue("gap", 50, 20);
     flex-wrap: wrap;
-
-    @media (max-width:$mobileSmall) {
-        flex-direction: column;
-    }
 }
 
 .offer {

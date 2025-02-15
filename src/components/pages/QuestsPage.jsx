@@ -122,8 +122,8 @@ export default function QuestsPage() {
                         </div>
                     </div>
                 </div>
-                <QuestsSwiper category={"all"} block={true} />
             </div>
+            <QuestsSwiper category={"all"} block={true} />
         </section>
     );
 }
