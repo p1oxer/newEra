@@ -16,6 +16,7 @@ export default function Footer() {
         { text: "Подарочный сертификат", link: "sertificate" },
         { text: "Контакты", link: "contacts" },
         { text: "Информация", link: "information" },
+        { text: "Админ", link: "admin" },
     ];
     return (
         <footer className="footer">
