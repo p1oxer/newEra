@@ -1,0 +1,17 @@
+<IfModule mod_rewrite.c>
+   RewriteEngine On
+
+   # Если запрос - это существующий файл или директория,
+   # то не делаем ничего.
+   RewriteCond %{REQUEST_FILENAME} -f [OR]
+   RewriteCond %{REQUEST_FILENAME} -d
+   RewriteRule ^ - [L]
+
+   # В противном случае перенаправляем все запросы на index.html.
+   RewriteRule ^ /index.html [L]
+ </IfModule>
+
+ <IfModule !mod_rewrite.c>
+     # Если mod_rewrite недоступен, сообщаем об ошибке.
+     ErrorDocument 404 "mod_rewrite is required to run this application."
+ </IfModule>
