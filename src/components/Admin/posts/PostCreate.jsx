@@ -1,3 +1,4 @@
+// src/posts/PostCreate.js
 import React from "react";
 import { Create, SimpleForm, TextInput } from "react-admin";
 

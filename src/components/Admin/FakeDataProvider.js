@@ -14,16 +14,20 @@ const generateData = (resource, count) => {
 
 // База данных с заглушками
 const fakeDB = {
-    posts: generateData("posts", 5),
+    posts: [  // Должно совпадать с `name="posts"`
+        { id: 1, title: "Пост 1", body: "Описание 1" },
+        { id: 2, title: "Пост 2", body: "Описание 2" },
+    ],
 };
 
 const fakeDataProvider = {
     getList: (resource, params) => {
-        return Promise.resolve({
-            data: fakeDB[resource],
-            total: fakeDB[resource].length,
-        });
-    },
+    console.log(`Запрос списка: ${resource}`, fakeDB[resource]); // Добавляем лог
+    return Promise.resolve({
+        data: fakeDB[resource],
+        total: fakeDB[resource].length,
+    });
+},
     getOne: (resource, params) => {
         const record = fakeDB[resource].find((item) => item.id === params.id);
         return Promise.resolve({ data: record });
