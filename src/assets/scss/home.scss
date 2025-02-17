@@ -447,19 +447,21 @@ button.button {
         @include adaptiveValue("font-size", 60, 40);
         margin-bottom: 30px;
     }
+
     img {
         max-width: 100%;
     }
-}/* AdminPanel.css */
+}
+
+/* AdminPanel.css */
 
 /* Общий стиль страницы */
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
-  }
-  
-  /* Верхняя панель */
-  .app-bar {
+}
+
+/* Верхняя панель */
+.app-bar {
     position: fixed;
     top: 0;
     left: 0;
@@ -471,16 +473,16 @@ body {
     align-items: center;
     padding: 0 15px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  }
-  
-  .app-bar h1 {
+}
+
+.app-bar h1 {
     margin: 0;
     font-size: 18px;
     flex-grow: 1;
-  }
-  
-  /* Боковая панель */
-  .drawer {
+}
+
+/* Боковая панель */
+.drawer {
     position: fixed;
     top: 50px;
     left: 0;
@@ -490,47 +492,47 @@ body {
     border-right: 1px solid #ddd;
     padding: 15px 0;
     box-sizing: border-box;
-  }
-  
-  .drawer a {
+}
+
+.drawer a {
     display: block;
     padding: 10px 20px;
     color: #fff;
     text-decoration: none;
     transition: background 0.3s;
-  }
-  
-  .drawer a:hover {
+}
+
+.drawer a:hover {
     background-color: #ddd;
-  }
-  
-  .drawer a.active {
-    background-color: #bbb;
+}
+
+.drawer a.active {
+    background-color: #818181;
     font-weight: bold;
-  }
-  
-  /* Основной контент */
-  .main-content {
+}
+
+/* Основной контент */
+.main-content {
     margin-left: 200px;
     margin-top: 50px;
     padding: 20px;
     box-sizing: border-box;
-  }
-  
-  .table {
+}
+
+.table {
     width: 500px;
     border-collapse: collapse;
     margin-top: 50px;
     margin-left: 250px;
-  }
-  
-  .table th,
-  .table td {
+}
+
+.table th,
+.table td {
     border: 1px solid #ccc;
     padding: 10px;
     text-align: left;
-  }
-  
-  .table th {
+}
+
+.table th {
     background-color: #333;
-  }
+}
