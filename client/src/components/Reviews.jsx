@@ -1,9 +1,23 @@
-import React from "react";
-import { reviews } from "../files/reviews";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { SwiperSlide } from "swiper/react";
 import CustomSwiper from "./UI/CustomSwiper";
 import Button from "./UI/ButtonLink";
 export default function Reviews() {
+    const [reviews, setReviews] = useState([]);
+
+    useEffect(() => {
+        axios
+            .get("http://localhost:5000/api/reviews")
+            .then((response) => {
+                const texts = response.data.map((review) => review.text);
+                setReviews(texts);
+            })
+            .catch((error) => {
+                console.error("Ошибка загрузки отзывов:", error);
+            });
+    }, []);
+
     const swiperReviewsSettings = {
         slidesPerView: 4,
         pagination: true,
