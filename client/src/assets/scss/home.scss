@@ -416,6 +416,10 @@ button.button {
     @include adaptiveValue("font-size", 24, 20);
     line-height: 1.2;
 
+    p {
+        margin-bottom: rem(10);
+    }
+
     @media (max-width:$mobile) {
         padding: 15px;
     }

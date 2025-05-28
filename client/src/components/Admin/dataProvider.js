@@ -39,7 +39,7 @@ export default {
 
         return {
             data: json.map((item) => ({ id: item.id, ...item })),
-            total: total || 12, 
+            total: total || 0, 
         };
     },
 
@@ -98,15 +98,6 @@ export default {
         );
 
         await Promise.all(promises);
-
-        // Либо, если твой сервер принимает POST/DELETE с массивом id:
-        /*
-        const { json } = await fetchUtils.fetchJson(url, {
-            method: 'POST',
-            body: JSON.stringify({ ids: params.ids }),
-            headers: new Headers({ 'Content-Type': 'application/json' }),
-        });
-        */
 
         return { data: params.ids }; // react-admin ожидает этот формат
     },

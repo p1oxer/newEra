@@ -17,7 +17,7 @@ export default function Reviews() {
                 console.error("Ошибка загрузки отзывов:", error);
             });
     }, []);
-
+    console.log(reviews);
     const swiperReviewsSettings = {
         slidesPerView: 4,
         pagination: true,
