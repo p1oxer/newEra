@@ -9,7 +9,7 @@ export default function Information() {
 
     useEffect(() => {
         axios
-            .get("http://localhost:5000/api/faq")
+            .get("https://new-era-api.loca.lt/api/faq")
             .then((response) => setFaqs(response.data))
             .catch((error) => console.error("Ошибка загрузки FAQ:", error));
     }, []);

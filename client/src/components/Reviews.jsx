@@ -8,7 +8,7 @@ export default function Reviews() {
 
     useEffect(() => {
         axios
-            .get("http://localhost:5000/api/reviews")
+            .get("https://new-era-api.loca.lt/api/reviews")
             .then((response) => {
                 const texts = response.data.map((review) => review.text);
                 setReviews(texts);
