@@ -5,7 +5,14 @@ const app = express();
 
 import reviewsRouter from "./routes/reviews.js";
 
-app.use(cors());
+app.use(
+    cors({
+        origin: "http://localhost:5173",
+        methods: ["GET", "POST", "PUT", "DELETE"],
+        allowedHeaders: ["Content-Type"],
+        exposedHeaders: ["Content-Range"],
+    })
+);
 app.use(express.json());
 
 // Подключаем маршруты
