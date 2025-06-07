@@ -25,9 +25,9 @@ export default function Burger() {
             </button>
             <nav className="menu__body">
                 <ul className="menu__list">
-                    {navigation.map((item) => {
+                    {navigation.map((item, index) => {
                         return (
-                            <li className="menu__item">
+                            <li key={index} className="menu__item">
                                 <Link to={item.link}>{item.text}</Link>
                             </li>
                         );

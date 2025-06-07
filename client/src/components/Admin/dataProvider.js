@@ -2,7 +2,7 @@
 import { fetchUtils } from "react-admin";
 import { stringify } from "query-string";
 
-const apiUrl = "https://new-era-api.loca.lt/api";
+const apiUrl = "http://localhost:5000/api";
 
 export default {
     // Получить список

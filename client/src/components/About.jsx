@@ -1,7 +1,12 @@
 import React from "react";
 import BlockTitle from "./UI/BlockTitle";
-
+import useFetch from "../hooks/useFetch";
+import ReactMarkdown from "react-markdown";
+import { sanitizeHTML } from "../hooks/sanitize";
 export default function About() {
+    const { data: textData, isLoading, error } = useFetch("about");
+    const text = textData?.length > 0 ? textData : [];
+
     return (
         <section className="about block">
             <div className="container">
@@ -13,39 +18,13 @@ export default function About() {
                     </div>
                     <div className="body-about__content">
                         <BlockTitle title={"О Новой Эре"} />
-                        <p>
-                            Совершенно новый и уникальный квест в Вологде с
-                            возможностью прохождения в Жанре Хоррор и в Жанре Приключения
-                        </p>
-                        <p>Множество игровых локаций </p>
-                        <p>
-                            Погружение в атмосферу с минус первой и до последней минуты
-                        </p>
-                        <p>Возвращение назад в будущее</p>
-                        <p>Сюжет - драма, достойная Оскара</p>
-                        <p>Захватывающая игра актера</p>
-                        <p>Альтернативные сценарии прохождения</p>
-                        <p>
-                            <span>Наша цель</span> - дать посетителям возможность
-                            прикоснуться к эмоциям, которые потрясают настолько, что не
-                            дадут шанса молчать о пережитом, а заставят говорить и
-                            советовать всем своим близким наш продукт.
-                        </p>
-                        <p>
-                            <span>Мы гарантируем:</span>
-                        </p>
-                        <p>Более 120 квадратных метров игровой площади</p>
-                        <p>90 минут искрометного перфоманса и настоящего экшена</p>
-                        <p>
-                            Новый уровень адреналина и страха, а так же выбор своего
-                            уровня прохождения
-                        </p>
-                        <p>Массу интересных фишек, которые есть только у нас </p>
-                        <p>Уникальные загадки</p>
-                        <p>
-                            Хватит читать. Пора звонить и бронировать свое приключение!
-                            Удиви себя и своих близких!
-                        </p>
+                        {text.map((item) => {
+                            return (
+                                <div key={item.id}>
+                                    <ReactMarkdown>{sanitizeHTML(item.text)}</ReactMarkdown>
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
             </div>

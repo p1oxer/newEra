@@ -7,9 +7,10 @@ import {
     DeleteButton,
     Pagination,
 } from "react-admin";
+import ListActions from "../UI/ActionsList";
 const FAQPagination = () => <Pagination rowsPerPageOptions={[5, 10, 25, 50]} />;
 const FAQList = (props) => (
-    <List {...props} pagination={<FAQPagination />} perPage={5}>
+    <List {...props} pagination={<FAQPagination />} perPage={5} actions={<ListActions />}>
         <Datagrid>
             <TextField source="id" />
             <TextField source="title" label="Вопрос" />

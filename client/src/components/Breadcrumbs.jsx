@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { useState } from "react";
+import React, { useState } from "react";
 import urlMappings from "../files/url-mapping.json";
 import { capitalizeFirstLetterAndReplaceDash } from "../functions/translit";
 export default function Breadcrumbs() {
@@ -14,11 +14,11 @@ export default function Breadcrumbs() {
             const breadcrumbName =
                 nameMap[crumb] || capitalizeFirstLetterAndReplaceDash(crumb);
             return (
-                <>
-                    <div className="crumb" key={crumb}>
+                <React.Fragment key={crumb}>
+                    <div className="crumb">
                         <Link to={currentLink}>{breadcrumbName}</Link>
                     </div>
-                </>
+                </React.Fragment>
             );
         });
 

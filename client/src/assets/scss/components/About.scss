@@ -42,8 +42,9 @@
 
         img {
             max-width: 100%;
-            @media (min-width:$tablet){
-                 min-width: 400px; 
+
+            @media (min-width:$tablet) {
+                min-width: 400px;
             }
         }
     }
@@ -60,7 +61,7 @@
             line-height: 1.2;
             font-weight: 300;
 
-            span {
+            strong {
                 font-weight: 500;
                 @include adaptiveValue("font-size", 22, 18);
                 color: $mainGreen;

@@ -11,6 +11,8 @@ import polyglotI18nProvider from "ra-i18n-polyglot";
 import FAQList from "./FAQ/FAQList";
 import FAQCreate from "./FAQ/FAQCreate";
 import FAQEdit from "./FAQ/FAQEdit";
+import AboutList from "./About/AboutList";
+import AboutEdit from "./About/AboutEdit";
 
 const i18nProvider = polyglotI18nProvider(() => russianMessages, "ru");
 const AdminPanel = () => (
@@ -34,6 +36,12 @@ const AdminPanel = () => (
             options={{ label: "Информация" }}
             create={FAQCreate}
             edit={FAQEdit}
+        />
+        <Resource
+            name="about"
+            list={AboutList}
+            options={{ label: "О нас" }}
+            edit={AboutEdit}
         />
     </Admin>
 );
