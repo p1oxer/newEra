@@ -1,3 +1,4 @@
+// src/resources/contacts/ContactsList.jsx
 import * as React from "react";
 import {
     List,
@@ -10,26 +11,26 @@ import {
 } from "react-admin";
 import ListActions from "../UI/ActionsList";
 
-const ReviewPagination = () => <Pagination rowsPerPageOptions={[5, 10, 25, 50]} />;
+const ContactsPagination = () => <Pagination rowsPerPageOptions={[5, 10, 25, 50]} />;
 
-const ReviewList = (props) => (
+export const ContactsList = (props) => (
     <List
         {...props}
-        pagination={<ReviewPagination />}
+        pagination={<ContactsPagination />}
         perPage={5}
         actions={
             <ListActions>
                 <CreateButton />
             </ListActions>
         }
+        title="Список контактной информации"
     >
         <Datagrid>
-            <TextField source="id" />
-            <TextField source="text" label="Текст отзыва" />
+            <TextField source="id" label="ID" />
+            <TextField source="info_type" label="Тип" />
+            <TextField source="value" label="Значение" />
             <EditButton />
             <DeleteButton />
         </Datagrid>
     </List>
 );
-
-export default ReviewList;

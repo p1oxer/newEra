@@ -6,6 +6,7 @@ const app = express();
 import reviewsRouter from "./routes/reviews.js";
 import faqRouter from "./routes/faq.js";
 import aboutRouter from "./routes/about.js";
+import contactsRouter from "./routes/contacts.js";
 
 app.use(
     cors({
@@ -18,12 +19,13 @@ app.use(
 app.use(express.json());
 
 // Подключаем маршруты
-app.use('/api/reviews', reviewsRouter);
-app.use('/api/faq', faqRouter);
+app.use("/api/reviews", reviewsRouter);
+app.use("/api/faq", faqRouter);
 app.use("/api/about", aboutRouter);
+app.use("/api/contacts", contactsRouter);
 
 // Запуск сервера
 const PORT = process.env.PORT || 5000;
-app.listen(PORT,  () => {
+app.listen(PORT, () => {
     console.log(`Сервер запущен на http://localhost:${PORT}`);
 });

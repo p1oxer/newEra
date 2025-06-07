@@ -2,8 +2,25 @@ import React from "react";
 import BlockTitle from "../UI/BlockTitle";
 import Breadcrumbs from "../Breadcrumbs";
 import { FaVk } from "react-icons/fa";
+import useFetch from "../../hooks/useFetch";
 
 export default function Contacts() {
+    const { data: contacts, isLoading, error } = useFetch("contacts");
+    if (isLoading) {
+        return <p>Загрузка...</p>;
+    }
+
+    if (error) {
+        console.error("Ошибка загрузки", error);
+        return <p>Ошибка при загрузке</p>;
+    }
+
+    const contactsList = contacts?.length > 0 ? contacts : [];
+
+    const addresses = contactsList.filter((c) => c.info_type === "address");
+    const phones = contactsList.filter((c) => c.info_type === "phone");
+    const workingHours = contactsList.filter((c) => c.info_type === "working_hours");
+
     return (
         <section className="contacts page">
             <div className="container">
@@ -12,30 +29,53 @@ export default function Contacts() {
                 <div className="contacts__body body-contacts">
                     <div className="contacts__content content-contacts">
                         <ul className="content-contacts__list">
-                            <li className="content-contacts__item">
-                                <p className="content-contacts__name">Адрес</p>
-                                <p className="content-contacts__link" href="">
-                                    г. Вологда, ул. Герцена 105Б
-                                </p>
-                                <p className="content-contacts__link" href="">
-                                    г. Вологда, ул. Зосимовская 7
-                                </p>
-                            </li>
-                            <li className="content-contacts__item">
-                                <p className="content-contacts__name">Телефон</p>
-                                <a
-                                    href="tel:89095944080"
-                                    className="content-contacts__link hover"
-                                >
-                                    +7 (909) 598-40-80
-                                </a>
-                            </li>
-                            <li className="content-contacts__item">
-                                <p className="content-contacts__name">Режим работы </p>
-                                <p className="content-contacts__link">
-                                    ПН - ВС 10:00 - 00:00
-                                </p>
-                            </li>
+                            {addresses.length > 0 && (
+                                <li className="content-contacts__item">
+                                    <p className="content-contacts__name">Адрес</p>
+                                    {addresses.map((addr) => {
+                                        return (
+                                            <p
+                                                key={addr.id}
+                                                className="content-contacts__link"
+                                            >
+                                                {addr.value}
+                                            </p>
+                                        );
+                                    })}
+                                </li>
+                            )}
+                            {phones.length > 0 && (
+                                <li className="content-contacts__item">
+                                    <p className="content-contacts__name">Телефон</p>
+                                    {phones.map((phone) => (
+                                        <a
+                                            key={phone.id}
+                                            href={`tel:${phone.value.replace(
+                                                /[^+\d]/g,
+                                                ""
+                                            )}`}
+                                            className="content-contacts__link hover"
+                                        >
+                                            {phone.value}
+                                        </a>
+                                    ))}
+                                </li>
+                            )}
+                            {workingHours.length > 0 && (
+                                <li className="content-contacts__item">
+                                    {workingHours.map((item) => (
+                                        <React.Fragment key={item.id}>
+                                            <p className="content-contacts__name">
+                                                Режим работы
+                                            </p>
+                                            <p className="content-contacts__link">
+                                                {item.value}
+                                            </p>
+                                        </React.Fragment>
+                                    ))}
+                                </li>
+                            )}
+
                             <li className="content-contacts__item">
                                 <p className="content-contacts__name">Социальные сети </p>
                                 <p className="content-contacts__link hover">

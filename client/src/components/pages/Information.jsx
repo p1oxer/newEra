@@ -18,7 +18,6 @@ export default function Information() {
         return <p>Ошибка при загрузке</p>;
     }
 
-    // ✅ Защита от null и undefined
     const faqList = faqs?.length > 0 ? faqs : [];
     return (
         <section className="information page">

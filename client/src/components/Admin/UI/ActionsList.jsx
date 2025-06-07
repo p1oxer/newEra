@@ -1,10 +1,6 @@
-import { Box } from "@mui/material"; // или import { makeStyles } from '@mui/styles';
-import { CreateButton } from "react-admin";
+import * as React from "react";
+import CardActions from '@mui/material/CardActions';
 
-const ListActions = () => (
-    <Box display="flex" justifyContent="flex-end" m={1}>
-        <CreateButton />
-    </Box>
-);
+const ListActions = ({ children }) => <CardActions>{children}</CardActions>;
 
 export default ListActions;

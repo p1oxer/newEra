@@ -13,6 +13,9 @@ import FAQCreate from "./FAQ/FAQCreate";
 import FAQEdit from "./FAQ/FAQEdit";
 import AboutList from "./About/AboutList";
 import AboutEdit from "./About/AboutEdit";
+import {ContactsList} from "./Contacts/ContactsList";
+import {ContactsEdit} from "./Contacts/ContactsEdit";
+import {ContactsCreate} from "./Contacts/ContactsCreate";
 
 const i18nProvider = polyglotI18nProvider(() => russianMessages, "ru");
 const AdminPanel = () => (
@@ -42,6 +45,13 @@ const AdminPanel = () => (
             list={AboutList}
             options={{ label: "О нас" }}
             edit={AboutEdit}
+        />
+        <Resource
+            name="contacts"
+            list={ContactsList}
+            options={{ label: "Контакты" }}
+            edit={ContactsEdit}
+            create={ContactsCreate}
         />
     </Admin>
 );

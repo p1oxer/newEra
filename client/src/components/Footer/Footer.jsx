@@ -5,7 +5,23 @@ import { FaLocationDot } from "react-icons/fa6";
 import { FaVk } from "react-icons/fa";
 import { FaTiktok } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa6";
+import useFetch from "../../hooks/useFetch";
 export default function Footer() {
+    const { data: contacts, isLoading, error } = useFetch("contacts");
+    if (isLoading) {
+        return <p>Загрузка...</p>;
+    }
+
+    if (error) {
+        console.error("Ошибка загрузки", error);
+        return <p>Ошибка при загрузке</p>;
+    }
+
+    const contactsList = contacts?.length > 0 ? contacts : [];
+
+    const addresses = contactsList.filter((c) => c.info_type === "address");
+    const phones = contactsList.filter((c) => c.info_type === "phone");
+
     const navigation = [
         { text: "Главная", link: "/" },
         { text: "Хоррор", link: "quests/horror" },
@@ -16,7 +32,6 @@ export default function Footer() {
         { text: "Подарочный сертификат", link: "sertificate" },
         { text: "Контакты", link: "contacts" },
         { text: "Информация", link: "information" },
-        { text: "Админ", link: "admin" },
     ];
     return (
         <footer className="footer">
@@ -31,16 +46,25 @@ export default function Footer() {
                         list={navigation}
                     />
                     <ul className="body-footer__list">
-                        <li>
-                            <FaPhone />
-                            <a className="link" href="tel:+79095984080">
-                                +7 (909) 598-40-80
-                            </a>
-                        </li>
-                        <li>
-                            <FaLocationDot />
-                            г. Вологда, ул. Зосимовская 7 | Герцена 105Б
-                        </li>
+                        {phones.length > 0 &&
+                            phones.map((phone) => (
+                                <li key={phone.id}>
+                                    <FaPhone />
+                                    <a
+                                        className="link"
+                                        href={`tel:${phone.value.replace(/[^+\d]/g, "")}`}
+                                    >
+                                        {phone.value}
+                                    </a>
+                                </li>
+                            ))}
+                        {addresses.length > 0 &&
+                            addresses.map((address) => (
+                                <li key={address.id}>
+                                    <FaLocationDot />
+                                    {address.value}
+                                </li>
+                            ))}
                         <li className="body-footer__socials socials">
                             <a target="_blank" href="https://vk.com/newera35">
                                 <FaVk />

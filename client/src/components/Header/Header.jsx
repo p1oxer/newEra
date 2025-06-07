@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import HeaderNav from "./HeaderNav";
 import Burger from "./Burger";
 import { Link } from "react-router-dom";
+import useFetch from "../../hooks/useFetch";
 
 export default function Header() {
     const navigation = [
@@ -26,7 +27,19 @@ export default function Header() {
             return;
         }
     }, []);
+    const { data: contacts, isLoading, error } = useFetch("contacts");
+    if (isLoading) {
+        return <p>Загрузка...</p>;
+    }
 
+    if (error) {
+        console.error("Ошибка загрузки", error);
+        return <p>Ошибка при загрузке</p>;
+    }
+
+    const contactsList = contacts?.length > 0 ? contacts : [];
+
+    const phones = contactsList.filter((c) => c.info_type === "phone");
     return (
         <>
             <header className="header">
@@ -36,12 +49,14 @@ export default function Header() {
                             <Link to={"/"} className="body-header__logo">
                                 <img src="/img/logo.png" alt="" />
                             </Link>
-                            <a
-                                href="tel:+79095984080"
-                                className="body-header__phone link"
-                            >
-                                +7 (909) 598-40-80
-                            </a>
+                            {phones.length > 0 && (
+                                <a
+                                    href={`tel:${phones[0].value.replace(/[^+\d]/g, "")}`}
+                                    className="body-header__phone link"
+                                >
+                                    {phones[0].value}
+                                </a>
+                            )}
                         </div>
 
                         <HeaderNav
