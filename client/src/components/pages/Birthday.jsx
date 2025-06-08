@@ -2,8 +2,21 @@ import React from "react";
 import { birthdayOffers } from "../../files/OffersData";
 import Offers from "../Offers/Offers";
 import Breadcrumbs from "../Breadcrumbs";
+import useFetch from "../../hooks/useFetch";
 
 export default function Birthday() {
+    const { data: birthdayOffers, isLoading, error } = useFetch("birthday_offers");
+    
+        if (isLoading) {
+            return <p>Загрузка...</p>;
+        }
+    
+        if (error) {
+            console.error("Ошибка загрузки", error);
+            return <p>Ошибка при загрузке</p>;
+        }
+    
+        const birthdayOffersList = birthdayOffers?.length > 0 ? birthdayOffers : [];
     return (
         <section className="group page">
             <div className="container">
@@ -12,7 +25,7 @@ export default function Birthday() {
                     День Рождения в <span>Новой Эре</span>
                 </h1>
 
-                <Offers offers={birthdayOffers} />
+                <Offers offers={birthdayOffersList} />
                 <div className="group__text">
                     <p>
                         Участники до 12 лет включительно проходят квест в сопровождении

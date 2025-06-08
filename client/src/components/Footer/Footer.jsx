@@ -2,12 +2,12 @@ import React from "react";
 import Nav from "../Nav";
 import { FaPhone } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
-import { FaVk } from "react-icons/fa";
-import { FaTiktok } from "react-icons/fa";
-import { FaInstagram } from "react-icons/fa6";
+import { FaVk, FaInstagram, FaYoutube, FaTelegramPlane, FaTiktok } from "react-icons/fa";
 import useFetch from "../../hooks/useFetch";
 export default function Footer() {
     const { data: contacts, isLoading, error } = useFetch("contacts");
+    const { data: socials } = useFetch("socials");
+
     if (isLoading) {
         return <p>Загрузка...</p>;
     }
@@ -17,6 +17,7 @@ export default function Footer() {
         return <p>Ошибка при загрузке</p>;
     }
 
+    const socialsList = socials?.length > 0 ? socials : [];
     const contactsList = contacts?.length > 0 ? contacts : [];
 
     const addresses = contactsList.filter((c) => c.info_type === "address");
@@ -33,6 +34,14 @@ export default function Footer() {
         { text: "Контакты", link: "contacts" },
         { text: "Информация", link: "information" },
     ];
+
+    const socialIcons = {
+        vk: <FaVk />,
+        instagram: <FaInstagram />,
+        youtube: <FaYoutube />,
+        telegram: <FaTelegramPlane />,
+        tiktok: <FaTiktok />,
+    };
     return (
         <footer className="footer">
             <div className="container">
@@ -65,23 +74,15 @@ export default function Footer() {
                                     {address.value}
                                 </li>
                             ))}
-                        <li className="body-footer__socials socials">
-                            <a target="_blank" href="https://vk.com/newera35">
-                                <FaVk />
-                            </a>
-                            <a
-                                target="_blank"
-                                href="https://www.tiktok.com/@neweravologda?_t=8qkcbz4Nk0d&_r=1"
-                            >
-                                <FaTiktok />
-                            </a>
-                            <a
-                                target="_blank"
-                                href="https://www.instagram.com/new_era_vologda/"
-                            >
-                                <FaInstagram />
-                            </a>
-                        </li>
+                        {socialsList.length > 0 && (
+                            <li className="body-footer__socials socials">
+                                {socialsList.map((item) => (
+                                    <a key={item.id} target="_blank" href={item.url}>
+                                        {socialIcons[item.network_type] || "??"}
+                                    </a>
+                                ))}
+                            </li>
+                        )}
                     </ul>
                 </div>
                 <p className="footer__copyright">

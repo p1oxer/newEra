@@ -5,7 +5,7 @@ export default function Offers({ offers }) {
     return (
         <div className="offers">
             {offers.map((offer) => {
-                return <OfferItem offer={offer} />;
+                return <OfferItem key={offer.id} offer={offer} />;
             })}
         </div>
     );

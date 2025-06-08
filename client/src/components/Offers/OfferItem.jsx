@@ -3,7 +3,13 @@ import { Link } from "react-router-dom";
 import { IoMdCheckmark } from "react-icons/io";
 export default function OfferItem({ offer }) {
     return (
-        <div className={offer.best ? "offer__item item-offer item-offer--best" : "offer__item item-offer"}>
+        <div
+            className={
+                offer.best
+                    ? "offer__item item-offer item-offer--best"
+                    : "offer__item item-offer"
+            }
+        >
             <div className="item-offer__body">
                 <div className="item-offer__top">
                     <div className="item-offer__name">{offer.name}</div>
@@ -13,17 +19,20 @@ export default function OfferItem({ offer }) {
                     </div>
                 </div>
                 <div className="item-offer__bottom">
-                    <ul className="item-offer__list">
-                        {offer.attributes.map((attr) => {
-                            return (
-                                <li className="item-offer__list-item">
-                                    <IoMdCheckmark color="#c30168" />
-                                    {attr}
-                                </li>
-                            );
-                        })}
-                    </ul>
+                    {offer.attributes.length > 0 && (
+                        <ul className="item-offer__list">
+                            {JSON.parse(offer.attributes).map((attr, index) => {
+                                return (
+                                    <li key={index} className="item-offer__list-item">
+                                        <IoMdCheckmark color="#c30168" />
+                                        {attr}
+                                    </li>
+                                );
+                            })}
+                        </ul>
+                    )}
                 </div>
+
                 <Link target="_blank" to={offer.link} className="item-offer__button">
                     Оставить заявку
                 </Link>

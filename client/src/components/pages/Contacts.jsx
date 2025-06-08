@@ -1,11 +1,13 @@
 import React from "react";
 import BlockTitle from "../UI/BlockTitle";
 import Breadcrumbs from "../Breadcrumbs";
-import { FaVk } from "react-icons/fa";
+import { FaVk, FaInstagram, FaYoutube, FaTelegramPlane, FaTiktok } from "react-icons/fa";
 import useFetch from "../../hooks/useFetch";
 
 export default function Contacts() {
     const { data: contacts, isLoading, error } = useFetch("contacts");
+    const { data: socials } = useFetch("socials");
+
     if (isLoading) {
         return <p>Загрузка...</p>;
     }
@@ -16,10 +18,19 @@ export default function Contacts() {
     }
 
     const contactsList = contacts?.length > 0 ? contacts : [];
+    const socialsList = socials?.length > 0 ? socials : [];
 
     const addresses = contactsList.filter((c) => c.info_type === "address");
     const phones = contactsList.filter((c) => c.info_type === "phone");
     const workingHours = contactsList.filter((c) => c.info_type === "working_hours");
+
+    const socialIcons = {
+        vk: <FaVk size={50} />,
+        instagram: <FaInstagram size={50} />,
+        youtube: <FaYoutube size={50} />,
+        telegram: <FaTelegramPlane size={50} />,
+        tiktok: <FaTiktok size={50} />,
+    };
 
     return (
         <section className="contacts page">
@@ -75,15 +86,26 @@ export default function Contacts() {
                                     ))}
                                 </li>
                             )}
-
-                            <li className="content-contacts__item">
-                                <p className="content-contacts__name">Социальные сети </p>
-                                <p className="content-contacts__link hover">
-                                    <a href="https://vk.com/newera35">
-                                        <FaVk size={50} />
-                                    </a>
-                                </p>
-                            </li>
+                            {socialsList.length > 0 && (
+                                <li className="content-contacts__item">
+                                    <p className="content-contacts__name">
+                                        Социальные сети
+                                    </p>
+                                    <div className="socials-list">
+                                        {socialsList.map((item) => (
+                                            <p
+                                                key={item.id}
+                                                className="content-contacts__link hover"
+                                            >
+                                                <a target="_blank" href={item.url}>
+                                                    {socialIcons[item.network_type] ||
+                                                        "??"}
+                                                </a>
+                                            </p>
+                                        ))}
+                                    </div>
+                                </li>
+                            )}
                         </ul>
                     </div>
                     <div className="contacts__reviews">

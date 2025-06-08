@@ -50,7 +50,7 @@
             @media (any-hover: hover) {
                 &:hover {
                     svg {
-                        fill: #eee;
+                        fill: $mainPink;
                     }
 
                 }
@@ -69,7 +69,14 @@
 
         @include adaptiveValue("font-size", 40, 30);
     }
-}.contacts__review{
+}
+.socials-list {
+    display: flex;
+    align-items: center;
+    @include adaptiveValue("gap", 15, 10);
+}
+
+.contacts__review{
     width: 100%;
     max-width: 560px;
 }

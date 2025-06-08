@@ -23,7 +23,7 @@ export const ContactsList = (props) => (
                 <CreateButton />
             </ListActions>
         }
-        title="Список контактной информации"
+        title="Контакты"
     >
         <Datagrid>
             <TextField source="id" label="ID" />

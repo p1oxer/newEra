@@ -13,9 +13,11 @@ import FAQCreate from "./FAQ/FAQCreate";
 import FAQEdit from "./FAQ/FAQEdit";
 import AboutList from "./About/AboutList";
 import AboutEdit from "./About/AboutEdit";
-import {ContactsList} from "./Contacts/ContactsList";
-import {ContactsEdit} from "./Contacts/ContactsEdit";
-import {ContactsCreate} from "./Contacts/ContactsCreate";
+import { ContactsList } from "./Contacts/ContactsList";
+import { ContactsEdit } from "./Contacts/ContactsEdit";
+import { ContactsCreate } from "./Contacts/ContactsCreate";
+import { SocialsList, SocialsCreate, SocialsEdit } from "./Socials/Socials";
+import { BirthdayList, BirthdayCreate, BirthdayEdit } from "./BirthdayOffers/BirthdayOffers";
 
 const i18nProvider = polyglotI18nProvider(() => russianMessages, "ru");
 const AdminPanel = () => (
@@ -52,6 +54,20 @@ const AdminPanel = () => (
             options={{ label: "Контакты" }}
             edit={ContactsEdit}
             create={ContactsCreate}
+        />
+        <Resource
+            name="socials"
+            list={SocialsList}
+            options={{ label: "Социальные сети" }}
+            edit={SocialsEdit}
+            create={SocialsCreate}
+        />
+        <Resource
+            name="birthday_offers"
+            list={BirthdayList}
+            create={BirthdayCreate}
+            edit={BirthdayEdit}
+            options={{ label: "День рождения" }}
         />
     </Admin>
 );
