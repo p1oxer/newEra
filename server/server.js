@@ -9,6 +9,8 @@ import contactsRouter from "./routes/contacts.js";
 import socialsRouter from "./routes/socials.js";
 import birthdayRouter from "./routes/birthday.js";
 import birthdayDescriptionRouter from "./routes/birthdayDescription.js";
+import groupRouter from "./routes/group.js";
+import groupDescriptionRouter from "./routes/groupDescription.js";
 
 app.use(
     cors({
@@ -28,6 +30,8 @@ app.use("/api/contacts", contactsRouter);
 app.use("/api/socials", socialsRouter);
 app.use("/api/birthday_offers", birthdayRouter);
 app.use("/api/birthday-description", birthdayDescriptionRouter);
+app.use("/api/group_offers", groupRouter);
+app.use("/api/group-description", groupDescriptionRouter);
 
 // Запуск сервера
 const PORT = process.env.PORT || 5000;

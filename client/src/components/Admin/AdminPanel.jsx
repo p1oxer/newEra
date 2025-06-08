@@ -21,8 +21,8 @@ import {
     BirthdayList,
     BirthdayCreate,
     BirthdayEdit,
-    BirthdayDescriptionEdit,
 } from "./BirthdayOffers/BirthdayOffers";
+import { GroupList, GroupCreate, GroupEdit } from "./GroupOffers/GroupOffers";
 
 const i18nProvider = polyglotI18nProvider(() => russianMessages, "ru");
 const AdminPanel = () => (
@@ -75,9 +75,11 @@ const AdminPanel = () => (
             options={{ label: "День рождения" }}
         />
         <Resource
-            name="birthday_description"
-            edit={BirthdayDescriptionEdit}
-            options={{ label: "тест" }}
+            name="group_offers"
+            list={GroupList}
+            create={GroupCreate}
+            edit={GroupEdit}
+            options={{ label: "Школьный класс/выпускной/корпоратив" }}
         />
     </Admin>
 );

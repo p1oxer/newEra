@@ -3,9 +3,11 @@ import Offers from "../Offers/Offers";
 import { groupOffers } from "../../files/OffersData";
 import Breadcrumbs from "../Breadcrumbs";
 import useFetch from "../../hooks/useFetch";
-
+import ReactMarkdown from "react-markdown";
+import { sanitizeHTML } from "../../hooks/sanitize";
 export default function Group() {
-    const { data: birthdayOffers, isLoading, error } = useFetch("birthday_offers");
+    const { data: groupOffers, isLoading, error } = useFetch("group_offers");
+    const { data: groupDescription } = useFetch("group-description");
 
     if (isLoading) {
         return <p>Загрузка...</p>;
@@ -16,7 +18,7 @@ export default function Group() {
         return <p>Ошибка при загрузке</p>;
     }
 
-    const birthdayOffersList = birthdayOffers?.length > 0 ? birthdayOffers : [];
+    const groupOffersList = groupOffers?.length > 0 ? groupOffers : [];
     return (
         <section className="group page">
             <div className="container">
@@ -25,45 +27,11 @@ export default function Group() {
                 <h2>
                     Отметьте Ваш праздник в <span>Новой Эре</span>
                 </h2>
-                <Offers offers={birthdayOffersList} />
+                <Offers offers={groupOffersList} />
                 <div className="group__text">
-                    <p>
-                        Участники до 12 лет включительно проходят квест в сопровождении
-                        одного взрослого(старше 18 лет) или дополнительного
-                        сопровождающего.
-                    </p>
-                    <p>
-                        <span>Квест на выбор:</span> 1. «Кома» 14+ 2. «Сон» 9+
-                    </p>
-                    <p>
-                        В данной программе участники делятся на 2 группы поровну, первая
-                        проходит квест, вторая в этот момент проходит в комнату отдыха и
-                        играет в мафию с нашим ведущим. После прохождения квеста группы
-                        меняются местами.
-                    </p>
-                    <p>
-                        <span>В КОМНАТУ ОТДЫХА входит:</span>
-                    </p>
-                    <p>- Удобное пространство для застолья на 15 сидячих мест</p>
-                    <p>- Сега</p>
-                    <p>- Игра мафия*</p>
-                    <p>- Горячая и холодная питьевая вода</p>
-                    <p>- Чай</p>
-                    <p>- Салфетки</p>
-                    <p>- Столовые приборы, одноразовая посуда</p>
-                    <p>- Микроволновка</p>
-                    <p>
-                        <span>Действует ежедневно.</span>
-                    </p>
-                    <p>
-                        Есть возможность принести свои угощения, фрукты или заказать пиццу
-                        для празднования в комнате отдыха.
-                    </p>
-                    <p>Любая музыка на ваш выбор.</p>
-                    <p>
-                        Скидки, указанные в группе, не распространяются на пакет "Для
-                        больших компаний"
-                    </p>
+                    <ReactMarkdown>
+                        {sanitizeHTML(groupDescription?.description)}
+                    </ReactMarkdown>
                 </div>
             </div>
         </section>

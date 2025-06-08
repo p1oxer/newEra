@@ -42,19 +42,28 @@
 
 
 .offers {
-    display: grid;
-    max-width: 1200px;
-    margin: 0px auto;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    @include adaptiveValue("margin-bottom", 50, 25);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
     @include adaptiveValue("gap", 50, 20);
+    flex-wrap: wrap;
+    @include adaptiveValue("margin-bottom", 50, 25);
 
-    @media (max-width: em(1155)) {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        flex-wrap: wrap;
+    &.offers-grid {
+        display: grid;
+        max-width: 1200px;
+        margin: 0px auto;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        @include adaptiveValue("margin-bottom", 50, 25);
+
+        @media (max-width: em(1155)) {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
     }
+
 }
 
 .item-offer {
@@ -62,7 +71,11 @@
     border-radius: 15px;
     transition: all 0.3s ease 0s;
     max-width: 350px;
-    min-width: 350px;
+
+    @media (min-width:em(375px)) {
+        min-width: 350px;
+
+    }
 
     @media (any-hover: hover) {
         &:hover {

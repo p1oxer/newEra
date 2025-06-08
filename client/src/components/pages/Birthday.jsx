@@ -8,7 +8,6 @@ import { sanitizeHTML } from "../../hooks/sanitize";
 export default function Birthday() {
     const { data: birthdayOffers, isLoading, error } = useFetch("birthday_offers");
     const { data: birthdayDescription } = useFetch("birthday-description");
-    console.log(birthdayDescription)
     if (isLoading) {
         return <p>Загрузка...</p>;
     }
