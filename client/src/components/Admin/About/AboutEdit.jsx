@@ -12,7 +12,6 @@ const AboutEdit = (props) => (
     <Edit {...props}>
         <SimpleForm toolbar={<CustomToolbar />}>
             <TextInput disabled source="id" />
-            {/* <TextInput multiline source="text" label="Текст" /> */}
             <SimpleMarkdownInput source="text" label="Текст" />
         </SimpleForm>
     </Edit>

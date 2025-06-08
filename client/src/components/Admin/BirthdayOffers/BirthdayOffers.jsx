@@ -18,6 +18,7 @@ import {
 import AttributesInput from "./AttributesInput";
 import ListActions from "../UI/ActionsList";
 import SimpleMarkdownInput from "../UI/SimpleMarkdownInput";
+import { BirthdayDescriptionField } from "./BirthdayDescriptionField";
 
 const BirthdayPagination = () => <Pagination rowsPerPageOptions={[5, 10, 25, 50]} />;
 
@@ -65,7 +66,7 @@ export const BirthdayList = (props) => (
             <EditButton />
             <DeleteButton />
         </Datagrid>
-        <SimpleMarkdownInput source="text" label="Текст" />
+        <BirthdayDescriptionField />
     </List>
 );
 
@@ -88,6 +89,14 @@ export const BirthdayEdit = (props) => (
             <BooleanInput source="best" label="Популярный" />
             <AttributesInput source="attributes" label="Атрибуты" />
             <TextInput source="link" label="Ссылка" validate={required()} />
+        </SimpleForm>
+    </Edit>
+);
+
+export const BirthdayDescriptionEdit = (props) => (
+    <Edit {...props} title="Редактировать текст">
+        <SimpleForm>
+            <SimpleMarkdownInput source="description" label="Текст" />
         </SimpleForm>
     </Edit>
 );
