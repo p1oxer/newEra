@@ -3,6 +3,7 @@ import HeaderNav from "./HeaderNav";
 import Burger from "./Burger";
 import { Link } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
+import Image from "../UI/Image";
 
 export default function Header() {
     const navigation = [
@@ -47,7 +48,7 @@ export default function Header() {
                     <div className="header__body body-header">
                         <div className="header__top">
                             <Link to={"/"} className="body-header__logo">
-                                <img src="/img/logo.png" alt="" />
+                                <Image sizes={["500"]} alt={"Логотип"} src={"/img/logo.png"}/>
                             </Link>
                             {phones.length > 0 && (
                                 <a

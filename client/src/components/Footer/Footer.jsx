@@ -4,6 +4,7 @@ import { FaPhone } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import { FaVk, FaInstagram, FaYoutube, FaTelegramPlane, FaTiktok } from "react-icons/fa";
 import useFetch from "../../hooks/useFetch";
+import Image from "../UI/Image";
 export default function Footer() {
     const { data: contacts, isLoading, error } = useFetch("contacts");
     const { data: socials } = useFetch("socials");
@@ -46,7 +47,7 @@ export default function Footer() {
         <footer className="footer">
             <div className="container">
                 <div className="footer__logo">
-                    <img src="/img/logo.png" alt="" />
+                    <Image sizes={["500"]} alt={"Логотип"} src={"/img/logo.png"} />
                 </div>
                 <div className="footer__body body-footer">
                     <Nav

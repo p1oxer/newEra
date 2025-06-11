@@ -13,6 +13,8 @@ import groupRouter from "./routes/group.js";
 import groupDescriptionRouter from "./routes/groupDescription.js";
 import imageRouter from "./routes/image.js";
 
+// import generateAllImages from "./scripts/generateImages.js";
+
 app.use(
     cors({
         origin: "*",
@@ -34,6 +36,9 @@ app.use("/api/birthday-description", birthdayDescriptionRouter);
 app.use("/api/group_offers", groupRouter);
 app.use("/api/group-description", groupDescriptionRouter);
 app.use("/api/image", imageRouter);
+
+// console.log("Запускаем генерацию изображений...");
+// await generateAllImages(); // Ждём завершения
 
 // Запуск сервера
 const PORT = process.env.PORT || 5000;

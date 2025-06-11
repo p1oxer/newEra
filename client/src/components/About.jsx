@@ -14,11 +14,7 @@ export default function About() {
                 <div className="about__body body-about">
                     <div className="sticky">
                         <div className="body-about__img">
-                            <Image
-                                alt={"Динозавр"}
-                                src={"img/dino.png"}
-                                sizes={["500"]}
-                            />
+                            <img src="/img/dino.png" alt="Динозавр" />
                         </div>
                     </div>
                     <div className="body-about__content">

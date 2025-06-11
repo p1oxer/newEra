@@ -6,13 +6,13 @@ export default function Image({ src, alt, sizes = ["500", "900", "1200"] }) {
     const ext = src.split(".").pop(); // Получаем расширение
 
     const getResizedPath = (size, format) => {
-        return `/api/image/${baseName}-${size}.${format}`;
+        return `${baseName}-${size}.${format}`;
     };
 
     const getMediaQuery = (size) => {
-        if (size === "500") return "(max-width: 500px)";
-        if (size === "900") return "(min-width: 501px) and (max-width: 900px)";
-        if (size === "1200") return "(min-width: 901px) and (max-width: 1200px)";
+        if (size === "500") return "(min-width: 320px)";
+        if (size === "900") return "(min-width: 501px)";
+        if (size === "1200") return "(min-width: 901px)";
         return "(min-width: 1201px)";
     };
 
@@ -21,13 +21,13 @@ export default function Image({ src, alt, sizes = ["500", "900", "1200"] }) {
             {sizes.map((size) => (
                 <React.Fragment key={size}>
                     <source
-                        type="image/webp"
-                        srcSet={getResizedPath(size, "webp")}
+                        type="image/avif"
+                        srcSet={getResizedPath(size, "avif")}
                         media={getMediaQuery(size)}
                     />
                     <source
-                        type="image/avif"
-                        srcSet={getResizedPath(size, "avif")}
+                        type="image/webp"
+                        srcSet={getResizedPath(size, "webp")}
                         media={getMediaQuery(size)}
                     />
                     <source
@@ -39,7 +39,7 @@ export default function Image({ src, alt, sizes = ["500", "900", "1200"] }) {
             ))}
 
             {/* Оригинал */}
-            <img src={`/api/image/${src}`} alt={alt} loading="lazy" />
+            <img src={`${src}`} alt={alt} loading="lazy" />
         </picture>
     );
 }

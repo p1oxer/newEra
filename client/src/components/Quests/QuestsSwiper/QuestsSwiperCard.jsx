@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Button from "../../UI/ButtonLink";
 import { Link } from "react-router-dom";
 import { translit } from "../../../functions/translit";
+import Image from "../../UI/Image";
 
 export default function QuestsSwiperCard({
     img,
@@ -17,7 +18,11 @@ export default function QuestsSwiperCard({
                     to={`../quests/${category}/${translit(name)}`}
                     className="card-quests__img"
                 >
-                    <img src={`/img/QuestsSwiper/${img}.jpg`} alt="" />
+                    <Image
+                        alt={name}
+                        src={`/img/QuestsSwiper/${img}.jpg`}
+                        sizes={["500"]}
+                    />
                 </Link>
                 <div className="card-quests__top">
                     <p className="card-quests__name">{name}</p>

@@ -21,6 +21,7 @@ import QuestsSwiper from "../Quests/QuestsSwiper/QuestsSwiper";
 import Button from "../UI/Button";
 import Modal from "../UI/Modal";
 import Video from "../UI/Video";
+import Image from "../UI/Image";
 
 export default function QuestsPage() {
     const { questId } = useParams();
@@ -59,10 +60,23 @@ export default function QuestsPage() {
                             {currentQuest.img.map((img) => (
                                 <SwiperSlide className="body-quest__slide" key={img}>
                                     <div className="body-quest__img">
-                                        <img
-                                            src={`/img/QuestsSwiper/${questId}/${img}.jpg`}
-                                            alt=""
-                                        />
+                                        <picture>
+                                            <source
+                                                srcSet={`/img/QuestsSwiper/${questId}/${img}-540.avif`}
+                                                type="image/avif"
+                                                media="(min-width: 320px)"
+                                            />
+                                            <source
+                                                srcSet={`/img/QuestsSwiper/${questId}/${img}-540.webp`}
+                                                type="image/webp"
+                                                media="(min-width: 320px)"
+                                            />
+                                            <img
+                                                src={`/img/QuestsSwiper/${questId}/${img}.jpg`}
+                                                alt="Изображение квеста"
+                                                loading="lazy"
+                                            />
+                                        </picture>
                                     </div>
                                 </SwiperSlide>
                             ))}
@@ -79,10 +93,23 @@ export default function QuestsPage() {
                             {currentQuest.img.map((img) => (
                                 <SwiperSlide className="body-quest__slide" key={img}>
                                     <div className="body-quest__img">
-                                        <img
-                                            src={`/img/QuestsSwiper/${questId}/${img}.jpg`}
-                                            alt=""
-                                        />
+                                        <picture>
+                                            <source
+                                                srcSet={`/img/QuestsSwiper/${questId}/${img}-540.avif`}
+                                                type="image/avif"
+                                                media="(min-width: 320px)"
+                                            />
+                                            <source
+                                                srcSet={`/img/QuestsSwiper/${questId}/${img}-540.webp`}
+                                                type="image/webp"
+                                                media="(min-width: 320px)"
+                                            />
+                                            <img
+                                                src={`/img/QuestsSwiper/${questId}/${img}.jpg`}
+                                                alt="Изображение квеста"
+                                                loading="lazy"
+                                            />
+                                        </picture>
                                     </div>
                                 </SwiperSlide>
                             ))}

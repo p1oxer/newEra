@@ -18,12 +18,44 @@ export default function Sertificate() {
                     >
                         <SwiperSlide className="body-sertificate__slide">
                             <div className="body-sertificate__slide-body">
-                                <img src="/img/Sertificates/01.jpg" alt="" />
+                                <picture>
+                                    <source
+                                        srcSet={`/img/Sertificates/01-560.avif`}
+                                        type="image/avif"
+                                        media="(min-width: 320px)"
+                                    />
+                                    <source
+                                        srcSet={`/img/Sertificates/01-560.webp`}
+                                        type="image/webp"
+                                        media="(min-width: 320px)"
+                                    />
+                                    <img
+                                        src={`/img/Sertificates/01.jpg`}
+                                        alt="Сертификат 1"
+                                        loading="lazy"
+                                    />
+                                </picture>
                             </div>
                         </SwiperSlide>
                         <SwiperSlide className="body-sertificate__slide">
                             <div className="body-sertificate__slide-body">
-                                <img src="/img/Sertificates/02.jpg" alt="" />
+                                <picture>
+                                    <source
+                                        srcSet={`/img/Sertificates/02-560.avif`}
+                                        type="image/avif"
+                                        media="(min-width: 320px)"
+                                    />
+                                    <source
+                                        srcSet={`/img/Sertificates/02-560.webp`}
+                                        type="image/webp"
+                                        media="(min-width: 320px)"
+                                    />
+                                    <img
+                                        src={`/img/Sertificates/02.jpg`}
+                                        alt="Сертификат 2"
+                                        loading="lazy"
+                                    />
+                                </picture>
                             </div>
                         </SwiperSlide>
                     </Swiper>
