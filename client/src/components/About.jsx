@@ -3,6 +3,7 @@ import BlockTitle from "./UI/BlockTitle";
 import useFetch from "../hooks/useFetch";
 import ReactMarkdown from "react-markdown";
 import { sanitizeHTML } from "../hooks/sanitize";
+import Image from "./UI/Image";
 export default function About() {
     const { data: textData, isLoading, error } = useFetch("about");
     const text = textData?.length > 0 ? textData : [];
@@ -13,7 +14,11 @@ export default function About() {
                 <div className="about__body body-about">
                     <div className="sticky">
                         <div className="body-about__img">
-                            <img src="/img/dino.png" alt="" />
+                            <Image
+                                alt={"Динозавр"}
+                                src={"img/dino.png"}
+                                sizes={["500"]}
+                            />
                         </div>
                     </div>
                     <div className="body-about__content">
@@ -21,7 +26,9 @@ export default function About() {
                         {text.map((item) => {
                             return (
                                 <div key={item.id}>
-                                    <ReactMarkdown>{sanitizeHTML(item.text)}</ReactMarkdown>
+                                    <ReactMarkdown>
+                                        {sanitizeHTML(item.text)}
+                                    </ReactMarkdown>
                                 </div>
                             );
                         })}

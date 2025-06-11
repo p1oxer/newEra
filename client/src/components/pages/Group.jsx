@@ -1,6 +1,4 @@
-import React from "react";
 import Offers from "../Offers/Offers";
-import { groupOffers } from "../../files/OffersData";
 import Breadcrumbs from "../Breadcrumbs";
 import useFetch from "../../hooks/useFetch";
 import ReactMarkdown from "react-markdown";
