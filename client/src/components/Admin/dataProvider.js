@@ -39,7 +39,7 @@ export default {
 
         return {
             data: json.map((item) => ({ id: item.id, ...item })),
-            total: total || 0, 
+            total: total || 0,
         };
     },
 
@@ -67,13 +67,47 @@ export default {
     // Обновить запись
     update: async (resource, params) => {
         const url = `${apiUrl}/${resource}/${params.id}`;
+
+        let { new_images, ...data } = params.data;
+
+        // Если есть новые изображения — загружаем их на сервер
+        if (new_images && Array.isArray(new_images)) {
+            const uploadedPaths = [];
+
+            for (const file of new_images) {
+                if (file.rawFile instanceof File) {
+                    const formData = new FormData();
+                    formData.append("image", file.rawFile);
+
+                    try {
+                        const response = await fetch(
+                            `${apiUrl}/certificates/upload-image`,
+                            {
+                                method: "POST",
+                                body: formData,
+                            }
+                        );
+
+                        const result = await response.json();
+                        uploadedPaths.push(result.path); // Например: /img/cert/...
+                    } catch (err) {
+                        console.error("Ошибка загрузки файла:", err);
+                    }
+                }
+            }
+
+            // Добавляем загруженные пути к существующим
+            data.image_paths = [...(data.image_paths || []), ...uploadedPaths];
+        }
+
+        // Отправляем данные на сервер
         await fetchUtils.fetchJson(url, {
             method: "PUT",
-            body: JSON.stringify(params.data),
+            body: JSON.stringify(data),
             headers: new Headers({ "Content-Type": "application/json" }),
         });
 
-        return { data: { id: params.id, ...params.data } };
+        return { data: { id: params.id, ...data } };
     },
 
     // Удалить одну запись

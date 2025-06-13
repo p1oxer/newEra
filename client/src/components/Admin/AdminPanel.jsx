@@ -17,6 +17,7 @@ import { ContactsList } from "./Contacts/ContactsList";
 import { ContactsEdit } from "./Contacts/ContactsEdit";
 import { ContactsCreate } from "./Contacts/ContactsCreate";
 import { SocialsList, SocialsCreate, SocialsEdit } from "./Socials/Socials";
+import { CertificateList, CertificateEdit } from "./Certificates/Certificate";
 import {
     BirthdayList,
     BirthdayCreate,
@@ -80,6 +81,12 @@ const AdminPanel = () => (
             create={GroupCreate}
             edit={GroupEdit}
             options={{ label: "Школьный класс/выпускной/корпоратив" }}
+        />
+        <Resource
+            name="certificates"
+            list={CertificateList}
+            edit={CertificateEdit}
+            options={{ label: "Сертификат" }}
         />
     </Admin>
 );

@@ -4,7 +4,6 @@ import db from "../db.js";
 const router = express.Router();
 
 // get all
-// GET /about - список записей (с пагинацией)
 router.get("/", async (req, res) => {
     const { _sort = "id", _order = "ASC", _start = 0, _end = 5 } = req.query;
 
@@ -52,10 +51,10 @@ router.put("/:id", async (req, res) => {
     try {
         const { id } = req.params;
         const { text } = req.body;
-        const [result] = await db.query(
-            "UPDATE about SET text = ? WHERE id = ?",
-            [text, id]
-        );
+        const [result] = await db.query("UPDATE about SET text = ? WHERE id = ?", [
+            text,
+            id,
+        ]);
 
         if (result.affectedRows === 0) {
             return res.status(404).json({ error: "Не найдено" });
