@@ -139,11 +139,11 @@ const ImageUploader = ({ source }) => {
                 }}
             >
                 {images.map((img, index) => (
-                    <div key={index} style={{ position: "relative" }}>
+                    <div key={index} style={{ position: "relative", width: "150px" }}>
                         <ImageField
                             record={{ src: img }}
                             source="src"
-                            sx={{ width: 100, height: 100 }}
+                            sx={{ width: 150, height: 150 }}
                         />
                         <button
                             onClick={() => removeImage(index, img)}
@@ -197,7 +197,7 @@ import SimpleMarkdownInput from "../UI/SimpleMarkdownInput";
 export const CertificateEdit = (props) => (
     <Edit {...props}>
         <SimpleForm>
-            <SimpleMarkdownInput source="text"/>
+            <SimpleMarkdownInput source="text" />
             <ImageUploader source="image_paths" />
         </SimpleForm>
     </Edit>
