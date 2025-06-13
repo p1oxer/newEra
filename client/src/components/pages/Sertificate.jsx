@@ -3,100 +3,69 @@ import { SwiperSlide, Swiper } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import BlockTitle from "../UI/BlockTitle";
 import Breadcrumbs from "../Breadcrumbs";
+import useFetch from "../../hooks/useFetch";
+import ReactMarkdown from "react-markdown";
+import { sanitizeHTML } from "../../hooks/sanitize";
 export default function Sertificate() {
+    const { data: certificates, isLoading, error } = useFetch("certificates");
+    if (isLoading) {
+        return <p>Загрузка...</p>;
+    }
+
+    if (error) {
+        console.error("Ошибка загрузки", error);
+        return <p>Ошибка при загрузке</p>;
+    }
+
+    const certificatesList = certificates?.length > 0 ? certificates : [];
     return (
         <section className="sertificate page">
             <div className="container">
                 <Breadcrumbs />
                 <BlockTitle title={"Подарочные сертификаты"} />
                 <div className="sertificate__body body-sertificate">
-                    <Swiper
-                        modules={[Autoplay]}
-                        loop={{ enabled: true }}
-                        autoplay={{ enabled: true, delay: 3000 }}
-                        className="body-sertificate__swiper"
-                    >
-                        <SwiperSlide className="body-sertificate__slide">
-                            <div className="body-sertificate__slide-body">
-                                <picture>
-                                    <source
-                                        srcSet={`/img/Sertificates/01-560.avif`}
-                                        type="image/avif"
-                                        media="(min-width: 320px)"
-                                    />
-                                    <source
-                                        srcSet={`/img/Sertificates/01-560.webp`}
-                                        type="image/webp"
-                                        media="(min-width: 320px)"
-                                    />
-                                    <img
-                                        src={`/img/Sertificates/01.jpg`}
-                                        alt="Сертификат 1"
-                                        loading="lazy"
-                                    />
-                                </picture>
-                            </div>
-                        </SwiperSlide>
-                        <SwiperSlide className="body-sertificate__slide">
-                            <div className="body-sertificate__slide-body">
-                                <picture>
-                                    <source
-                                        srcSet={`/img/Sertificates/02-560.avif`}
-                                        type="image/avif"
-                                        media="(min-width: 320px)"
-                                    />
-                                    <source
-                                        srcSet={`/img/Sertificates/02-560.webp`}
-                                        type="image/webp"
-                                        media="(min-width: 320px)"
-                                    />
-                                    <img
-                                        src={`/img/Sertificates/02.jpg`}
-                                        alt="Сертификат 2"
-                                        loading="lazy"
-                                    />
-                                </picture>
-                            </div>
-                        </SwiperSlide>
-                    </Swiper>
+                    {certificatesList[0].image_paths.length > 0 && (
+                        <Swiper
+                            modules={[Autoplay]}
+                            loop={{ enabled: true }}
+                            autoplay={{ enabled: true, delay: 3000 }}
+                            className="body-sertificate__swiper"
+                        >
+                            {certificatesList[0].image_paths.map((path, index) => {
+                                return (
+                                    <SwiperSlide
+                                        key={index}
+                                        className="body-sertificate__slide"
+                                    >
+                                        <div className="body-sertificate__slide-body">
+                                            <picture>
+                                                <source
+                                                    srcSet={`${path.split(".")[0]}-560.avif`}
+                                                    type="image/avif"
+                                                    media="(min-width: 320px)"
+                                                />
+                                                <source
+                                                    srcSet={`${path.split(".")[0]}-560.webp`}
+                                                    type="image/webp"
+                                                    media="(min-width: 320px)"
+                                                />
+                                                <img
+                                                    src={path}
+                                                    alt={`Сертификат ${index}`}
+                                                    loading="lazy"
+                                                />
+                                            </picture>
+                                        </div>
+                                    </SwiperSlide>
+                                );
+                            })}
+                        </Swiper>
+                    )}
+
                     <div className="body-sertificate__content">
-                        <p>
-                            <span>1.</span> Сертификат дает право на прохождение одного
-                            квеста на выбор : “Дитя апокалипсиса” (14+) , “Блогеры:
-                            загадки старого дома” (8+), "Сон" (9+) и "Кома" (14+).
-                        </p>
-                        <p>
-                            <span>2.</span> Участники до 13 лет проходят квест в
-                            сопровождении родителей или дополнительного аниматора
-                            (аниматор оплачивается отдельно)
-                        </p>
-                        <p>
-                            <span>3.</span> Если количество участников больше, чем указано
-                            в сертификате, доплата 800 рублей/участник
-                        </p>
-                        <p>
-                            <span>4.</span> Необходимо предварительно забронировать время
-                            игры в группе{" "}
-                            <a target="_blank" href="https://vk.com/newera35">
-                                vk.com/newera35
-                            </a>{" "}
-                            или по телефону
-                        </p>
-                        <p>
-                            <span>5.</span> Сертификат действителен на одну игру
-                        </p>
-                        <p>
-                            <span>6.</span> Срок действия сертификата 6 месяцев
-                        </p>
-                        <p>
-                            <span>7.</span> Скидки, указанные в группе, не
-                            распространяются на игры по сертификату
-                        </p>
-                        <p>
-                            <span>8.</span> Адрес квеста "Блогеры: загадки старого дома" и
-                            "Дитя Апокалипсиса" : ул. Зосимовская, д. 7, 3 этаж, офис 301
-                            Адрес квеста "Сон" и "Кома" : ул. Герцена, д. 105 б
-                        </p>
+                        <ReactMarkdown>
+                            {sanitizeHTML(certificatesList[0].text)}
+                        </ReactMarkdown>
                     </div>
                 </div>
             </div>

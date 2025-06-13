@@ -14,13 +14,16 @@
     display: flex;
     flex-direction: row;
     @include adaptiveValue("gap", 50, 30);
-    @media (max-width:$mobile){
-         flex-direction: column-reverse; 
+
+    @media (max-width:$mobile) {
+        flex-direction: column-reverse;
     }
-    &__swiper{
+
+    &__swiper {
         max-width: 600px;
         width: 100%;
     }
+
     // .body-sertificate__slide
     &__slide {}
 
@@ -36,14 +39,26 @@
         display: flex;
         flex-direction: column;
         gap: 10px;
-        p{
+
+        p {
             font-weight: 300;
             @include adaptiveValue("font-size", 22, 18);
             line-height: 1.2;
             color: #dadada;
-            span {
+
+            strong {
                 color: $mainGreen;
                 font-weight: 500;
+            }
+
+            a {
+                color: $mainGreen;
+
+                @media (any-hover: hover) {
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
             }
         }
     }
