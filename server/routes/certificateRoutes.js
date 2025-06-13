@@ -102,32 +102,46 @@ router.put("/:id", async (req, res) => {
     const { text, image_paths } = req.body;
 
     try {
-        // Преобразуем image_paths в массив, если это строка
-        const pathsArray =
-            typeof image_paths === "string"
-                ? JSON.parse(image_paths).filter((p) => typeof p === "string")
-                : (image_paths || []).filter((p) => typeof p === "string");
+        let pathsArray = [];
 
+        // Если это строка, значит это JSON из формы
+        if (typeof image_paths === "string") {
+            try {
+                const parsed = JSON.parse(image_paths);
+                // Если это массив строк, преобразуем в массив объектов
+                if (Array.isArray(parsed)) {
+                    pathsArray = parsed.map((path) => ({ path }));
+                }
+            } catch (e) {
+                console.error("Failed to parse image_paths as JSON", e);
+            }
+        } else if (Array.isArray(image_paths)) {
+            // Если это уже массив, предполагаем, что он в виде [{ path: ... }]
+            pathsArray = image_paths.filter(
+                (item) => item && typeof item.path === "string"
+            );
+        }
+
+        // Сохраняем как JSON в БД
         await db.query("UPDATE certificates SET text = ?, image_paths = ? WHERE id = ?", [
             text,
-            JSON.stringify(pathsArray),
+            JSON.stringify(pathsArray.map((i) => i.path)),
             req.params.id,
         ]);
+
         res.json({
             id: req.params.id,
             text,
-            image_paths: pathsArray,
+            image_paths: pathsArray.map((i) => i.path),
         });
     } catch (err) {
         console.error("Update error:", err);
-        res.status(500).json({
-            error: "Failed to update certificate",
-            details: err.message,
-        });
+        res.status(500).json({ error: "Failed to update certificate" });
     }
 });
 
 // Получить одну запись
+// GET /:id
 router.get("/:id", async (req, res) => {
     try {
         const [rows] = await db.query("SELECT * FROM certificates WHERE id = ?", [
@@ -136,10 +150,21 @@ router.get("/:id", async (req, res) => {
         if (rows.length === 0) {
             return res.status(404).json({ error: "Запись не найдена" });
         }
-
         const certificate = rows[0];
+
+        // Парсим image_paths, если это строка
         if (typeof certificate.image_paths === "string") {
-            certificate.image_paths = JSON.parse(certificate.image_paths);
+            try {
+                const parsed = JSON.parse(certificate.image_paths);
+                // Если это массив строк, преобразуем в массив объектов
+                if (Array.isArray(parsed)) {
+                    certificate.image_paths = parsed.map((path) => ({ path }));
+                } else {
+                    certificate.image_paths = [];
+                }
+            } catch {
+                certificate.image_paths = [];
+            }
         }
 
         res.json(certificate);
@@ -149,67 +174,81 @@ router.get("/:id", async (req, res) => {
     }
 });
 
-// Функция для получения всех версий файла
-function getDerivedFilenames(filePath) {
-    const dir = path.dirname(filePath);
-    const name = path.basename(filePath, path.extname(filePath));
-    const ext = path.extname(filePath);
-
-    return [
-        // Основной файл
-        filePath,
-        path.join(dir, `${name}-560${ext}`),
-        path.join(dir, `${name}-560.avif`),
-        path.join(dir, `${name}-560.webp`)
-    ];
-}
 
 router.post("/delete-image/:id", async (req, res) => {
     const { path: imagePath } = req.body;
+    const cleanImagePath = imagePath?.trim();
 
     try {
+        // 1. Получаем текущие пути из БД
         const [[certificate]] = await db.query(
             "SELECT image_paths FROM certificates WHERE id = ?",
             [req.params.id]
         );
 
-        let pathsArray = [];
-        if (certificate?.image_paths) {
-            try {
-                pathsArray = JSON.parse(certificate.image_paths);
-                if (!Array.isArray(pathsArray)) pathsArray = [];
-            } catch {
-                pathsArray = [];
-            }
+        if (!certificate) {
+            return res.status(404).json({ error: "Сертификат не найден" });
         }
 
-        // Удаляем путь из массива
-        pathsArray = pathsArray.filter((p) => p !== imagePath);
+        // 2. Парсим JSON из БД
+        let pathsArray = [];
+        try {
+            // Проверяем, если это уже массив (для обратной совместимости)
+            pathsArray = Array.isArray(certificate.image_paths)
+                ? certificate.image_paths
+                : JSON.parse(certificate.image_paths || "[]");
+        } catch (e) {
+            console.error("Ошибка парсинга image_paths:", e);
+            pathsArray = [];
+        }
 
-        // Сохраняем обновленный список путей
+        console.log("Текущие пути:", pathsArray);
+        console.log("Удаляемый путь:", cleanImagePath);
+
+        // 3. Фильтруем массив (удаляем точное совпадение)
+        const updatedPaths = pathsArray.filter((p) => p !== cleanImagePath);
+
+        console.log("Обновленные пути:", updatedPaths);
+
+        // 4. Сохраняем в БД
         await db.query("UPDATE certificates SET image_paths = ? WHERE id = ?", [
-            JSON.stringify(pathsArray),
+            JSON.stringify(updatedPaths),
             req.params.id,
         ]);
 
-        // Удаление файла и его версий
-        const fullImagePath = path.join(FULL_IMG_DIR, imagePath.split("/").pop());
+        // 5. Удаляем файлы с диска
+        if (cleanImagePath) {
+            const filename = cleanImagePath.split("/").pop();
+            const fullPath = path.join(FULL_IMG_DIR, filename);
 
-        const filesToDelete = getDerivedFilenames(fullImagePath);
+            // Генерируем все возможные варианты файлов
+            const filesToDelete = [
+                fullPath,
+                fullPath.replace(/\.(\w+)$/, "-560.$1"),
+                fullPath.replace(/\.(\w+)$/, "-360.$1"),
+                fullPath.replace(/\.(\w+)$/, "-160.$1"),
+            ];
 
-        for (const file of filesToDelete) {
-            try {
-                await fs.access(file); // Проверяем существование
-                await fs.unlink(file); // Удаляем
-            } catch (err) {
-                console.warn(`Файл не найден для удаления: ${file}`);
+            for (const file of filesToDelete) {
+                try {
+                    await fs.unlink(file).catch(() => {});
+                    console.log("Удален файл:", file);
+                } catch (err) {
+                    console.warn("Не удалось удалить файл:", file, err.message);
+                }
             }
         }
 
-        res.json({ success: true });
+        res.json({
+            success: true,
+            remainingImages: updatedPaths,
+        });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: "Ошибка удаления изображения" });
+        console.error("Ошибка при удалении изображения:", err);
+        res.status(500).json({
+            error: "Ошибка сервера",
+            details: err.message,
+        });
     }
 });
 export default router;

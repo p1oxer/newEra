@@ -191,12 +191,13 @@ const ImageUploader = ({ source }) => {
         </div>
     );
 };
+import SimpleMarkdownInput from "../UI/SimpleMarkdownInput";
 
 // === Форма редактирования записи ===
 export const CertificateEdit = (props) => (
     <Edit {...props}>
         <SimpleForm>
-            <TextInput source="text" multiline fullWidth />
+            <SimpleMarkdownInput source="text"/>
             <ImageUploader source="image_paths" />
         </SimpleForm>
     </Edit>
