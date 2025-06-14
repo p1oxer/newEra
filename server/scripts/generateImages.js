@@ -2,51 +2,59 @@ import fs from "fs/promises";
 import path from "path";
 import sharp from "sharp";
 
-// Форматы, в которых сохраняем
-const FORMATS = ["webp", "avif"];
+const TARGET_FORMATS = ["webp", "avif"];
+const COMPRESSION_QUALITY = 80;
+const DEFAULT_SIZES = [500, 900];
 
-/**
- * Генерирует нужные версии изображения
- */
-export async function generateImageVersions(filePath, sizes = [500, 900]) {
+export async function generateImageVersions(
+    filePath,
+    { sizes = DEFAULT_SIZES, quality = COMPRESSION_QUALITY, overwrite = false } = {}
+) {
     const dir = path.dirname(filePath);
     const baseName = path.basename(filePath, path.extname(filePath));
 
-    for (const size of sizes) {
-        for (const format of FORMATS) {
-            const resizedFilePath = path.join(dir, `${baseName}-${size}.${format}`);
+    try {
+        // 1. Загружаем и сразу сжимаем исходное изображение (в памяти)
+        const compressedImage = sharp(filePath)
+            .withMetadata() // сохраняем метаданные
+            .jpeg({ quality: quality, mozjpeg: true }); // сжатие для JPEG
 
-            // Пропускаем, если уже существует
-            if (await fileExists(resizedFilePath)) continue;
+        const compressedBuffer = await compressedImage.toBuffer();
 
-            try {
-                let image = sharp(filePath);
+        // 2. Создаем версии в разных форматах и размерах
+        for (const size of sizes) {
+            for (const format of TARGET_FORMATS) {
+                const outputPath = path.join(dir, `${baseName}-${size}.${format}`);
+
+                if (!overwrite && (await fileExists(outputPath))) continue;
+
+                const pipeline = sharp(compressedBuffer);
 
                 if (size !== "original") {
-                    image = image.resize(size);
+                    pipeline.resize(size);
                 }
 
-                switch (format) {
-                    case "webp":
-                        image = image.webp({ quality: 80 });
-                        break;
-                    case "avif":
-                        image = image.avif({ quality: 80 });
-                        break;
+                if (format === "webp") {
+                    pipeline.webp({ quality });
+                } else if (format === "avif") {
+                    pipeline.avif({ quality });
                 }
 
-                await image.toFile(resizedFilePath);
-                console.log(`Создано: ${resizedFilePath}`);
-            } catch (err) {
-                console.error(`Ошибка при обработке ${filePath}:`, err.message);
+                await pipeline.toFile(outputPath);
+                console.log(`Создано: ${outputPath}`);
             }
         }
+
+        return { success: true };
+    } catch (err) {
+        console.error(`Ошибка при обработке ${filePath}:`, err);
+        return { success: false, error: err };
     }
 }
 
-async function fileExists(pathToFile) {
+async function fileExists(filePath) {
     try {
-        await fs.access(pathToFile);
+        await fs.access(filePath);
         return true;
     } catch {
         return false;

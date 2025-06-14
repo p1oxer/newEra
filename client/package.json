@@ -33,8 +33,10 @@
         "react-markdown": "^10.1.0",
         "react-quill-new": "^3.4.6",
         "react-router-dom": "^7.1.5",
+        "react-sortablejs": "^6.1.4",
         "sass": "^1.70.0",
         "sharp": "^0.34.2",
+        "sortablejs": "^1.15.6",
         "swiper": "^11.1.15"
     },
     "devDependencies": {

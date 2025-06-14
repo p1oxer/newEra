@@ -24,6 +24,7 @@ import {
     BirthdayEdit,
 } from "./BirthdayOffers/BirthdayOffers";
 import { GroupList, GroupCreate, GroupEdit } from "./GroupOffers/GroupOffers";
+import { QuestCreate, QuestEdit, QuestList } from "./Quest/Quest";
 
 const i18nProvider = polyglotI18nProvider(() => russianMessages, "ru");
 const AdminPanel = () => (
@@ -87,6 +88,13 @@ const AdminPanel = () => (
             list={CertificateList}
             edit={CertificateEdit}
             options={{ label: "Сертификат" }}
+        />
+        <Resource
+            name="quests"
+            list={QuestList}
+            edit={QuestEdit}
+            create={QuestCreate}
+            options={{ label: "Квесты" }}
         />
     </Admin>
 );

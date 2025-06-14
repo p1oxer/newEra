@@ -71,7 +71,10 @@ router.post("/upload-image", upload.single("image"), async (req, res) => {
             return res.status(400).json({ error: "No file uploaded" });
         }
 
-        await generateImageVersions(req.file.path, [560]);
+        await generateImageVersions(req.file.path, {
+            sizes: [560],
+            quality: 90,
+        });
         const relativePath = `/img/cert/${req.file.filename}`;
 
         let pathsArray = currentPaths ? JSON.parse(currentPaths) : [];
@@ -185,7 +188,6 @@ router.get("/:id", async (req, res) => {
         res.status(500).json({ error: "Ошибка сервера" });
     }
 });
-
 
 router.post("/delete-image/:id", async (req, res) => {
     const { path: imagePath } = req.body;

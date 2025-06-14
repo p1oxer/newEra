@@ -13,6 +13,7 @@ import groupRouter from "./routes/group.js";
 import groupDescriptionRouter from "./routes/groupDescription.js";
 import imageRouter from "./routes/image.js";
 import certificateRouter from "./routes/certificateRoutes.js";
+import questRouter from "./routes/questRoute.js";
 
 // import generateAllImages from "./scripts/generateImages.js";
 app.use(express.json({ limit: "10mb" }));
@@ -39,6 +40,7 @@ app.use("/api/group_offers", groupRouter);
 app.use("/api/group-description", groupDescriptionRouter);
 app.use("/api/image", imageRouter);
 app.use("/api/certificates", certificateRouter);
+app.use("/api/quests", questRouter);
 
 // console.log("Запускаем генерацию изображений...");
 // await generateAllImages(); // Ждём завершения
