@@ -14,8 +14,9 @@ import {
     useRefresh,
     Button,
     FormDataConsumer,
+    Toolbar,
+    SaveButton,
 } from "react-admin";
-import { useFormContext } from "react-hook-form";
 import { useState, useEffect } from "react";
 
 // === Список записей ===
@@ -29,7 +30,6 @@ export const CertificateList = (props) => (
     </List>
 );
 
-// === Компонент для загрузки и отображения изображений ===
 const ImageUploader = ({ source }) => {
     const record = useRecordContext();
     const notify = useNotify();
@@ -52,17 +52,14 @@ const ImageUploader = ({ source }) => {
         }
     }, [record, source]);
 
-    // Загрузка нового изображения
     const handleUpload = async (e) => {
         const file = e.target.files[0];
         if (!file) return;
-
         setUploading(true);
         const formData = new FormData();
         formData.append("image", file);
         formData.append("certificateId", record.id);
         formData.append("currentPaths", JSON.stringify(images)); // Отправляем текущие пути
-
         try {
             const response = await fetch(
                 "http://localhost:5000/api/certificates/upload-image",
@@ -71,17 +68,21 @@ const ImageUploader = ({ source }) => {
                     body: formData,
                 }
             );
-
             if (!response.ok) throw new Error("Upload failed");
-
             const result = await response.json();
-
             if (result.success) {
                 const newPath = result.image.path;
                 const updated = [...images, newPath];
                 setImages(updated);
                 notify("Изображение успешно загружено", { type: "success" });
-                refresh(); // Обновляем UI
+
+                // === ВАЖНОЕ ИСПРАВЛЕНИЕ ===
+                // Обновляем поле image_paths в форме
+                setValue(
+                    source,
+                    updated.map((path) => ({ path })),
+                    { shouldDirty: true }
+                );
             }
         } catch (error) {
             notify("Ошибка загрузки изображения", { type: "error" });
@@ -191,12 +192,19 @@ const ImageUploader = ({ source }) => {
         </div>
     );
 };
-import SimpleMarkdownInput from "../UI/SimpleMarkdownInput";
 
+import SimpleMarkdownInput from "../UI/SimpleMarkdownInput";
+import { useFormContext } from "react-hook-form";
+
+const CustomToolbar = (props) => (
+    <Toolbar {...props}>
+        <SaveButton />
+    </Toolbar>
+);
 // === Форма редактирования записи ===
 export const CertificateEdit = (props) => (
-    <Edit {...props}>
-        <SimpleForm>
+    <Edit {...props} mutationMode="optimistic">
+        <SimpleForm toolbar={<CustomToolbar />}>
             <SimpleMarkdownInput source="text" />
             <ImageUploader source="image_paths" />
         </SimpleForm>

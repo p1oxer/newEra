@@ -99,44 +99,56 @@ router.post("/upload-image", upload.single("image"), async (req, res) => {
 });
 
 router.put("/:id", async (req, res) => {
-    const { text, image_paths } = req.body;
+    const { text } = req.body;
 
     try {
-        let pathsArray = [];
+        // 1. Получаем текущие данные (включая существующие изображения)
+        const [[currentData]] = await db.query(
+            "SELECT text, image_paths FROM certificates WHERE id = ?",
+            [req.params.id]
+        );
 
-        // Если это строка, значит это JSON из формы
-        if (typeof image_paths === "string") {
+        // 2. Парсим image_paths, только если это строка
+        let currentImages = [];
+
+        if (typeof currentData.image_paths === "string") {
             try {
-                const parsed = JSON.parse(image_paths);
-                // Если это массив строк, преобразуем в массив объектов
+                const parsed = JSON.parse(currentData.image_paths);
+                // Если это массив → сохраняем как есть
                 if (Array.isArray(parsed)) {
-                    pathsArray = parsed.map((path) => ({ path }));
+                    currentImages = parsed;
+                } else {
+                    // Если это НЕ массив, но валидный JSON → оборачиваем в массив
+                    currentImages = [parsed];
                 }
             } catch (e) {
                 console.error("Failed to parse image_paths as JSON", e);
+                currentImages = [];
             }
-        } else if (Array.isArray(image_paths)) {
-            // Если это уже массив, предполагаем, что он в виде [{ path: ... }]
-            pathsArray = image_paths.filter(
-                (item) => item && typeof item.path === "string"
-            );
+        } else if (Array.isArray(currentData.image_paths)) {
+            // Если это уже массив (например, от react-hook-form), используем напрямую
+            currentImages = currentData.image_paths;
+        } else {
+            currentImages = [];
         }
 
-        // Сохраняем как JSON в БД
-        await db.query("UPDATE certificates SET text = ?, image_paths = ? WHERE id = ?", [
-            text,
-            JSON.stringify(pathsArray.map((i) => i.path)),
+        // 3. Обновляем ТОЛЬКО текст, не трогая изображения
+        await db.query("UPDATE certificates SET text = ? WHERE id = ?", [
+            text || currentData.text,
             req.params.id,
         ]);
 
         res.json({
             id: req.params.id,
-            text,
-            image_paths: pathsArray.map((i) => i.path),
+            text: text || currentData.text,
+            image_paths: currentImages, // Возвращаем неизменённые изображения
         });
     } catch (err) {
         console.error("Update error:", err);
-        res.status(500).json({ error: "Failed to update certificate" });
+        res.status(500).json({
+            error: "Failed to update certificate",
+            details: err.message,
+        });
     }
 });
 
@@ -224,9 +236,8 @@ router.post("/delete-image/:id", async (req, res) => {
             // Генерируем все возможные варианты файлов
             const filesToDelete = [
                 fullPath,
-                fullPath.replace(/\.(\w+)$/, "-560.$1"),
-                fullPath.replace(/\.(\w+)$/, "-360.$1"),
-                fullPath.replace(/\.(\w+)$/, "-160.$1"),
+                fullPath.replace(/\.(\w+)$/, "-560.avif"),
+                fullPath.replace(/\.(\w+)$/, "-560.webp"),
             ];
 
             for (const file of filesToDelete) {
