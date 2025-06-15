@@ -14,8 +14,9 @@ import groupDescriptionRouter from "./routes/groupDescription.js";
 import imageRouter from "./routes/image.js";
 import certificateRouter from "./routes/certificateRoutes.js";
 import questRouter from "./routes/questRoute.js";
+import jwt from "jsonwebtoken";
+import jwksClient from "jwks-rsa";
 
-// import generateAllImages from "./scripts/generateImages.js";
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 app.use(
@@ -26,7 +27,6 @@ app.use(
         exposedHeaders: ["Content-Range"],
     })
 );
-app.use(express.json());
 
 // Подключаем маршруты
 app.use("/api/reviews", reviewsRouter);
@@ -42,8 +42,58 @@ app.use("/api/image", imageRouter);
 app.use("/api/certificates", certificateRouter);
 app.use("/api/quests", questRouter);
 
-// console.log("Запускаем генерацию изображений...");
-// await generateAllImages(); // Ждём завершения
+const client = jwksClient({
+    jwksUri: `${process.env.SUPABASE_URL}/auth/v1/.well-known/jwks.json`,
+});
+
+function getKey(header, callback) {
+    client.getSigningKey(header.kid, (err, key) => {
+        const signingKey = key?.getPublicKey();
+        callback(null, signingKey);
+    });
+}
+
+function verifyToken(token) {
+    return new Promise((resolve, reject) => {
+        jwt.verify(token, getKey, { algorithms: ["RS256"] }, (err, decoded) => {
+            if (err) return reject(err);
+
+            const issuer = process.env.SUPABASE_URL; // например: https://xxx.supabase.co/auth/v1
+            const expectedIssuer = `${issuer}/auth/v1`;
+            const audience = "authenticated"; // см. Supabase документацию
+
+            if (decoded.iss !== expectedIssuer || decoded.aud !== audience) {
+                return reject(new Error("Invalid token issuer or audience"));
+            }
+
+            resolve(decoded);
+        });
+    });
+}
+
+// Middleware для проверки токена
+async function authenticate(req, res, next) {
+    const authHeader = req.headers.authorization;
+    if (!authHeader) return res.status(401).json({ error: "No token provided" });
+
+    const token = authHeader.split(" ")[1];
+    try {
+        const decoded = await verifyToken(token);
+        req.user = decoded;
+        next();
+    } catch (err) {
+        res.status(401).json({ error: "Invalid token" });
+    }
+}
+
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL;
+
+function isAdmin(req, res, next) {
+    if (req.user.email !== ADMIN_EMAIL) {
+        return res.status(403).json({ error: "Access denied" });
+    }
+    next();
+}
 
 // Запуск сервера
 const PORT = process.env.PORT || 5000;
