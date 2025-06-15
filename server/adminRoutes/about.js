@@ -46,6 +46,24 @@ router.get("/:id", async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 });
+// Редактировать запись
+router.put("/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { text } = req.body;
+        const [result] = await db.query("UPDATE about SET text = ? WHERE id = ?", [
+            text,
+            id,
+        ]);
 
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: "Не найдено" });
+        }
+
+        res.json({ id, text });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
 
 export default router;

@@ -24,7 +24,6 @@ const LoginPage = () => {
                 minHeight: "100vh",
                 alignItems: "center",
                 justifyContent: "center",
-                background: "url(https://source.unsplash.com/random/1600x900)",
                 backgroundSize: "cover",
             }}
         >

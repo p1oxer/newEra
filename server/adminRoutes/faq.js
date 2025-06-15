@@ -31,7 +31,27 @@ router.get("/", async (req, res) => {
         return res.status(500).json({ error: err.message });
     }
 });
+// create one
 
+router.post("/", async (req, res) => {
+    try {
+        const { title, text } = req.body;
+
+        const [result] = await db.query("INSERT INTO faq (title, text) VALUES (?, ?)", [
+            title,
+            text,
+        ]);
+        res.status(201).json({
+            data: {
+                id: result.insertId,
+                title: title,
+                text: text,
+            },
+        });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
 // Получить одну запись
 router.get("/:id", async (req, res) => {
     try {
@@ -44,6 +64,39 @@ router.get("/:id", async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 });
+// Редактировать запись
+router.put("/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { title, text } = req.body;
+        const [result] = await db.query(
+            "UPDATE faq SET title = ?, text = ? WHERE id = ?",
+            [title, text, id]
+        );
 
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: "Не найдено" });
+        }
+
+        res.json({ id, title, text });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+router.delete("/:id", async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const [result] = await db.query("DELETE FROM faq WHERE id = ?", [id]);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: "Не найдено" });
+        }
+
+        res.json({ message: "Успешно удалёно" });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
 
 export default router;

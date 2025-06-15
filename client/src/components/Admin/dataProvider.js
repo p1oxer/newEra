@@ -1,15 +1,32 @@
 // src/dataProvider.js
+
 import { fetchUtils } from "react-admin";
 import { stringify } from "query-string";
+import { supabase } from "../../../supabaseClient";
 
-const apiUrl = "http://localhost:5000/api";
+const apiUrl = "http://localhost:5000/api/admin"; // ваш защищённый путь
+
+const getAuthToken = async () => {
+    const {
+        data: { session },
+    } = await supabase.auth.getSession();
+    return session?.access_token;
+};
+
+const httpClient = async (url, options = {}) => {
+    const token = await getAuthToken();
+    if (!token) throw new Error("No token");
+
+    const headers = new Headers(options.headers || {});
+    headers.set("Authorization", `Bearer ${token}`);
+
+    return fetchUtils.fetchJson(url, { ...options, headers });
+};
 
 export default {
-    // Получить список
     getList: async (resource, params) => {
         const { page = 1, perPage = 5 } = params.pagination || {};
         const { field = "id", order = "ASC" } = params.sort || {};
-
         const start = (page - 1) * perPage;
         const end = page * perPage;
 
@@ -21,16 +38,12 @@ export default {
         };
 
         const url = `${apiUrl}/${resource}?${stringify(query)}`;
+        const { json, headers } = await httpClient(url);
 
-        // fetchUtils.fetchJson возвращает объект: { json, headers, status }
-        const { json, headers } = await fetchUtils.fetchJson(url);
-
-        // Получаем total из заголовка Content-Range или другого источника
         const contentRange = headers.get("Content-Range");
         let total = 0;
 
         if (contentRange) {
-            // парсим Content-Range: reviews 0-5/12
             const match = /\/(\d+)$/.exec(contentRange);
             if (match && match[1]) {
                 total = parseInt(match[1], 10);
@@ -43,100 +56,49 @@ export default {
         };
     },
 
-    // Получить одну запись
     getOne: async (resource, params) => {
         const url = `${apiUrl}/${resource}/${params.id}`;
-        const { json } = await fetchUtils.fetchJson(url);
+        const { json } = await httpClient(url);
         return { data: { id: json.id, ...json } };
     },
 
-    // Создать запись
     create: async (resource, params) => {
         const url = `${apiUrl}/${resource}`;
-        const { json } = await fetchUtils.fetchJson(url, {
+        const { json } = await httpClient(url, {
             method: "POST",
             body: JSON.stringify(params.data),
             headers: new Headers({ "Content-Type": "application/json" }),
         });
 
-        const id = json.id || json.insertId || params.data.id;
-
+        const id = json.id || params.data.id;
         return { data: { id, ...params.data } };
     },
 
-    // Обновить запись
     update: async (resource, params) => {
         const url = `${apiUrl}/${resource}/${params.id}`;
-
-        let { new_images, ...data } = params.data;
-
-        // Если есть новые изображения — загружаем их на сервер
-        if (new_images && Array.isArray(new_images)) {
-            const uploadedPaths = [];
-
-            for (const file of new_images) {
-                if (file.rawFile instanceof File) {
-                    const formData = new FormData();
-                    formData.append("image", file.rawFile);
-
-                    try {
-                        const response = await fetch(
-                            `${apiUrl}/certificates/upload-image`,
-                            {
-                                method: "POST",
-                                body: formData,
-                            }
-                        );
-
-                        const result = await response.json();
-                        uploadedPaths.push(result.path); // Например: /img/cert/...
-                    } catch (err) {
-                        console.error("Ошибка загрузки файла:", err);
-                    }
-                }
-            }
-
-            // Добавляем загруженные пути к существующим
-            data.image_paths = [...(data.image_paths || []), ...uploadedPaths];
-        }
-
-        // Отправляем данные на сервер
-        await fetchUtils.fetchJson(url, {
+        await httpClient(url, {
             method: "PUT",
-            body: JSON.stringify(data),
+            body: JSON.stringify(params.data),
             headers: new Headers({ "Content-Type": "application/json" }),
         });
 
-        return { data: { id: params.id, ...data } };
+        return { data: { id: params.id, ...params.data } };
     },
 
-    // Удалить одну запись
     delete: async (resource, params) => {
         const url = `${apiUrl}/${resource}/${params.id}`;
-        await fetchUtils.fetchJson(url, {
-            method: "DELETE",
-        });
-
+        await httpClient(url, { method: "DELETE" });
         return { data: {} };
     },
 
-    // ✅ Новый метод: удалить несколько записей
     deleteMany: async (resource, params) => {
-        const url = `${apiUrl}/${resource}/delete-many`;
-
-        // Если ты хочешь отправить DELETE-запрос на каждый id отдельно:
         const promises = params.ids.map((id) =>
-            fetchUtils.fetchJson(`${apiUrl}/${resource}/${id}`, {
-                method: "DELETE",
-            })
+            httpClient(`${apiUrl}/${resource}/${id}`, { method: "DELETE" })
         );
-
         await Promise.all(promises);
-
-        return { data: params.ids }; // react-admin ожидает этот формат
+        return { data: params.ids };
     },
 
-    // Не обязательные, но нужные для совместимости
     getMany: async () => ({ data: [] }),
     getManyReference: async () => ({ data: [], total: 0 }),
     updateMany: async () => ({ data: [] }),

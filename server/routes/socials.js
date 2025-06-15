@@ -46,66 +46,6 @@ router.get("/:id", async (req, res) => {
     }
 });
 
-// Создать новую запись
-router.post("/", async (req, res) => {
-    try {
-        const { network_type, url, sort_order = 0 } = req.body;
 
-        if (!network_type || !url) {
-            return res.status(400).json({ error: "Поля обязательны" });
-        }
-
-        const [result] = await db.query(
-            "INSERT INTO social_links (network_type, url) VALUES (?, ?)",
-            [network_type, url, sort_order]
-        );
-
-        res.status(201).json({
-            id: result.insertId,
-            network_type,
-            url,
-            sort_order,
-        });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
-// Обновить запись
-router.put("/:id", async (req, res) => {
-    try {
-        const { network_type, url, sort_order } = req.body;
-
-        const [result] = await db.query(
-            "UPDATE social_links SET network_type = ?, url = ?, WHERE id = ?",
-            [network_type, url, req.params.id]
-        );
-
-        if (result.affectedRows === 0) {
-            return res.status(404).json({ error: "Не найдено" });
-        }
-
-        res.json({ id: req.params.id, network_type, url, sort_order });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
-// Удалить запись
-router.delete("/:id", async (req, res) => {
-    try {
-        const [result] = await db.query("DELETE FROM social_links WHERE id = ?", [
-            req.params.id,
-        ]);
-
-        if (result.affectedRows === 0) {
-            return res.status(404).json({ error: "Не найдено" });
-        }
-
-        res.json({ success: true });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
 
 export default router;

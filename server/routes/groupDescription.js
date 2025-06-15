@@ -26,25 +26,6 @@ router.get("/:id", async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 });
-// Обновить описание
-router.put("/:id", async (req, res) => {
-    const { description } = req.body;
 
-    try {
-        const [result] = await db.query(
-            "UPDATE group_description SET description = ? WHERE id = ?",
-            [description, req.params.id]
-        );
-
-        if (result.affectedRows === 0) {
-            return res.status(404).json({ error: "Не найдено" });
-        }
-
-        res.json({ id: req.params.id, description });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: err.message });
-    }
-});
 
 export default router;

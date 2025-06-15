@@ -6,7 +6,7 @@ const router = express.Router();
 // Получить описание
 router.get("/", async (req, res) => {
     try {
-        const [rows] = await db.query("SELECT * FROM birthday_description LIMIT 1");
+        const [rows] = await db.query("SELECT * FROM group_description LIMIT 1");
         const data = rows[0] || { id: null, description: "" };
         res.json(data);
     } catch (err) {
@@ -17,7 +17,7 @@ router.get("/", async (req, res) => {
 // Получить одну запись
 router.get("/:id", async (req, res) => {
     try {
-        const [rows] = await db.query("SELECT * FROM birthday_description WHERE id = ?", [
+        const [rows] = await db.query("SELECT * FROM group_description WHERE id = ?", [
             req.params.id,
         ]);
         if (rows.length === 0) return res.status(404).json({ error: "Не найдено" });
@@ -26,6 +26,25 @@ router.get("/:id", async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 });
+// Обновить описание
+router.put("/:id", async (req, res) => {
+    const { description } = req.body;
 
+    try {
+        const [result] = await db.query(
+            "UPDATE group_description SET description = ? WHERE id = ?",
+            [description, req.params.id]
+        );
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: "Не найдено" });
+        }
+
+        res.json({ id: req.params.id, description });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: err.message });
+    }
+});
 
 export default router;

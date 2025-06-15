@@ -1,7 +1,7 @@
 // services/questService.js
 import axios from "axios";
 
-const API_HOST = import.meta.env.VITE_API_HOST; // например, http://localhost:5000
+const API_HOST = import.meta.env.VITE_API_HOST; 
 
 export const getQuestIdBySlug = async (slug) => {
     try {
