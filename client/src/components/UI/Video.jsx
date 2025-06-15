@@ -13,7 +13,7 @@ export default function Video({ video, resetVideo }) {
     return (
         <div className="video">
             <video ref={videoRef} controls>
-                <source src={`/videos/${video}.mp4`} type="video/mp4" />
+                <source src={`${video}`} type="video/mp4" />
             </video>
         </div>
     );

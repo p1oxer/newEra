@@ -1,9 +1,12 @@
+// questRoute.js
 import express from "express";
 import db from "../db.js";
 import fs from "fs/promises";
 import path from "path";
 import multer from "multer";
 import { generateImageVersions } from "../scripts/generateImages.js";
+import { capitalizeFirstLetterAndReplaceDash, translit } from "../../client/src/functions/translit.js";
+import { updateLocaleWithQuest } from "../../client/src/functions/localization.js";
 
 const router = express.Router();
 
@@ -120,7 +123,7 @@ router.put("/:id", async (req, res) => {
         address,
         small_description,
         category,
-        img, // <-- добавлено: получаем img из тела запроса
+        img,
     } = req.body;
 
     try {
@@ -327,6 +330,90 @@ router.post("/delete-video/:id", async (req, res) => {
     } catch (err) {
         console.error("Ошибка при удалении видео:", err);
         res.status(500).json({ error: "Ошибка сервера", details: err.message });
+    }
+});
+router.get("/slug/:slug", async (req, res) => {
+    try {
+        const [rows] = await db.query("SELECT id FROM quests WHERE slug = ?", [
+            req.params.slug,
+        ]);
+        if (rows.length === 0) return res.status(404).json({ error: "Квест не найден" });
+        res.json({ id: rows[0].id });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Ошибка сервера" });
+    }
+});
+
+router.post("/", async (req, res) => {
+    const {
+        title,
+        description,
+        people,
+        age,
+        difficulty,
+        time,
+        address,
+        small_description,
+        category,
+        img = [],
+    } = req.body;
+
+    if (!title) {
+        return res.status(400).json({ error: "Title и description обязательны" });
+    }
+
+    try {
+        const slug = translit(title);
+        // Проверяем уникальность slug
+        const [existing] = await db.query("SELECT * FROM quests WHERE slug = ?", [slug]);
+        if (existing.length > 0) {
+            return res
+                .status(400)
+                .json({ error: "Квест с таким названием уже существует" });
+        }
+        
+        // Вставляем новый квест
+        const [result] = await db.query(
+            `INSERT INTO quests (
+                slug, title, description, people, age, difficulty, time, address, 
+                small_description, category, img
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            [
+                slug,
+                title,
+                description,
+                people,
+                age,
+                difficulty,
+                time,
+                address,
+                small_description,
+                category,
+                JSON.stringify(img), // сохраняем как JSON-строку
+            ]
+        );
+        // Обновляем файл локализации
+        await updateLocaleWithQuest(slug, title);
+        const newQuestId = result.insertId;
+
+        // Возвращаем клиенту новый объект
+        res.status(201).json({
+            id: newQuestId,
+            title,
+            description,
+            people,
+            age,
+            difficulty,
+            time,
+            address,
+            small_description,
+            category,
+            img,
+        });
+    } catch (err) {
+        console.error("Ошибка при создании квеста:", err);
+        res.status(500).json({ error: "Не удалось создать квест", details: err.message });
     }
 });
 export default router;

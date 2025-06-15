@@ -36,13 +36,6 @@
         }
     }
 
-    .swiper-btn {
-        @media (min-width:em(1400)) {
-            display: none;
-            visibility: hidden;
-            opacity: 0;
-        }
-    }
 }
 
 .card-quests {

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Navigate, useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 
 import { FreeMode, Thumbs } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -16,29 +16,55 @@ import { FaLocationDot } from "react-icons/fa6";
 import AttributeQuest from "../Quests/AttributeQuest";
 import Breadcrumbs from "../Breadcrumbs";
 import ButtonLink from "../UI/ButtonLink";
-import questsData from "../../files/questsData.json";
-import QuestsSwiper from "../Quests/QuestsSwiper/QuestsSwiper";
 import Button from "../UI/Button";
 import Modal from "../UI/Modal";
 import Video from "../UI/Video";
-import Image from "../UI/Image";
+import QuestsSwiper from "../Quests/QuestsSwiper/QuestsSwiper";
+import ReactMarkdown from "react-markdown";
+// Хуки и утилиты
+import useFetch from "../../hooks/useFetch";
+import { sanitizeHTML } from "../../hooks/sanitize";
+import { getQuestIdBySlug } from "../../functions/questService";
 
 export default function QuestsPage() {
-    const { questId } = useParams();
+    const { questId } = useParams(); // это slug, например 'koma'
+    const [realId, setRealId] = useState(null);
+    const [loading, setLoading] = useState(true);
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
-    const currentQuest = questsData[questId];
     const [open, setOpen] = useState(false);
-    if (!currentQuest) {
-        return <Navigate replace to="/404" />; // Или редирект на страницу 404
+    const navigate = useNavigate();
+    useEffect(() => {
+        const fetchId = async () => {
+            const { id, error } = await getQuestIdBySlug(questId);
+            if (error === "not-found") {
+                navigate("/404"); // Редирект на /404
+            } else {
+                setRealId(id);
+            }
+        };
+
+        fetchId();
+        setLoading(false);
+    }, [questId, navigate]);
+
+    // Используем realId для загрузки данных через useFetch
+    const {
+        data: currentQuest,
+        isLoading,
+        error,
+    } = useFetch(realId ? `quests/${realId}` : null);
+
+    if (loading || isLoading) {
+        return <div>Загрузка...</div>;
     }
 
-    const descriptionParagraphs = currentQuest.description
-        .split(";")
-        .map((paragraph, index) => (
-            <p key={index} className="body-quest__paragraph">
-                {paragraph.trim()}
-            </p>
-        ));
+    if (error) {
+        return <div>Ошибка загрузки квеста</div>;
+    }
+
+    if (!currentQuest) {
+        return <div>Квест не найден</div>;
+    }
 
     return (
         <section className="quest page">
@@ -50,80 +76,107 @@ export default function QuestsPage() {
             <div className="container">
                 <Breadcrumbs />
                 <div className="quest__body body-quest">
-                    <div className="body-quest__gallery">
-                        <Swiper
-                            spaceBetween={10}
-                            thumbs={{ swiper: thumbsSwiper }}
-                            modules={[FreeMode, Thumbs]}
-                            className={"body-quest__swiper"}
-                        >
-                            {currentQuest.img.map((img) => (
-                                <SwiperSlide className="body-quest__slide" key={img}>
-                                    <div className="body-quest__img">
-                                        <picture>
-                                            <source
-                                                srcSet={`/img/QuestsSwiper/${questId}/${img}-540.avif`}
-                                                type="image/avif"
-                                                media="(min-width: 320px)"
-                                            />
-                                            <source
-                                                srcSet={`/img/QuestsSwiper/${questId}/${img}-540.webp`}
-                                                type="image/webp"
-                                                media="(min-width: 320px)"
-                                            />
-                                            <img
-                                                src={`/img/QuestsSwiper/${questId}/${img}.jpg`}
-                                                alt="Изображение квеста"
-                                                loading="lazy"
-                                            />
-                                        </picture>
-                                    </div>
-                                </SwiperSlide>
-                            ))}
-                        </Swiper>
-                        <Swiper
-                            onSwiper={setThumbsSwiper}
-                            spaceBetween={10}
-                            slidesPerView={4}
-                            freeMode={true}
-                            watchSlidesProgress={true}
-                            modules={[FreeMode, Thumbs]}
-                            className={"body-quest__thumbs"}
-                        >
-                            {currentQuest.img.map((img) => (
-                                <SwiperSlide className="body-quest__slide" key={img}>
-                                    <div className="body-quest__img">
-                                        <picture>
-                                            <source
-                                                srcSet={`/img/QuestsSwiper/${questId}/${img}-540.avif`}
-                                                type="image/avif"
-                                                media="(min-width: 320px)"
-                                            />
-                                            <source
-                                                srcSet={`/img/QuestsSwiper/${questId}/${img}-540.webp`}
-                                                type="image/webp"
-                                                media="(min-width: 320px)"
-                                            />
-                                            <img
-                                                src={`/img/QuestsSwiper/${questId}/${img}.jpg`}
-                                                alt="Изображение квеста"
-                                                loading="lazy"
-                                            />
-                                        </picture>
-                                    </div>
-                                </SwiperSlide>
-                            ))}
-                        </Swiper>
-                    </div>
+                    {currentQuest.img.length > 0 && (
+                        <div className="body-quest__gallery">
+                            {/* Основной слайдер */}
+                            <Swiper
+                                spaceBetween={10}
+                                thumbs={{ swiper: thumbsSwiper }}
+                                modules={[FreeMode, Thumbs]}
+                                className="body-quest__swiper"
+                            >
+                                {currentQuest.img.map((img, index) => (
+                                    <SwiperSlide
+                                        className="body-quest__slide"
+                                        key={index}
+                                    >
+                                        <div className="body-quest__img">
+                                            <picture>
+                                                <source
+                                                    type="image/avif"
+                                                    srcSet={`${
+                                                        img.split(".")[0]
+                                                    }-540.avif`}
+                                                    media={"(min-width:320px)"}
+                                                />
+                                                <source
+                                                    type="image/webp"
+                                                    srcSet={`${
+                                                        img.split(".")[0]
+                                                    }-540.webp`}
+                                                    media={"(min-width:320px)"}
+                                                />
+                                                <img
+                                                    src={`${img}`}
+                                                    alt={`Изображение ${index + 1}`}
+                                                    loading="lazy"
+                                                />
+                                            </picture>
+                                        </div>
+                                    </SwiperSlide>
+                                ))}
+                            </Swiper>
+
+                            {/* Превью */}
+                            <Swiper
+                                onSwiper={setThumbsSwiper}
+                                spaceBetween={10}
+                                slidesPerView={4}
+                                freeMode={true}
+                                watchSlidesProgress={true}
+                                modules={[FreeMode, Thumbs]}
+                                className="body-quest__thumbs"
+                            >
+                                {currentQuest.img.map((img, index) => (
+                                    <SwiperSlide
+                                        className="body-quest__slide"
+                                        key={index}
+                                    >
+                                        <div className="body-quest__img">
+                                            <picture>
+                                                <source
+                                                    type="image/avif"
+                                                    srcSet={`${
+                                                        img.split(".")[0]
+                                                    }-540.avif`}
+                                                    media={"(min-width:320px)"}
+                                                />
+                                                <source
+                                                    type="image/webp"
+                                                    srcSet={`${
+                                                        img.split(".")[0]
+                                                    }-540.webp`}
+                                                    media={"(min-width:320px)"}
+                                                />
+                                                <img
+                                                    src={`${img}`}
+                                                    alt={`Изображение ${index + 1}`}
+                                                    loading="lazy"
+                                                />
+                                            </picture>
+                                        </div>
+                                    </SwiperSlide>
+                                ))}
+                            </Swiper>
+                        </div>
+                    )}
+
                     <div className="body-quest__content">
                         <span className="body-quest__name">{currentQuest.title}</span>
                         <div className="body-quest__description">
-                            {descriptionParagraphs}
+                            {
+                                <ReactMarkdown>
+                                    {sanitizeHTML(currentQuest.description)}
+                                </ReactMarkdown>
+                            }
                         </div>
                         <div className="body-quest__buttons">
-                            <ButtonLink target={"_blank"} link={currentQuest.link}>
-                                Забронировать <FaVk size={25} />
-                            </ButtonLink>
+                            {currentQuest.link && (
+                                <ButtonLink target="_blank" link={currentQuest.link}>
+                                    Забронировать <FaVk size={25} />
+                                </ButtonLink>
+                            )}
+
                             {currentQuest.video && (
                                 <Button onClick={() => setOpen(true)}>
                                     Трейлер квеста
@@ -131,25 +184,36 @@ export default function QuestsPage() {
                             )}
                         </div>
                         <div className="quest__attributes attributes-quest">
-                            <AttributeQuest text={currentQuest.people}>
-                                <FaPeopleGroup />
-                            </AttributeQuest>
-                            <AttributeQuest text={currentQuest.age}>
-                                <TbMoodKid />
-                            </AttributeQuest>
-                            <AttributeQuest text={currentQuest.difficulty}>
-                                <FaSkull />
-                            </AttributeQuest>
-                            <AttributeQuest text={currentQuest.time}>
-                                <IoTimeOutline />
-                            </AttributeQuest>
-                            <AttributeQuest text={currentQuest.address}>
-                                <FaLocationDot />
-                            </AttributeQuest>
+                            {currentQuest.people && (
+                                <AttributeQuest text={currentQuest.people}>
+                                    <FaPeopleGroup />
+                                </AttributeQuest>
+                            )}
+                            {currentQuest.age && (
+                                <AttributeQuest text={currentQuest.age}>
+                                    <TbMoodKid />
+                                </AttributeQuest>
+                            )}
+                            {currentQuest.difficulty && (
+                                <AttributeQuest text={currentQuest.difficulty}>
+                                    <FaSkull />
+                                </AttributeQuest>
+                            )}
+                            {currentQuest.time && (
+                                <AttributeQuest text={currentQuest.time}>
+                                    <IoTimeOutline />
+                                </AttributeQuest>
+                            )}
+                            {currentQuest.address && (
+                                <AttributeQuest text={currentQuest.address}>
+                                    <FaLocationDot />
+                                </AttributeQuest>
+                            )}
                         </div>
                     </div>
                 </div>
             </div>
+            {/* Рекомендуемые квесты */}
             <QuestsSwiper category={"all"} block={true} />
         </section>
     );

@@ -24,7 +24,7 @@ export default function Sertificate() {
                 <Breadcrumbs />
                 <BlockTitle title={"Подарочные сертификаты"} />
                 <div className="sertificate__body body-sertificate">
-                    {certificatesList[0].image_paths.length > 0 && (
+                    {certificatesList[0]?.image_paths?.length > 0 && (
                         <Swiper
                             modules={[Autoplay]}
                             loop={{ enabled: true }}
@@ -64,7 +64,7 @@ export default function Sertificate() {
 
                     <div className="body-sertificate__content">
                         <ReactMarkdown>
-                            {sanitizeHTML(certificatesList[0].text)}
+                            {sanitizeHTML(certificatesList[0]?.text)}
                         </ReactMarkdown>
                     </div>
                 </div>

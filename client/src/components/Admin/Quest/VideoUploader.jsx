@@ -127,7 +127,12 @@ export const VideoUploader = ({ source }) => {
                     <video
                         src={currentVideo}
                         controls
-                        style={{ width: "100%", maxWidth: "600px", marginTop: "10px" }}
+                        style={{
+                            width: "100%",
+                            maxWidth: "600px",
+                            marginTop: "10px",
+                            maxHeight: "200px",
+                        }}
                     >
                         Ваш браузер не поддерживает тег video.
                     </video>
