@@ -17,22 +17,33 @@ export const VideoUploader = ({ source }) => {
         }
     }, [record, source]);
 
-    // Загрузка нового видео
     const handleUpload = async (e) => {
         const file = e.target.files[0];
         if (!file) return;
 
         setUploading(true);
-        const formData = new FormData();
-        formData.append("video", file);
-        formData.append("questId", record.id);
 
         try {
+            // Получаем токен
+            const {
+                data: { session },
+            } = await supabase.auth.getSession();
+
+            const token = session?.access_token;
+            if (!token) throw new Error("No token");
+
+            const formData = new FormData();
+            formData.append("video", file);
+            formData.append("questId", record.id);
+
             const response = await fetch(
-                "http://localhost:5000/api/quests/upload-video",
+                "http://localhost:5000/api/admin/quests/upload-video",
                 {
                     method: "POST",
                     body: formData,
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
                 }
             );
 
@@ -46,6 +57,7 @@ export const VideoUploader = ({ source }) => {
                 notify("Видео успешно загружено", { type: "success" });
             }
         } catch (error) {
+            console.error(error);
             notify("Не удалось загрузить видео", { type: "error" });
         } finally {
             setUploading(false);
@@ -56,12 +68,21 @@ export const VideoUploader = ({ source }) => {
     // Удаление видео
     const handleDelete = async () => {
         try {
+            // Получаем токен
+            const {
+                data: { session },
+            } = await supabase.auth.getSession();
+
+            const token = session?.access_token;
+            if (!token) throw new Error("No token");
+
             const response = await fetch(
-                `http://localhost:5000/api/quests/delete-video/${record.id}`,
+                `http://localhost:5000/api/admin/quests/delete-video/${record.id}`,
                 {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
                     },
                     body: JSON.stringify({ path: currentVideo }),
                 }
@@ -76,6 +97,7 @@ export const VideoUploader = ({ source }) => {
                 notify("Видео удалено", { type: "success" });
             }
         } catch (error) {
+            console.error(error);
             notify("Не удалось удалить видео", { type: "error" });
         }
     };

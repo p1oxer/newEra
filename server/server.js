@@ -82,7 +82,9 @@ app.use("/api/group-description", groupDescriptionRouter);
 app.use("/api/certificates", certificateRouter);
 app.use("/api/quests", questRouter);
 
+
 // админские маршруты
+
 app.use("/api/admin/reviews", authenticate, isAdmin, reviewsAdminRouter);
 app.use("/api/admin/faq", authenticate, isAdmin, faqAdminRouter);
 app.use("/api/admin/about", authenticate, isAdmin, aboutAdminRouter);

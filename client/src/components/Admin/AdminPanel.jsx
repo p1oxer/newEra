@@ -1,5 +1,4 @@
-import React from "react";
-import { Admin, Resource, ListGuesser } from "react-admin";
+import { Admin, Resource } from "react-admin";
 import ReviewList from "./reviews/ReviewList";
 import ReviewEdit from "./reviews/ReviewEdit";
 import ReviewCreate from "./reviews/ReviewCreate";
@@ -25,13 +24,14 @@ import {
 } from "./BirthdayOffers/BirthdayOffers";
 import { GroupList, GroupCreate, GroupEdit } from "./GroupOffers/GroupOffers";
 import { QuestCreate, QuestEdit, QuestList } from "./Quest/Quest";
+import adminDataProvider from "./adminDataProvider";
 
 const i18nProvider = polyglotI18nProvider(() => russianMessages, "ru");
 const AdminPanel = () => (
     <Admin
         i18nProvider={i18nProvider}
         basename="/admin"
-        dataProvider={dataProvider}
+        dataProvider={adminDataProvider}
         authProvider={authProvider}
         loginPage={LoginPage}
     >

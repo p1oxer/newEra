@@ -22,7 +22,7 @@ router.get("/", async (req, res) => {
         const [[{ total }]] = await db.query("SELECT COUNT(*) AS total FROM faq");
 
         // Устанавливаем заголовок Content-Range
-        res.header("Content-Range", `faq ${startInt}-${endInt}/${total}`);
+        res.header("Content-Range", `items ${startInt}-${endInt}/${total}`);
 
         // Отправляем только один ответ
         return res.json(rows);

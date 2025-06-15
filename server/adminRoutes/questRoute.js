@@ -5,8 +5,11 @@ import fs from "fs/promises";
 import path from "path";
 import multer from "multer";
 import { generateImageVersions } from "../scripts/generateImages.js";
-import { capitalizeFirstLetterAndReplaceDash, translit } from "../../client/src/functions/translit.js";
-import { updateLocaleWithQuest } from "../../client/src/functions/localization.js";
+import { translit } from "../../client/src/functions/translit.js";
+import {
+    updateLocaleWithQuest,
+    removeLocaleQuest,
+} from "../../client/src/functions/localization.js";
 
 const router = express.Router();
 
@@ -132,11 +135,25 @@ router.put("/:id", async (req, res) => {
         ]);
         if (!currentData) return res.status(404).json({ error: "Квест не найден" });
 
-        // Если img пришёл от клиента — используем его, иначе оставляем старые данные
+        let newSlug = currentData.slug;
+        let oldSlug = currentData.slug;
+
+        // Если заголовок изменился — генерируем новый slug
+        if (title && title !== currentData.title) {
+            newSlug = translit(title);
+
+            // Удаляем старый slug из файла локализации
+            await removeLocaleQuest(oldSlug);
+
+            // Добавляем новый slug в файл локализации
+            await updateLocaleWithQuest(newSlug, title);
+        }
+
         const images = img ? img : JSON.parse(currentData.img || "[]");
 
         await db.query(
             `UPDATE quests SET 
+                slug = ?, 
                 title = ?, 
                 description = ?, 
                 people = ?, 
@@ -149,6 +166,7 @@ router.put("/:id", async (req, res) => {
                 img = ?
              WHERE id = ?`,
             [
+                newSlug,
                 title || currentData.title,
                 description || currentData.description,
                 people || currentData.people,
@@ -158,13 +176,14 @@ router.put("/:id", async (req, res) => {
                 address || currentData.address,
                 small_description || currentData.small_description,
                 category || currentData.category,
-                JSON.stringify(images), // <-- здесь мы сохраняем как строку
+                JSON.stringify(images),
                 req.params.id,
             ]
         );
 
         res.json({
             id: req.params.id,
+            slug: newSlug,
             title: title || currentData.title,
             description: description || currentData.description,
             people: people || currentData.people,
@@ -174,7 +193,7 @@ router.put("/:id", async (req, res) => {
             address: address || currentData.address,
             small_description: small_description || currentData.small_description,
             category: category || currentData.category,
-            img: images, // <-- отправляем клиенту как массив
+            img: images,
         });
     } catch (err) {
         console.error("Update error:", err);
@@ -284,6 +303,13 @@ router.post("/upload-video", uploadVideo.single("video"), async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
     try {
+        const [[quest]] = await db.query("SELECT slug FROM quests WHERE id = ?", [
+            req.params.id,
+        ]);
+        if (!quest) return res.status(404).json({ error: "Квест не найден" });
+
+        const { slug } = quest;
+
         const [result] = await db.query("DELETE FROM quests WHERE id = ?", [
             req.params.id,
         ]);
@@ -291,6 +317,9 @@ router.delete("/:id", async (req, res) => {
         if (result.affectedRows === 0) {
             return res.status(404).json({ error: "Квест не найден" });
         }
+
+        // Удаляем запись из файла локализации
+        await removeLocaleQuest(slug);
 
         res.json({ success: true, message: "Квест успешно удален" });
     } catch (err) {
@@ -372,7 +401,7 @@ router.post("/", async (req, res) => {
                 .status(400)
                 .json({ error: "Квест с таким названием уже существует" });
         }
-        
+
         // Вставляем новый квест
         const [result] = await db.query(
             `INSERT INTO quests (

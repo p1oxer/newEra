@@ -4,7 +4,7 @@ import { fetchUtils } from "react-admin";
 import { stringify } from "query-string";
 import { supabase } from "../../../supabaseClient";
 
-const apiUrl = "http://localhost:5000/api/admin"; // ваш защищённый путь
+const apiUrl = "http://localhost:5000/api"; // общий путь
 
 const getAuthToken = async () => {
     const {
@@ -27,6 +27,7 @@ export default {
     getList: async (resource, params) => {
         const { page = 1, perPage = 5 } = params.pagination || {};
         const { field = "id", order = "ASC" } = params.sort || {};
+
         const start = (page - 1) * perPage;
         const end = page * perPage;
 
@@ -38,13 +39,14 @@ export default {
         };
 
         const url = `${apiUrl}/${resource}?${stringify(query)}`;
+
         const { json, headers } = await httpClient(url);
 
-        const contentRange = headers.get("Content-Range");
-        let total = 0;
+        let total = json.length;
 
+        const contentRange = headers.get("Content-Range");
         if (contentRange) {
-            const match = /\/(\d+)$/.exec(contentRange);
+            const match = /.*\/(\d+)/.exec(contentRange); // парсим /total
             if (match && match[1]) {
                 total = parseInt(match[1], 10);
             }
@@ -52,7 +54,7 @@ export default {
 
         return {
             data: json.map((item) => ({ id: item.id, ...item })),
-            total: total || 0,
+            total,
         };
     },
 

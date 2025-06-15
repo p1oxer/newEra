@@ -2,6 +2,7 @@ import { ReactSortable } from "react-sortablejs";
 import { useState, useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import { useRecordContext, useNotify, Button, FormDataConsumer } from "react-admin";
+import { supabase } from "../../../../supabaseClient";
 
 export const ImageUploader = ({ source }) => {
     const record = useRecordContext();
@@ -38,17 +39,29 @@ export const ImageUploader = ({ source }) => {
         if (!file) return;
 
         setUploading(true);
-        const formData = new FormData();
-        formData.append("image", file);
-        formData.append("questId", record.id);
-        formData.append("currentPaths", JSON.stringify(images));
 
         try {
+            // Получаем токен
+            const {
+                data: { session },
+            } = await supabase.auth.getSession();
+
+            const token = session?.access_token;
+            if (!token) throw new Error("No token");
+
+            const formData = new FormData();
+            formData.append("image", file);
+            formData.append("questId", record.id);
+            formData.append("currentPaths", JSON.stringify(images));
+
             const response = await fetch(
-                "http://localhost:5000/api/quests/upload-image",
+                "http://localhost:5000/api/admin/quests/upload-image",
                 {
                     method: "POST",
                     body: formData,
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
                 }
             );
 
@@ -63,6 +76,7 @@ export const ImageUploader = ({ source }) => {
                 notify("Изображение успешно загружено", { type: "success" });
             }
         } catch (error) {
+            console.error(error);
             notify("Ошибка загрузки изображения", { type: "error" });
         } finally {
             setUploading(false);
@@ -76,11 +90,27 @@ export const ImageUploader = ({ source }) => {
         setImages(updated);
 
         try {
-            await fetch(`http://localhost:5000/api/quests/delete-image/${record.id}`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ path: imgPath }),
-            });
+            // Получаем токен
+            const {
+                data: { session },
+            } = await supabase.auth.getSession();
+
+            const token = session?.access_token;
+            if (!token) throw new Error("No token");
+
+            const response = await fetch(
+                `http://localhost:5000/api/admin/quests/delete-image/${record.id}`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                    body: JSON.stringify({ path: imgPath }),
+                }
+            );
+
+            if (!response.ok) throw new Error("Delete failed");
 
             notify("Изображение удалено", { type: "success" });
         } catch (err) {
