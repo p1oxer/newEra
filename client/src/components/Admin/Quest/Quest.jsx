@@ -40,7 +40,10 @@ const categoryChoices = [
     { id: "horror", name: "Ужасы" },
     { id: "adventures", name: "Приключения" },
 ];
-
+const difficultyChoices = [
+    { id: "MEDIUM | HARD", name: "MEDIUM | HARD" },
+    { id: "LITE", name: "LITE" },
+];
 export const QuestEdit = (props) => (
     <Edit {...props} mutationMode="optimistic">
         <SimpleForm toolbar={<CustomToolbar />}>
@@ -52,7 +55,11 @@ export const QuestEdit = (props) => (
             />
             <TextInput source="people" label="Кол-во игроков" />
             <TextInput source="age" label="Возраст" />
-            <TextInput source="difficulty" label="Сложность" />
+            <SelectInput
+                source="difficulty"
+                label="Сложность"
+                choices={difficultyChoices}
+            />
             <TextInput source="time" label="Длительность" />
             <TextInput source="address" label="Адрес" fullWidth />
             <TextInput source="small_description" label="Краткое описание" fullWidth />
@@ -75,7 +82,11 @@ export const QuestCreate = (props) => (
             />
             <TextInput source="people" label="Кол-во игроков" />
             <TextInput source="age" label="Возраст" />
-            <TextInput source="difficulty" label="Сложность" />
+            <SelectInput
+                source="difficulty"
+                label="Сложность"
+                choices={difficultyChoices}
+            />
             <TextInput source="time" label="Длительность" />
             <TextInput source="address" label="Адрес" fullWidth />
             <TextInput source="small_description" label="Краткое описание" fullWidth />

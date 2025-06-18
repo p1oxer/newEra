@@ -42,28 +42,23 @@
 
 
 .offers {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    @include adaptiveValue("gap", 50, 20);
-    flex-wrap: wrap;
+    max-width: 1200px;
+    padding-top: 40px;
+    margin-top: -40px;
+    padding-bottom: 40px;
+    margin-bottom: -40px;
     @include adaptiveValue("margin-bottom", 50, 25);
 
-    &.offers-grid {
-        display: grid;
-        max-width: 1200px;
-        margin: 0px auto;
-        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-        @include adaptiveValue("margin-bottom", 50, 25);
 
-        @media (max-width: em(1155)) {
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
+    .swiper-wrapper {
+        margin: 0px auto !important;
     }
 
+    .swiper-slide {
+        display: flex;
+        justify-content: center;
+        align-items: stretch;
+    }
 }
 
 .item-offer {
@@ -71,6 +66,13 @@
     border-radius: 15px;
     transition: all 0.3s ease 0s;
     max-width: 350px;
+    height: 100%;
+    min-height: 0;
+
+    @media (max-width:em(1200)) {
+        max-width: 100%;
+        width: 100%;
+    }
 
     @media (min-width:em(375px)) {
         min-width: 350px;
