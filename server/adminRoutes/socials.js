@@ -77,7 +77,7 @@ router.put("/:id", async (req, res) => {
         const { network_type, url, sort_order } = req.body;
 
         const [result] = await db.query(
-            "UPDATE social_links SET network_type = ?, url = ?, WHERE id = ?",
+            "UPDATE social_links SET network_type = ?, url = ? WHERE id = ?",
             [network_type, url, req.params.id]
         );
 

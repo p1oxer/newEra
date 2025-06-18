@@ -21,7 +21,7 @@ export default function OfferItem({ offer }) {
                 <div className="item-offer__bottom">
                     {offer.attributes.length > 0 && (
                         <ul className="item-offer__list">
-                            {JSON.parse(offer.attributes).map((attr, index) => {
+                            {offer.attributes.map((attr, index) => {
                                 return (
                                     <li key={index} className="item-offer__list-item">
                                         <IoMdCheckmark color="#c30168" />

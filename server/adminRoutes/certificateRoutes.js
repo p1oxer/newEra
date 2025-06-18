@@ -6,8 +6,7 @@ import multer from "multer";
 import { generateImageVersions } from "../scripts/generateImages.js";
 const router = express.Router();
 
-// Путь относительно клиентской папки public
-const CLIENT_PUBLIC_DIR = path.join(process.cwd(), "..", "client", "public");
+const CLIENT_PUBLIC_DIR = path.join(process.cwd(), "..", "uploads");
 const IMG_DIR = "img/cert";
 const FULL_IMG_DIR = path.join(CLIENT_PUBLIC_DIR, IMG_DIR);
 
@@ -102,59 +101,44 @@ router.post("/upload-image", upload.single("image"), async (req, res) => {
 });
 
 router.put("/:id", async (req, res) => {
-    const { text } = req.body;
+    const { text, image_paths } = req.body;
 
     try {
-        // 1. Получаем текущие данные (включая существующие изображения)
+        // Получаем текущие данные
         const [[currentData]] = await db.query(
-            "SELECT text, image_paths FROM certificates WHERE id = ?",
+            "SELECT * FROM certificates WHERE id = ?",
             [req.params.id]
         );
 
-        // 2. Парсим image_paths, только если это строка
-        let currentImages = [];
-
-        if (typeof currentData.image_paths === "string") {
-            try {
-                const parsed = JSON.parse(currentData.image_paths);
-                // Если это массив → сохраняем как есть
-                if (Array.isArray(parsed)) {
-                    currentImages = parsed;
-                } else {
-                    // Если это НЕ массив, но валидный JSON → оборачиваем в массив
-                    currentImages = [parsed];
-                }
-            } catch (e) {
-                console.error("Failed to parse image_paths as JSON", e);
-                currentImages = [];
-            }
-        } else if (Array.isArray(currentData.image_paths)) {
-            // Если это уже массив (например, от react-hook-form), используем напрямую
-            currentImages = currentData.image_paths;
-        } else {
-            currentImages = [];
+        if (!currentData) {
+            return res.status(404).json({ error: "Сертификат не найден" });
         }
 
-        // 3. Обновляем ТОЛЬКО текст, не трогая изображения
-        await db.query("UPDATE certificates SET text = ? WHERE id = ?", [
-            text || currentData.text,
-            req.params.id,
-        ]);
+        const images = image_paths ? image_paths : JSON.parse(currentData.image_paths || "[]");
 
+        // Обновляем запись в БД
+        await db.query(
+            `UPDATE certificates SET 
+                text = ?, 
+                image_paths = ?
+             WHERE id = ?`,
+            [text || currentData.text, JSON.stringify(images), req.params.id]
+        );
+
+        // Отправляем клиенту обновлённые данные
         res.json({
             id: req.params.id,
             text: text || currentData.text,
-            image_paths: currentImages, // Возвращаем неизменённые изображения
+            image_paths: images,
         });
     } catch (err) {
-        console.error("Update error:", err);
+        console.error("Ошибка обновления сертификата:", err);
         res.status(500).json({
-            error: "Failed to update certificate",
+            error: "Не удалось обновить сертификат",
             details: err.message,
         });
     }
 });
-
 // Получить одну запись
 // GET /:id
 router.get("/:id", async (req, res) => {

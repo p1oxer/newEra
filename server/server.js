@@ -27,6 +27,14 @@ import certificateAdminRouter from "./adminRoutes/certificateRoutes.js";
 import questAdminRouter from "./adminRoutes/questRoute.js";
 import imageAdminRouter from "./adminRoutes/image.js";
 import jwt from "jsonwebtoken";
+import { fileURLToPath } from "url";
+import { dirname, join } from "path";
+
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+app.use("/uploads", express.static(join(__dirname, "../uploads")));
 
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));

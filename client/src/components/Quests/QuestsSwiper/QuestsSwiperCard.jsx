@@ -21,15 +21,15 @@ export default function QuestsSwiperCard({
                     <picture>
                         <source
                             type="image/avif"
-                            srcSet={`${img?.split(".")[0]}-540.avif`}
+                            srcSet={`${import.meta.env.VITE_UPLOADS_URL}${img?.split(".")[0]}-540.avif`}
                             media={"(min-width:320px)"}
                         />
                         <source
                             type="image/webp"
-                            srcSet={`${img?.split(".")[0]}-540.webp`}
+                            srcSet={`${import.meta.env.VITE_UPLOADS_URL}${img?.split(".")[0]}-540.webp`}
                             media={"(min-width:320px)"}
                         />
-                        <img src={`${img}`} alt={`Изображение ${name}`} loading="lazy" />
+                        <img src={`${import.meta.env.VITE_UPLOADS_URL}${img}`} alt={`Изображение ${name}`} loading="lazy" />
                     </picture>
                 </Link>
                 <div className="card-quests__top">

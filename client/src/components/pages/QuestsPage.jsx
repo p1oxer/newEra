@@ -70,7 +70,9 @@ export default function QuestsPage() {
         <section className="quest page">
             {currentQuest.video && (
                 <Modal open={open} onClose={() => setOpen(false)}>
-                    <Video video={currentQuest.video} />
+                    <Video
+                        video={`${import.meta.env.VITE_UPLOADS_URL}${currentQuest.video}`}
+                    />
                 </Modal>
             )}
             <div className="container">
@@ -95,19 +97,21 @@ export default function QuestsPage() {
                                                 <source
                                                     type="image/avif"
                                                     srcSet={`${
-                                                        img.split(".")[0]
-                                                    }-540.avif`}
+                                                        import.meta.env.VITE_UPLOADS_URL
+                                                    }${img.split(".")[0]}-540.avif`}
                                                     media={"(min-width:320px)"}
                                                 />
                                                 <source
                                                     type="image/webp"
                                                     srcSet={`${
-                                                        img.split(".")[0]
-                                                    }-540.webp`}
+                                                        import.meta.env.VITE_UPLOADS_URL
+                                                    }${img.split(".")[0]}-540.webp`}
                                                     media={"(min-width:320px)"}
                                                 />
                                                 <img
-                                                    src={`${img}`}
+                                                    src={`${
+                                                        import.meta.env.VITE_UPLOADS_URL
+                                                    }${img}`}
                                                     alt={`Изображение ${index + 1}`}
                                                     loading="lazy"
                                                 />
@@ -137,19 +141,21 @@ export default function QuestsPage() {
                                                 <source
                                                     type="image/avif"
                                                     srcSet={`${
-                                                        img.split(".")[0]
-                                                    }-540.avif`}
+                                                        import.meta.env.VITE_UPLOADS_URL
+                                                    }${img.split(".")[0]}-540.avif`}
                                                     media={"(min-width:320px)"}
                                                 />
                                                 <source
                                                     type="image/webp"
                                                     srcSet={`${
-                                                        img.split(".")[0]
-                                                    }-540.webp`}
+                                                        import.meta.env.VITE_UPLOADS_URL
+                                                    }${img.split(".")[0]}-540.webp`}
                                                     media={"(min-width:320px)"}
                                                 />
                                                 <img
-                                                    src={`${img}`}
+                                                    src={`${
+                                                        import.meta.env.VITE_UPLOADS_URL
+                                                    }${img}`}
                                                     alt={`Изображение ${index + 1}`}
                                                     loading="lazy"
                                                 />

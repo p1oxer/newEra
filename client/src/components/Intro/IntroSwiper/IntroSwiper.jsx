@@ -8,45 +8,67 @@ export default () => {
         <Swiper className="intro-swiper" spaceBetween={50} slidesPerView={1}>
             <SwiperSlide>
                 <div className="intro-swiper__img">
-                     <picture>
+                    <picture>
                         <source
-                            srcSet="/img/Intro/mob-640.avif"
+                            srcSet={`${
+                                import.meta.env.VITE_UPLOADS_URL
+                            }/img/Intro/mob-640.avif`}
                             type="image/avif"
                             media="(max-width: 640px)"
                         />
                         <source
-                            srcSet="/img/Intro/mob-640.webp"
+                            srcSet={`${
+                                import.meta.env.VITE_UPLOADS_URL
+                            }/img/Intro/mob-640.webp`}
                             type="image/webp"
                             media="(max-width: 640px)"
                         />
-                        <source srcSet="/img/Intro/mob.jpg" media="(max-width: 640px)" />
                         <source
-                            srcSet="/img/Intro/01-1280.avif"
+                            srcSet={`${
+                                import.meta.env.VITE_UPLOADS_URL
+                            }/img/Intro/mob.jpg`}
+                            media="(max-width: 640px)"
+                        />
+                        <source
+                            srcSet={`${
+                                import.meta.env.VITE_UPLOADS_URL
+                            }/img/Intro/01-1280.avif`}
                             type="image/avif"
                             media="(max-width: 1280px)"
                         />
                         <source
-                            srcSet="/img/Intro/01-1280.webp"
+                            srcSet={`${
+                                import.meta.env.VITE_UPLOADS_URL
+                            }/img/Intro/01-1280.webp`}
                             type="image/webp"
                             media="(max-width: 1280px)"
                         />
-                        <source srcSet="/img/Intro/01-1280.jpg" media="(max-width: 1280px)" />
                         <source
-                            srcSet="/img/Intro/01.avif"
+                            srcSet={`${
+                                import.meta.env.VITE_UPLOADS_URL
+                            }/img/Intro/01-1280.jpg`}
+                            media="(max-width: 1280px)"
+                        />
+                        <source
+                            srcSet={`${
+                                import.meta.env.VITE_UPLOADS_URL
+                            }/img/Intro/01.avif`}
                             type="image/avif"
                             media="(min-width: 1281px)"
                         />
                         <source
-                            srcSet="/img/Intro/01.webp"
+                            srcSet={`${
+                                import.meta.env.VITE_UPLOADS_URL
+                            }/img/Intro/01.webp`}
                             type="image/webp"
                             media="(min-width: 1281px)"
                         />
                         <img
-                            src="/img/Intro/01.png"
+                            src={`${import.meta.env.VITE_UPLOADS_URL}/img/Intro/01.png`}
                             alt="Интро"
                             loading="lazy"
                         />
-                    </picture> 
+                    </picture>
                 </div>
             </SwiperSlide>
         </Swiper>

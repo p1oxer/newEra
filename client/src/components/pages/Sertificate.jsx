@@ -40,17 +40,17 @@ export default function Sertificate() {
                                         <div className="body-sertificate__slide-body">
                                             <picture>
                                                 <source
-                                                    srcSet={`${path.split(".")[0]}-560.avif`}
+                                                    srcSet={`${import.meta.env.VITE_UPLOADS_URL}${path.split(".")[0]}-560.avif`}
                                                     type="image/avif"
                                                     media="(min-width: 320px)"
                                                 />
                                                 <source
-                                                    srcSet={`${path.split(".")[0]}-560.webp`}
+                                                    srcSet={`${import.meta.env.VITE_UPLOADS_URL}${path.split(".")[0]}-560.webp`}
                                                     type="image/webp"
                                                     media="(min-width: 320px)"
                                                 />
                                                 <img
-                                                    src={path}
+                                                    src={`${import.meta.env.VITE_UPLOADS_URL}${path}`}
                                                     alt={`Сертификат ${index}`}
                                                     loading="lazy"
                                                 />

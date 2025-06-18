@@ -48,7 +48,13 @@ export default function Header() {
                     <div className="header__body body-header">
                         <div className="header__top">
                             <Link to={"/"} className="body-header__logo">
-                                <Image sizes={["500"]} alt={"Логотип"} src={"/img/logo.png"}/>
+                                <Image
+                                    sizes={["500"]}
+                                    alt={"Логотип"}
+                                    src={`${
+                                        import.meta.env.VITE_UPLOADS_URL
+                                    }/img/logo.png`}
+                                />
                             </Link>
                             {phones.length > 0 && (
                                 <a

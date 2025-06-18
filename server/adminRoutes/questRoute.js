@@ -14,11 +14,11 @@ import {
 const router = express.Router();
 
 // Путь к клиентской директории public
-const CLIENT_PUBLIC_DIR = path.join(process.cwd(), "..", "client", "public");
+const CLIENT_PUBLIC_DIR = path.join(process.cwd(), "..", "uploads");
 
-// Пути для изображений и видео
 const IMG_QUEST_DIR = "img/quests";
 const FULL_IMG_QUEST_DIR = path.join(CLIENT_PUBLIC_DIR, IMG_QUEST_DIR);
+
 const VIDEO_QUEST_DIR = "video/quests";
 const FULL_VIDEO_QUEST_DIR = path.join(CLIENT_PUBLIC_DIR, VIDEO_QUEST_DIR);
 

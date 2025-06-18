@@ -57,10 +57,6 @@
             }
         }
 
-        &:not(:last-child) {
-            margin-bottom: rem(10);
-        }
-
         svg {
             transition: all 0.3s ease 0s;
         }

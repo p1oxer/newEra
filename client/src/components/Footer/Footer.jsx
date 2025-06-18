@@ -47,7 +47,11 @@ export default function Footer() {
         <footer className="footer">
             <div className="container">
                 <div className="footer__logo">
-                    <Image sizes={["500"]} alt={"Логотип"} src={"/img/logo.png"} />
+                    <Image
+                        sizes={["500"]}
+                        alt={"Логотип"}
+                        src={`${import.meta.env.VITE_UPLOADS_URL}/img/logo.png`}
+                    />
                 </div>
                 <div className="footer__body body-footer">
                     <Nav

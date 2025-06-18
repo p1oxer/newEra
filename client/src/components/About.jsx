@@ -14,7 +14,7 @@ export default function About() {
                 <div className="about__body body-about">
                     <div className="sticky">
                         <div className="body-about__img">
-                            <img src="/img/dino.png" alt="Динозавр" />
+                            <img src={`${import.meta.env.VITE_UPLOADS_URL}/img/dino.png`} alt="Динозавр" />
                         </div>
                     </div>
                     <div className="body-about__content">
