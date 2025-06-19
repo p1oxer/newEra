@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import React, { useState } from "react";
-import urlMappings from "../files/url-mapping.json";
+import urlMappings from "../../../files/url-mapping.json";
 import { capitalizeFirstLetterAndReplaceDash } from "../functions/translit";
 export default function Breadcrumbs() {
     const [nameMap, setNameMap] = useState(urlMappings);
