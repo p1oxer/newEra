@@ -4,7 +4,7 @@ import { fetchUtils } from "react-admin";
 import queryString from "query-string";
 import { supabase } from "../../supabaseClient";
 
-const apiUrl = "http://localhost:5000/api"; // общий путь
+const apiUrl = `${import.meta.env.VITE_API_HOST}`; // общий путь
 
 const getAuthToken = async () => {
     const {
