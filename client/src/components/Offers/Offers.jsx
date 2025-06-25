@@ -54,7 +54,6 @@ export default function Offers({ offers }) {
         <Swiper
             ref={sliderRef}
             modules={[Pagination]}
-            spaceBetween={20}
             slidesPerView={3}
             slidesPerGroup={3}
             watchOverflow={true}
@@ -77,12 +76,11 @@ export default function Offers({ offers }) {
                 700: {
                     slidesPerView: 2,
                     slidesPerGroup: 2,
-                    spaceBetween: 20,
+                    spaceBetween: 15,
                 },
                 1200: {
                     slidesPerView: 3,
                     slidesPerGroup: 3,
-                    spaceBetween: 30,
                 },
             }}
         >

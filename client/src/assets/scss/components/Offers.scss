@@ -59,7 +59,10 @@
 
     .swiper-wrapper {
         margin: 0px auto !important;
-        justify-content: start !important;
+            // justify-content: center !important;
+        @media (max-width:em(1200)) {
+            justify-content: start !important;
+        }
     }
 
     .swiper-slide {
