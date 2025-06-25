@@ -1,8 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
-import { Outlet, ScrollRestoration, useLocation } from "react-router-dom";
-import ScrollToTop from "../UI/ScrollToTop";
+import { Outlet, ScrollRestoration } from "react-router-dom";
 
 export default function MainLayout() {
     return (

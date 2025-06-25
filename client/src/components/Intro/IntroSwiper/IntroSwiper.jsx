@@ -1,7 +1,6 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css/pagination";
 import "swiper/css";
-import SwiperButton from "../../UI/SwiperButton";
 
 export default () => {
     return (
@@ -66,7 +65,8 @@ export default () => {
                         <img
                             src={`${import.meta.env.VITE_UPLOADS_URL}/img/Intro/01.png`}
                             alt="Интро"
-                            loading="lazy"
+                            width="1280"
+                            height="720"
                         />
                     </picture>
                 </div>

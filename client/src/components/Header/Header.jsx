@@ -29,9 +29,6 @@ export default function Header() {
         }
     }, []);
     const { data: contacts, isLoading, error } = useFetch("contacts");
-    if (isLoading) {
-        return <p>Загрузка...</p>;
-    }
 
     if (error) {
         console.error("Ошибка загрузки", error);
@@ -54,6 +51,8 @@ export default function Header() {
                                     src={`${
                                         import.meta.env.VITE_UPLOADS_URL
                                     }/img/logo.png`}
+                                    width={200}
+                                    height={71}
                                 />
                             </Link>
                             {phones.length > 0 && (

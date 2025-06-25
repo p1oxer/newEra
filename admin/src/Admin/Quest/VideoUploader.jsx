@@ -123,11 +123,7 @@ export const VideoUploader = ({ source }) => {
                     color="primary"
                     disabled={uploading}
                 >
-                    {uploading
-                        ? "Загрузка..."
-                        : currentVideo
-                        ? "Заменить видео"
-                        : "Загрузить видео"}
+                    {currentVideo ? "Заменить видео" : "Загрузить видео"}
                 </Button>
             </label>
 
@@ -156,9 +152,7 @@ export const VideoUploader = ({ source }) => {
                             marginTop: "10px",
                             maxHeight: "200px",
                         }}
-                    >
-                        Ваш браузер не поддерживает тег video.
-                    </video>
+                    ></video>
                 </Box>
             )}
 

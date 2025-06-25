@@ -3,10 +3,17 @@ import { Link } from "react-router-dom";
 
 export default function Burger() {
     const [isOpened, setIsOpened] = useState(false);
+
     function handleClick() {
         setIsOpened(!isOpened);
         document.body.classList.toggle("menu-open");
     }
+
+    function handleLinkClick() {
+        setIsOpened(false);
+        document.body.classList.remove("menu-open");
+    }
+
     const navigation = [
         { text: "Главная", link: "/" },
         { text: "Хоррор", link: "quests/horror" },
@@ -18,6 +25,7 @@ export default function Burger() {
         { text: "Контакты", link: "contacts" },
         { text: "Информация", link: "information" },
     ];
+
     return (
         <div className={isOpened ? "header__menu menu" : "header__menu menu"}>
             <button onClick={handleClick} type="button" className="menu__icon icon-menu">
@@ -28,7 +36,9 @@ export default function Burger() {
                     {navigation.map((item, index) => {
                         return (
                             <li key={index} className="menu__item">
-                                <Link to={item.link}>{item.text}</Link>
+                                <Link to={item.link} onClick={handleLinkClick}>
+                                    {item.text}
+                                </Link>
                             </li>
                         );
                     })}

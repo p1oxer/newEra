@@ -25,11 +25,13 @@ import ReactMarkdown from "react-markdown";
 import useFetch from "../../hooks/useFetch";
 import { sanitizeHTML } from "../../hooks/sanitize";
 import { getQuestIdBySlug } from "../../functions/questService";
+import useSEO from "../../hooks/useSEO";
 
 export default function QuestsPage() {
     const { questId } = useParams(); // это slug, например 'koma'
     const [realId, setRealId] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [mainSwiper, setMainSwiper] = useState(null);
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
     const [open, setOpen] = useState(false);
     const navigate = useNavigate();
@@ -45,6 +47,10 @@ export default function QuestsPage() {
 
         fetchId();
         setLoading(false);
+        return () => {
+            setMainSwiper(null);
+            setThumbsSwiper(null);
+        };
     }, [questId, navigate]);
 
     // Используем realId для загрузки данных через useFetch
@@ -54,8 +60,18 @@ export default function QuestsPage() {
         error,
     } = useFetch(realId ? `quests/${realId}` : null);
 
+    // Используем SEO для страницы квеста
+    useSEO("questPage", {
+        title: currentQuest?.title,
+        description: currentQuest?.description,
+        slug: questId,
+        image: currentQuest?.img?.[0]
+            ? `/uploads/img/quests/${currentQuest.img[0]}`
+            : null,
+    });
+
     if (loading || isLoading) {
-        return <div>Загрузка...</div>;
+        return null;
     }
 
     if (error) {
@@ -168,7 +184,7 @@ export default function QuestsPage() {
                     )}
 
                     <div className="body-quest__content">
-                        <span className="body-quest__name">{currentQuest.title}</span>
+                        <h1 className="body-quest__name">{currentQuest.title}</h1>
                         <div className="body-quest__description">
                             {
                                 <ReactMarkdown>
@@ -220,7 +236,7 @@ export default function QuestsPage() {
                 </div>
             </div>
             {/* Рекомендуемые квесты */}
-            <QuestsSwiper category={"all"} block={true} />
+            <QuestsSwiper category={"all"} block={true} blockTitle={"Наши квесты"} />
         </section>
     );
 }

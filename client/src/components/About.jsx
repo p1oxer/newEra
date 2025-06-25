@@ -8,13 +8,23 @@ export default function About() {
     const { data: textData, isLoading, error } = useFetch("about");
     const text = textData?.length > 0 ? textData : [];
 
+    if (isLoading) {
+        return null;
+    }
+
     return (
         <section className="about block">
             <div className="container">
                 <div className="about__body body-about">
                     <div className="sticky">
                         <div className="body-about__img">
-                            <img src={`${import.meta.env.VITE_UPLOADS_URL}/img/dino.png`} alt="Динозавр" />
+                            <img
+                                src={`${import.meta.env.VITE_UPLOADS_URL}/img/dino.png`}
+                                alt="Динозавр"
+                                loading="lazy"
+                                width={400}
+                                height={371}
+                            />
                         </div>
                     </div>
                     <div className="body-about__content">

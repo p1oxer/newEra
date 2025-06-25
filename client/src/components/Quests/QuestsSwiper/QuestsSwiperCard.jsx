@@ -29,7 +29,7 @@ export default function QuestsSwiperCard({
                             srcSet={`${import.meta.env.VITE_UPLOADS_URL}${img?.split(".")[0]}-540.webp`}
                             media={"(min-width:320px)"}
                         />
-                        <img src={`${import.meta.env.VITE_UPLOADS_URL}${img}`} alt={`Изображение ${name}`} loading="lazy" />
+                        <img src={`${import.meta.env.VITE_UPLOADS_URL}${img}`} alt={`Изображение ${name}`} loading="lazy" width={427.5} height={427.5} />
                     </picture>
                 </Link>
                 <div className="card-quests__top">

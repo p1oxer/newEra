@@ -49,15 +49,24 @@
     margin-bottom: -40px;
     @include adaptiveValue("margin-bottom", 50, 25);
 
+    @media (max-width:em(1200)) {
+        padding-right: 20px;
+        margin-right: -20px;
+        padding-left: 20px;
+        margin-left: -20px;
+    }
+
 
     .swiper-wrapper {
         margin: 0px auto !important;
+        justify-content: start !important;
     }
 
     .swiper-slide {
         display: flex;
         justify-content: center;
         align-items: stretch;
+
     }
 }
 
@@ -68,15 +77,14 @@
     max-width: 350px;
     height: 100%;
     min-height: 0;
-    min-width: 350px;
+
     @media (max-width:em(1200)) {
         max-width: 100%;
         width: 100%;
     }
 
-    @media (min-width:em(375px)) {
+    @media (min-width:em(992)) {
         min-width: 350px;
-
     }
 
     @media (any-hover: hover) {

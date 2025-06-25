@@ -165,7 +165,7 @@ export const ImageUploader = ({ source }) => {
             />
             <label htmlFor="image-upload">
                 <Button component="span" color="primary" disabled={uploading}>
-                    {uploading ? "Загрузка..." : "Добавить изображение"}
+                    {"Добавить изображение"}
                 </Button>
             </label>
 
@@ -254,7 +254,6 @@ export const ImageUploader = ({ source }) => {
 import SimpleMarkdownInput from "../UI/SimpleMarkdownInput";
 import { useFormContext } from "react-hook-form";
 import ListActions from "../UI/ActionsList";
-
 
 const CustomToolbar = (props) => (
     <Toolbar {...props}>

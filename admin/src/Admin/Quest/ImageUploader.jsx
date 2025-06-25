@@ -139,7 +139,7 @@ export const ImageUploader = ({ source }) => {
             />
             <label htmlFor="image-upload">
                 <Button component="span" color="primary" disabled={uploading}>
-                    {uploading ? "Загрузка..." : "Добавить изображение"}
+                    {"Добавить изображение"}
                 </Button>
             </label>
 

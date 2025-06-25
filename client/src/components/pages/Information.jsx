@@ -5,13 +5,13 @@ import Accordion from "../UI/Accordion";
 import useFetch from "../../hooks/useFetch";
 import { sanitizeHTML } from "../../hooks/sanitize";
 import ReactMarkdown, { defaultUrlTransform } from "react-markdown";
+import useSEO from "../../hooks/useSEO";
 
 export default function Information() {
+    useSEO("information");
+
     const { data: faqs, isLoading, error } = useFetch("faq");
 
-    if (isLoading) {
-        return <p>Загрузка...</p>;
-    }
 
     if (error) {
         console.error("Ошибка загрузки", error);
@@ -23,8 +23,8 @@ export default function Information() {
         <section className="information page">
             <div className="container">
                 <Breadcrumbs />
+                <BlockTitle title="Информация" level={1} />
                 <div className="faq">
-                    <BlockTitle title={"Информация"} />
                     {faqList.map((faq) => {
                         return (
                             <Accordion key={faq.id} title={faq.title}>

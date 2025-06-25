@@ -6,11 +6,12 @@ import Breadcrumbs from "../Breadcrumbs";
 import useFetch from "../../hooks/useFetch";
 import ReactMarkdown from "react-markdown";
 import { sanitizeHTML } from "../../hooks/sanitize";
+import useSEO from "../../hooks/useSEO";
+
 export default function Sertificate() {
+    useSEO("certificate");
+
     const { data: certificates, isLoading, error } = useFetch("certificates");
-    if (isLoading) {
-        return <p>Загрузка...</p>;
-    }
 
     if (error) {
         console.error("Ошибка загрузки", error);
@@ -22,7 +23,7 @@ export default function Sertificate() {
         <section className="sertificate page">
             <div className="container">
                 <Breadcrumbs />
-                <BlockTitle title={"Подарочные сертификаты"} />
+                <BlockTitle title="Подарочные сертификаты" level={1} />
                 <div className="sertificate__body body-sertificate">
                     {certificatesList[0]?.image_paths?.length > 0 && (
                         <Swiper
@@ -40,17 +41,23 @@ export default function Sertificate() {
                                         <div className="body-sertificate__slide-body">
                                             <picture>
                                                 <source
-                                                    srcSet={`${import.meta.env.VITE_UPLOADS_URL}${path.split(".")[0]}-560.avif`}
+                                                    srcSet={`${
+                                                        import.meta.env.VITE_UPLOADS_URL
+                                                    }${path.split(".")[0]}-560.avif`}
                                                     type="image/avif"
                                                     media="(min-width: 320px)"
                                                 />
                                                 <source
-                                                    srcSet={`${import.meta.env.VITE_UPLOADS_URL}${path.split(".")[0]}-560.webp`}
+                                                    srcSet={`${
+                                                        import.meta.env.VITE_UPLOADS_URL
+                                                    }${path.split(".")[0]}-560.webp`}
                                                     type="image/webp"
                                                     media="(min-width: 320px)"
                                                 />
                                                 <img
-                                                    src={`${import.meta.env.VITE_UPLOADS_URL}${path}`}
+                                                    src={`${
+                                                        import.meta.env.VITE_UPLOADS_URL
+                                                    }${path}`}
                                                     alt={`Сертификат ${index}`}
                                                     loading="lazy"
                                                 />

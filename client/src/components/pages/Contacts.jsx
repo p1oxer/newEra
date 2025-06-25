@@ -3,14 +3,14 @@ import BlockTitle from "../UI/BlockTitle";
 import Breadcrumbs from "../Breadcrumbs";
 import { FaVk, FaInstagram, FaYoutube, FaTelegramPlane, FaTiktok } from "react-icons/fa";
 import useFetch from "../../hooks/useFetch";
+import useSEO from "../../hooks/useSEO";
 
 export default function Contacts() {
+    useSEO("contacts");
+
     const { data: contacts, isLoading, error } = useFetch("contacts");
     const { data: socials } = useFetch("socials");
 
-    if (isLoading) {
-        return <p>Загрузка...</p>;
-    }
 
     if (error) {
         console.error("Ошибка загрузки", error);
@@ -36,7 +36,7 @@ export default function Contacts() {
         <section className="contacts page">
             <div className="container">
                 <Breadcrumbs />
-                <BlockTitle title={"Контакты"} />
+                <BlockTitle title="Контакты" level={1} />
                 <div className="contacts__body body-contacts">
                     <div className="contacts__content content-contacts">
                         <ul className="content-contacts__list">

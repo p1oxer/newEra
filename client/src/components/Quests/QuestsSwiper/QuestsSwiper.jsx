@@ -27,20 +27,18 @@ export default function QuestsSwiper({ block, category, blockTitle }) {
             : quests.filter((quest) => quest?.category === category);
     }, [quests, category]);
 
-    // Логика для кнопок навигации
-    const handleButtonDisabling = (swiper) => {
+    function handleButtonDisabling(swiper) {
         if (swiper.isBeginning) {
             swiperButtonPrev.current?.classList.add("swiper-btn-disabled");
         } else {
             swiperButtonPrev.current?.classList.remove("swiper-btn-disabled");
         }
-
         if (swiper.isEnd) {
-            swiperButtonNext.current?.classList.add("swiper-btn-disabled");
+            // swiperButtonNext.current?.classList.add("swiper-btn-disabled");
         } else {
             swiperButtonNext.current?.classList.remove("swiper-btn-disabled");
         }
-    };
+    }
 
     // Проверяем наличие слайдов после изменения filteredQuests
     useEffect(() => {
@@ -66,7 +64,7 @@ export default function QuestsSwiper({ block, category, blockTitle }) {
     }, [filteredQuests]);
 
     if (isLoading) {
-        return <div>Загрузка квестов...</div>;
+        return null;
     }
 
     if (error) {
@@ -80,7 +78,7 @@ export default function QuestsSwiper({ block, category, blockTitle }) {
         >
             <div className="container">
                 <div className="quests__swiper-top">
-                    <BlockTitle title={blockTitle ?? "Наши квесты"} />
+                    {blockTitle && <BlockTitle title={blockTitle} />}
                     {isButtonVisible && (
                         <div className="swiper-buttons">
                             <SwiperButton
@@ -100,22 +98,22 @@ export default function QuestsSwiper({ block, category, blockTitle }) {
                 </div>
 
                 <Swiper
-                    onReachBeginning={() =>
-                        swiperButtonPrev.current?.classList.add("swiper-btn-disabled")
-                    }
-                    onReachEnd={() =>
-                        swiperButtonNext.current?.classList.add("swiper-btn-disabled")
-                    }
+                    onReachBeginning={() => {
+                        swiperButtonPrev.current?.classList.add("swiper-btn-disabled");
+                    }}
+                    onReachEnd={() => {
+                        swiperButtonNext.current?.classList.add("swiper-btn-disabled");
+                    }}
                     onSlideChange={(swiper) => handleButtonDisabling(swiper)}
                     onSwiper={(swiper) => {
                         swiperRef.current = swiper;
                         handleButtonDisabling(swiper);
                     }}
-                    modules={[Navigation]}
-                    navigation={{
-                        prevEl: ".quests-swiper__button-prev",
-                        nextEl: ".quests-swiper__button-next",
-                    }}
+                    // modules={[Navigation]}
+                    // navigation={{
+                    //     prevEl: ".quests-swiper__button-prev",
+                    //     nextEl: ".quests-swiper__button-next",
+                    // }}
                     className="swiper-quests"
                     breakpoints={{
                         320: { slidesPerView: 1 },

@@ -1,7 +1,7 @@
 // components/Image.jsx или .tsx
 import React from "react";
 
-export default function Image({ src, alt, sizes = ["500", "900", "1200"] }) {
+export default function Image({ src, alt, sizes = ["500", "900", "1200"], width, height }) {
     const baseName = src.replace(/\.[^/.]+$/, ""); // Убираем расширение
     const ext = src.split(".").pop(); // Получаем расширение
 
@@ -39,7 +39,7 @@ export default function Image({ src, alt, sizes = ["500", "900", "1200"] }) {
             ))}
 
             {/* Оригинал */}
-            <img src={`${src}`} alt={alt} loading="lazy" />
+            <img src={`${src}`} alt={alt} loading="lazy" width={width} height={height} />
         </picture>
     );
 }

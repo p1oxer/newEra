@@ -19,8 +19,8 @@ export default function SwiperButton({
             ref={ref}
             className={
                 isAbsolute
-                    ? `swiper-btn ${modificator}__button-prev swiper-btn-prev swiper-btn-absolute`
-                    : `swiper-btn ${modificator}__button-prev swiper-btn-prev`
+                    ? `swiper-btn ${modificator}__button-prev swiper-btn-prev swiper-btn-absolute swiper-btn-disabled`
+                    : `swiper-btn ${modificator}__button-prev swiper-btn-prev swiper-btn-disabled`
             }
         >
             <FaArrowLeftLong color="#fff" size={20} />

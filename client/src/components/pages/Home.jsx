@@ -1,27 +1,32 @@
-import React from "react";
+import React, { Suspense } from "react";
 import Intro from "../Intro/Intro";
 import QuestsSwiper from "../Quests/QuestsSwiper/QuestsSwiper";
 import BlockTitle from "../UI/BlockTitle";
 import Reviews from "../Reviews";
 import About from "../About";
+import useSEO from "../../hooks/useSEO";
+
+const MapBlock = React.lazy(() => import("../MapBlock"));
 
 export default function Home() {
+    useSEO("home");
+
     return (
         <>
             <Intro />
-            <QuestsSwiper block={true} category={"all"}/>
+            <div className="container">
+                <BlockTitle
+                    title="Новая Эра - Квесты в Вологде"
+                    level={1}
+                    className="visually-hidden"
+                />
+            </div>
+            <QuestsSwiper block={true} category={"all"} blockTitle={"Наши квесты"} />
             <Reviews />
             <About />
-            <div className="map block">
-                <div className="container">
-                    <BlockTitle title={"Где нас найти?"} />
-                    <iframe
-                        src="https://yandex.ru/map-widget/v1/?um=constructor%3A9432c79b0f2bd8f9a9c0b46022ffaa2bc518df236b007c98c391100903196b60&amp;source=constructor"
-                        width="100%"
-                        height="496"
-                    ></iframe>
-                </div>
-            </div>
+            <Suspense fallback={null}>
+                <MapBlock />
+            </Suspense>
         </>
     );
 }

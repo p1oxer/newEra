@@ -51,6 +51,9 @@ export default function Footer() {
                         sizes={["500"]}
                         alt={"Логотип"}
                         src={`${import.meta.env.VITE_UPLOADS_URL}/img/logo.png`}
+                        loading="lazy"
+                        width={400}
+                        height={141}
                     />
                 </div>
                 <div className="footer__body body-footer">

@@ -1,10 +1,23 @@
 import { Link, useLocation } from "react-router-dom";
-import React, { useState } from "react";
-import urlMappings from "../../../files/url-mapping.json";
+import React, { useState, useEffect } from "react";
 import { capitalizeFirstLetterAndReplaceDash } from "../functions/translit";
+
 export default function Breadcrumbs() {
-    const [nameMap, setNameMap] = useState(urlMappings);
+    const [nameMap, setNameMap] = useState({});
     const location = useLocation();
+
+    useEffect(() => {
+        // Загружаем JSON с сервера
+        fetch(`${import.meta.env.VITE_FILES_URL || ""}/url-mapping.json`)
+            .then((res) => res.json())
+            .then((data) => {
+                setNameMap(data);
+            })
+            .catch((err) => {
+                console.error("Ошибка загрузки url-mapping.json", err);
+                setNameMap({});
+            });
+    }, []);
     let currentLink = "";
     const crumbs = location.pathname
         .split("/")
